@@ -1,0 +1,32 @@
+.container {
+  @apply fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 flex flex-col items-center justify-center;
+
+  @apply opacity-0 invisible;
+  @apply transition-all ease-in-out;
+  &.enable {
+    @apply opacity-75 visible;
+  }
+}
+
+.loader {
+  @apply ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4;
+  border-top-color: #3498db;
+  animation: spinner 1.5s linear infinite;
+}
+
+.label {
+  @apply text-center text-white text-xl font-semibold;
+}
+
+.children {
+  @apply text-center text-white;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

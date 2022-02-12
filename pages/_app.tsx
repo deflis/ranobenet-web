@@ -1,8 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import "~/utils/globals.css";
+import { AuthProvider } from "~/utils/firebase/auth";
+import { GlobalContainer } from "~/components/templates/global/GlobalContainer";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <AuthProvider>
+      <GlobalContainer>
+        <Component {...pageProps} />
+      </GlobalContainer>
+    </AuthProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

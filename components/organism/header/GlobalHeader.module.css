@@ -1,0 +1,17 @@
+.headerContainer {
+  @apply mx-auto px-4 sm:px-6;
+}
+.header {
+  @apply flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10;
+}
+
+.logo {
+  @apply flex justify-start lg:w-0 lg:flex-1;
+
+  @apply text-xl;
+  font-family: 'Yusei Magic', sans-serif;
+}
+
+.signInButton {
+  @apply ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700;
+}
