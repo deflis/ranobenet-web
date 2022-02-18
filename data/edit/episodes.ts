@@ -5,7 +5,7 @@ import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useUserContext } from '~/utils/firebase/auth';
 import { getNovel, getSWRKeyForNovel } from './novels';
 import { NovelsApiCleint } from '~/utils/apiClient';
-import { EpisodeDtoForSave } from '~/api';
+import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/api';
 
 const getSWRKeyForEpisode = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;
 
