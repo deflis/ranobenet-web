@@ -1,7 +1,7 @@
 import { Configuration, UsersApi, NovelsApi } from '~/api';
 
 const conf = new Configuration({
-  basePath: 'https://localhost:7167',
+  basePath: 'https://api.ranobe.net',
   headers: {
     'content-type': 'application/json',
   },
