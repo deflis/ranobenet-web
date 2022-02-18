@@ -3,7 +3,7 @@ import useSWRImmutable from 'swr/immutable';
 import { useUserContext } from '~/utils/firebase/auth';
 import { UsersApiClient } from '~/utils/apiClient';
 import { FirebaseUser, getAuthHeader } from '../firebaseAuth';
-import { UserDtoForSave } from '~/api';
+import { UserDtoForSave } from '~/ranobe-net-api';
 
 export const useEditUser = () => {
   const firebaseUser = useUserContext();

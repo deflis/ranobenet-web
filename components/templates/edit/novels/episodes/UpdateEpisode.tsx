@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useCallback } from 'react';
-import { EpisodeDtoForMe } from '~/api';
+import { EpisodeDtoForMe } from '~/ranobe-net-api';
 import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { EpisodeData, EpisodeEditor } from '~/components/organism/edit/novels/EpisodeEditor';

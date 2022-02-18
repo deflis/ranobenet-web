@@ -5,7 +5,7 @@ import { pagesPath } from '~/utils/$path';
 import Link from 'next/link';
 import { Container } from '~/components/atoms/common/Container';
 import { NovelsApiCleint } from '~/utils/apiClient';
-import { NovelDtoForPublicListingPagedList } from '~/api';
+import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api';
 import { useNovelsFetcher } from '~/data/novels';
 
 type Props = {

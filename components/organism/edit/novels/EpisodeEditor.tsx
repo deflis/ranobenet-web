@@ -6,7 +6,7 @@ import { TextField, TextFieldMultiLine } from '~/components/atoms/forms/TextFiel
 
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NovelDtoForMe } from '~/api';
+import { NovelDtoForMe } from '~/ranobe-net-api';
 
 const EpisodeDataSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは１文字以上必要です。' }),

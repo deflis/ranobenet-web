@@ -8,7 +8,7 @@ import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pagesPath } from '~/utils/$path';
 import { useNovelFetcher } from '~/data/novels';
-import { ChapterDtoForPublicTypeEnum } from '~/api';
+import { ChapterDtoForPublicTypeEnum } from '~/ranobe-net-api';
 
 export interface Query extends ParsedUrlQuery {
   novelId: string;

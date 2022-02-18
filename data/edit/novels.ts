@@ -4,7 +4,7 @@ import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useUserContext } from '~/utils/firebase/auth';
 import { NovelsApiCleint } from '~/utils/apiClient';
-import { NovelDtoForMe, NovelDtoForSave } from '~/api';
+import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api';
 
 export const getSWRKeyForNovel = (novelId: number) => `/novels/${novelId}` as const;
 

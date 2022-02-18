@@ -1,4 +1,4 @@
-import { Configuration, UsersApi, NovelsApi } from '~/api';
+import { Configuration, UsersApi, NovelsApi } from '~/ranobe-net-api';
 
 const conf = new Configuration({
   basePath: 'https://api.ranobe.net',
