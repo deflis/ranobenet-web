@@ -1,15 +1,19 @@
 const purgecss = [
   '@fullhuman/postcss-purgecss',
   {
-    content: ['./components/**/*.js', './pages/**/*.js'],
-    defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-  },
-];
+    content: [
+        './pages/**/*.{js,jsx,ts,tsx}',
+        './components/**/*.{js,jsx,ts,tsx}'
+    ],
+    defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+    safelist: ["html", "body"]
+  }
+],;
 module.exports = {
   plugins: [
     'postcss-import',
     'tailwindcss',
     ['postcss-preset-env', { stage: 1 }],
-    // ...(process.env.NODE_ENV === 'production' ? [purgecss] : []),
+    ...(process.env.NODE_ENV === 'production' ? [purgecss] : []),
   ],
 };
