@@ -9,6 +9,7 @@ import { NeedLogin } from '~/components/organism/NeedLogin';
 import { useEditUser } from '~/data/edit/users';
 import { globalTitle } from '~/utils/constants';
 import { signOut } from '~/utils/firebase/auth';
+import { useEffect } from 'react';
 
 export const EditUsersMe: React.FC = () => {
   const { user, loading, update, loggedOut } = useEditUser();
@@ -36,7 +37,10 @@ type UserData = {
 };
 
 const Editor: React.VFC<{ user: UserDtoForMe; onClickOk: (user: UserDtoForSave) => void }> = ({ user, onClickOk }) => {
-  const { register, handleSubmit } = useForm<UserDtoForSave>({ defaultValues: user });
+  const { register, handleSubmit, reset } = useForm<UserData>({ defaultValues: user });
+  useEffect(() => {
+    reset(user);
+  }, [user]);
 
   return (
     <form onSubmit={handleSubmit(onClickOk)}>
