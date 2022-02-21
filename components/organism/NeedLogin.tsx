@@ -5,7 +5,7 @@ export const NeedLogin: React.FC<{ label?: string }> = ({ label }) => (
   <>
     <p>{label && <>{label}には</>}ログインが必要です。</p>
     <p>
-      <NextLinkButton href={pageLogin()}>Sign up</NextLinkButton>
+      <NextLinkButton href={pageLogin()}>ログインする</NextLinkButton>
     </p>
   </>
 );
