@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Container } from '~/components/atoms/common/Container';
-import type { NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
@@ -8,14 +8,39 @@ import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pagesPath } from '~/utils/$path';
 import { useNovelFetcher } from '~/data/novels';
-import { ChapterDtoForPublicTypeEnum } from '~/ranobe-net-api';
+import { ChapterDtoForPublicTypeEnum, NovelDtoForPublic } from '~/ranobe-net-api';
+import { NovelsApiCleint } from '~/utils/apiClient';
+
+type Props = {
+  novelId: number;
+  novel: NovelDtoForPublic;
+};
 
 export interface Query extends ParsedUrlQuery {
   novelId: string;
 }
 
-const Novel: React.FC<{ novelId: number }> = ({ novelId }) => {
-  const { novel } = useNovelFetcher(novelId);
+export const getStaticPaths: GetStaticPaths<Query> = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
+  const novelId = parseInt(context.params?.novelId ?? '', 10) || 1;
+  const novel = await NovelsApiCleint.apiV1NovelsIdGet({ id: novelId });
+  return {
+    props: {
+      novelId,
+      novel,
+    },
+    revalidate: 60 * 60 * 10,
+  };
+};
+
+const Novel: NextPage<Props> = ({ novelId, novel: prefetchedNovel }) => {
+  const { novel } = useNovelFetcher(novelId, prefetchedNovel);
 
   return (
     <>
@@ -26,10 +51,10 @@ const Novel: React.FC<{ novelId: number }> = ({ novelId }) => {
       {novel && (
         <Container>
           <Heading>{novel.title}</Heading>
-          {novel.chapters!.map((chapter) => (
+          {novel.chapters.map((chapter) => (
             <>
               {chapter.type === ChapterDtoForPublicTypeEnum.NUMBER_1 && <Heading>{chapter.title}</Heading>}
-              {chapter.episodes!.map((episode) => (
+              {chapter.episodes.map((episode) => (
                 <p key={episode.id}>
                   <NextLinkButton href={pagesPath.novels._novelId(novelId)._episodeId(episode.id!).$url()}>
                     {episode.title}
@@ -44,17 +69,4 @@ const Novel: React.FC<{ novelId: number }> = ({ novelId }) => {
   );
 };
 
-const Page: NextPage = () => {
-  const router = useRouter();
-  const { novelId } = router.query as Query;
-  const novelIdNum = parseInt(novelId, 10) || 1;
-
-  // SWR hooks inside the `SWRConfig` boundary will use those values.
-  return (
-    <SWRConfig>
-      <Novel novelId={novelIdNum} />
-    </SWRConfig>
-  );
-};
-
-export default Page;
+export default Novel;

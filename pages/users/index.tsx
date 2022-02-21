@@ -21,11 +21,12 @@ export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
       page,
       users: await fetchUsers(page),
     },
+    revalidate: 60 * 60 * 10,
   };
 };
 
-const Page: NextPage<Props> = ({ page, users: _users }) => {
-  const { users } = useUsersFetcher(page);
+const Page: NextPage<Props> = ({ page, users: prefetchedUsers }) => {
+  const { users } = useUsersFetcher(page, prefetchedUsers);
   // SWR hooks inside the `SWRConfig` boundary will use those values.
   return <Users page={1} users={users} />;
 };

@@ -14,7 +14,7 @@ export interface Query extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: true,
   };
 };
 

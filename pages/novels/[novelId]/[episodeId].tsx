@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
@@ -8,16 +8,45 @@ import { Container } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
 import { useNovelEpisodeFetcher } from '~/data/novels';
+import { NovelDtoForPublic } from '~/ranobe-net-api';
+import { NovelsApiCleint } from '~/utils/apiClient';
 import { parse } from '~/utils/parser';
 import { pageNovelEpisode } from '~/utils/path';
+
+type Props = {
+  novelId: number;
+  episodeId: number;
+  novel: NovelDtoForPublic;
+};
 
 export interface Query extends ParsedUrlQuery {
   novelId: string;
   episodeId: string;
 }
 
-const Episode: React.FC<{ novelId: number; episodeId: number }> = ({ novelId, episodeId }) => {
-  const { episode, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId);
+export const getStaticPaths: GetStaticPaths<Query> = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
+  const novelId = parseInt(context.params?.novelId ?? '', 10) || 1;
+  const episodeId = parseInt(context.params?.episodeId ?? '', 10) || 1;
+  const novel = await NovelsApiCleint.apiV1NovelsIdGet({ id: novelId });
+  return {
+    props: {
+      novelId,
+      episodeId,
+      novel,
+    },
+    revalidate: 60 * 60 * 10,
+  };
+};
+
+const Episode: NextPage<Props> = ({ novelId, episodeId, novel: prefetchedNovel }) => {
+  const { episode, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId, prefetchedNovel);
 
   const story = useMemo(() => (episode ? parse(episode.story) : undefined), [episode]);
 
@@ -52,15 +81,5 @@ const Episode: React.FC<{ novelId: number; episodeId: number }> = ({ novelId, ep
     </>
   );
 };
-const Page: NextPage = () => {
-  const { query } = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const novelId = parseInt((query as Query).novelId, 10);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const episodeId = parseInt((query as Query).episodeId, 10);
 
-  // SWR hooks inside the `SWRConfig` boundary will use those values.
-  return <Episode novelId={novelId} episodeId={episodeId} />;
-};
-
-export default Page;
+export default Episode;

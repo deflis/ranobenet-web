@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { pagesPath } from '~/utils/$path';
 import Link from 'next/link';
@@ -20,12 +20,16 @@ export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
   const page = parseInt(context.params?.page ?? '1', 10) || 1;
   const novels = await NovelsApiCleint.apiV1NovelsGet({ page });
   return {
-    props: { page, novels },
+    props: {
+      page,
+      novels,
+    },
+    revalidate: 60 * 60 * 10,
   };
 };
 
-const Novels: NextPage<Props> = ({ page }) => {
-  const { novels } = useNovelsFetcher(page);
+const Novels: NextPage<Props> = ({ page, novels: prefetchedNovels }) => {
+  const { novels } = useNovelsFetcher(page, prefetchedNovels);
   return (
     <>
       <Head>
@@ -39,7 +43,7 @@ const Novels: NextPage<Props> = ({ page }) => {
 
             {novels.items.map((novel) => (
               <p key={novel.id}>
-                <Link href={pagesPath.novels._novelId(novel.id!).$url()}>{novel.title}</Link>
+                <Link href={pagesPath.novels._novelId(novel.id).$url()}>{novel.title}</Link>
               </p>
             ))}
           </>
