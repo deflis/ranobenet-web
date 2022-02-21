@@ -23,6 +23,10 @@ export default class MyDocument extends Document {
           <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
           <link href='https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap' rel='stylesheet' />
+
+          <meta name='theme-color' content='#2B5797' />
+          <link rel='manifest' href='/manifest.webmanifest' />
+          <link rel='apple-touch-icon' href='/icon-192x192.png' />
         </Head>
         <body>
           <Main />
