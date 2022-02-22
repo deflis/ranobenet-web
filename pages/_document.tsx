@@ -1,7 +1,7 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 
-export default class MyDocument extends Document {
+export default class Document extends NextDocument {
   render(): React.ReactElement {
     return (
       <Html lang='ja'>
