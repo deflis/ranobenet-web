@@ -4,7 +4,7 @@ import { NextLinkButton } from '~/components/atoms/common/Button';
 import { Container } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
-import { EpisodeDtoForPublic } from '~/ranobe-net-api';
+import { EpisodeDtoForPublic } from '~/ranobe-net-api/@types';
 import { parse } from '~/utils/parser';
 import { pageNovelEpisode } from '~/utils/path';
 

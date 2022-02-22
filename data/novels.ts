@@ -1,12 +1,13 @@
 import useSWR from 'swr';
-import { NovelDtoForPublic, NovelDtoForPublicListing, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api';
-import { NovelsApiCleint } from '~/utils/apiClient';
+import { NovelDtoForPublic, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
+import { apiClient } from '~/utils/apiClient';
 
 export const createNovelKey = (id: number): string => `get/novels/${id}` as const;
-export const fetchNovel = (id: number) => NovelsApiCleint.apiV1NovelsIdGet({ id });
+export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();
 
 export const createNovelsKey = (page?: number): string => `get/novels?page=${page}` as const;
-export const fetchNovels = (page?: number) => NovelsApiCleint.apiV1NovelsGet({ page: page ?? 1, size: 10 });
+export const fetchNovels = (page?: number) =>
+  apiClient.api.v1.novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
 
 export const useNovelsFetcher = (page: number, prefetchedData?: NovelDtoForPublicListingPagedList) => {
   const { data, error } = useSWR(createNovelsKey(page), async () => fetchNovels(page), {

@@ -1,5 +1,10 @@
-/* tslint:disable */
 /* eslint-disable */
-export * from './runtime';
-export * from './apis';
-export * from './models';
+export type Methods = {
+  get: {
+    query: {
+      id: number
+    }
+
+    status: 200
+  }
+}

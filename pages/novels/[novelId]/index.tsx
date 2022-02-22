@@ -1,8 +1,8 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { useNovelFetcher } from '~/data/novels';
-import { ApiV1NovelsGetOrderEnum, NovelDtoForPublic } from '~/ranobe-net-api';
-import { NovelsApiCleint } from '~/utils/apiClient';
+import { fetchNovel, useNovelFetcher } from '~/data/novels';
+import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
+import { apiClient } from '~/utils/apiClient';
 import { Novel } from '~/components/templates/novels/Novel';
 import { Loading } from '~/components/atoms/common/Loading';
 
@@ -16,7 +16,9 @@ export interface Query extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
-  const novel = await NovelsApiCleint.apiV1NovelsGet({ order: ApiV1NovelsGetOrderEnum.Id, descending: true });
+  const novel = await await apiClient.api.v1.novels.$get({
+    query: { order: 'id', descending: true, size: 10, page: 1 },
+  });
 
   return {
     paths: [
@@ -32,7 +34,7 @@ export const getStaticPaths: GetStaticPaths<Query> = async () => {
 
 export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
   const novelId = parseInt(context.params?.novelId ?? '', 10) || 1;
-  const novel = await NovelsApiCleint.apiV1NovelsIdGet({ id: novelId });
+  const novel = await fetchNovel(novelId);
   return {
     props: {
       novelId,

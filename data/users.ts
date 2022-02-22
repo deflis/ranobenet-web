@@ -1,12 +1,14 @@
 import useSWR from 'swr';
 import { FirebaseUser } from './firebaseAuth';
-import { UsersApiClient } from '~/utils/apiClient';
-import { UserDtoForPublic, UserDtoForPublicListingPagedList } from '~/ranobe-net-api';
+import { apiClient } from '~/utils/apiClient';
+import { UserDtoForPublic, UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 
 export const fetchMe = async (user: FirebaseUser) =>
-  await UsersApiClient.apiV1UsersMePost({
-    headers: {
-      authorization: `Bearer ${await user.getIdToken()}`,
+  await apiClient.api.v1.users.me.$post({
+    config: {
+      headers: {
+        authorization: `Bearer ${await user.getIdToken()}`,
+      },
     },
   });
 
@@ -27,10 +29,11 @@ export const useUserMe = (user: FirebaseUser | null) => {
 };
 
 export const createUserKey = (id: number): string => `get/users/${id}` as const;
-export const fetchUser = (id: number) => UsersApiClient.apiV1UsersIdGet({ id });
+export const fetchUser = (id: number) => apiClient.api.v1.users._id(id).$get();
 
 export const createUsersKey = (page?: number): string => `get/users?page=${page}` as const;
-export const fetchUsers = (page?: number) => UsersApiClient.apiV1UsersGet({ page: page ?? 1, size: 10 });
+export const fetchUsers = (page?: number) =>
+  apiClient.api.v1.users.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
 
 export const useUserFetcher = (id: number, prefetchedData?: UserDtoForPublic) => {
   const { data, error } = useSWR(createUserKey(id), async () => await fetchUser(id), {

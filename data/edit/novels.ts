@@ -3,8 +3,8 @@ import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useUserContext } from '~/utils/firebase/auth';
-import { NovelsApiCleint } from '~/utils/apiClient';
-import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api';
+import { apiClient } from '~/utils/apiClient';
+import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
 
 export const getSWRKeyForNovel = (novelId: number) => `/novels/${novelId}` as const;
 
@@ -53,39 +53,30 @@ export const useUpdateNovel = (novelId: number) => {
 };
 
 export const getNovel = async (id: number, user: FirebaseUser) =>
-  NovelsApiCleint.apiV1NovelsIdMeGet(
-    { id },
-    {
+  apiClient.api.v1.novels._id(id).me.$get({
+    config: {
       headers: {
-        'content-type': 'application/json',
         ...(await getAuthHeader(user)),
       },
-    }
-  );
+    },
+  });
 
 export const createNovel = async (novelDtoForSave: NovelDtoForSave, user: FirebaseUser) =>
-  NovelsApiCleint.apiV1NovelsPost(
-    {
-      novelDtoForSave,
-    },
-    {
+  apiClient.api.v1.novels.$post({
+    body: novelDtoForSave,
+    config: {
       headers: {
-        'content-type': 'application/json',
         ...(await getAuthHeader(user)),
       },
-    }
-  );
+    },
+  });
 
 export const updateNovel = async (id: number, novelDtoForSave: NovelDtoForSave, user: FirebaseUser) =>
-  NovelsApiCleint.apiV1NovelsIdPut(
-    {
-      id,
-      novelDtoForSave,
-    },
-    {
+  apiClient.api.v1.novels._id(id).$put({
+    body: novelDtoForSave,
+    config: {
       headers: {
-        'content-type': 'application/json',
         ...(await getAuthHeader(user)),
       },
-    }
-  );
+    },
+  });

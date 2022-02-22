@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api';
+import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/utils/constants';
 import { pageUserDetail, pageUsers } from '~/utils/path';
 

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { pagesPath } from '~/utils/$path';
 import { Container } from '~/components/atoms/common/Container';
-import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api';
+import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { pageNovels } from '~/utils/path';
 
 export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = ({ novels }) => {

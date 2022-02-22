@@ -11,6 +11,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@aspida/fetch": "^1.7.1",
     "@hookform/devtools": "^4.0.2",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.8",

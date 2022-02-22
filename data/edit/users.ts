@@ -1,9 +1,9 @@
 import { useAsyncFn } from 'react-use';
 import useSWRImmutable from 'swr/immutable';
 import { useUserContext } from '~/utils/firebase/auth';
-import { UsersApiClient } from '~/utils/apiClient';
+import { apiClient } from '~/utils/apiClient';
 import { FirebaseUser, getAuthHeader } from '../firebaseAuth';
-import { UserDtoForSave } from '~/ranobe-net-api';
+import { UserDtoForSave } from '~/ranobe-net-api/@types';
 
 export const useEditUser = () => {
   const firebaseUser = useUserContext();
@@ -28,17 +28,16 @@ export const useEditUser = () => {
 };
 
 export const getUser = async (user: FirebaseUser) =>
-  UsersApiClient.apiV1UsersMeGet({
-    headers: await getAuthHeader(user),
+  apiClient.api.v1.users.me.$post({
+    config: {
+      headers: await getAuthHeader(user),
+    },
   });
 
 export const postUser = async (userDtoForSave: UserDtoForSave, user: FirebaseUser) =>
-  UsersApiClient.apiV1UsersMePut(
-    { userDtoForSave },
-    {
-      headers: {
-        'content-type': 'application/json',
-        ...(await getAuthHeader(user)),
-      },
-    }
-  );
+  apiClient.api.v1.users.me.$put({
+    body: userDtoForSave,
+    config: {
+      headers: await getAuthHeader(user),
+    },
+  });

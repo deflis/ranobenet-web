@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { fetchUsers, useUsersFetcher } from '~/data/users';
 import { Users } from '~/components/templates/users/Users';
-import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api';
+import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { ParsedUrlQuery } from 'querystring';
 
 type Props = {

@@ -1,11 +1,12 @@
-import { Configuration, UsersApi, NovelsApi } from '~/ranobe-net-api';
+import fetchClient from '@aspida/fetch';
+import api from '~/ranobe-net-api/$api';
 
-const conf = new Configuration({
-  basePath: 'https://api.ranobe.net',
-  headers: {
-    'content-type': 'application/json',
-  },
-});
-
-export const UsersApiClient = new UsersApi(conf);
-export const NovelsApiCleint = new NovelsApi(conf);
+export const apiClient = api(
+  fetchClient(fetch, {
+    baseURL: 'https://api.ranobe.net',
+    throwHttpErrors: true,
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+);

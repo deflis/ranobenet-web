@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import { useAsyncFn } from 'react-use';
-import { UserDtoForMe, UserDtoForSave } from '~/ranobe-net-api';
+import { UserDtoForMe, UserDtoForSave } from '~/ranobe-net-api/@types';
 import { Button, SubmitButton } from '~/components/atoms/common/Button';
 import { Loading } from '~/components/atoms/common/Loading';
 import { TextField } from '~/components/atoms/forms/TextField';

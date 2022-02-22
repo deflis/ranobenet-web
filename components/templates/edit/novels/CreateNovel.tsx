@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { NovelDtoForMe } from '~/ranobe-net-api';
+import { NovelDtoForMe } from '~/ranobe-net-api/@types';
 import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { NovelData, NovelEditor } from '~/components/organism/edit/novels/NovelEditor';

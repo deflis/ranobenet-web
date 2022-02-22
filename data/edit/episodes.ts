@@ -4,8 +4,8 @@ import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useUserContext } from '~/utils/firebase/auth';
 import { getNovel, getSWRKeyForNovel } from './novels';
-import { NovelsApiCleint } from '~/utils/apiClient';
-import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api';
+import { apiClient } from '~/utils/apiClient';
+import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
 
 const getSWRKeyForEpisode = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;
 
@@ -66,26 +66,22 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
 };
 
 export const getEpisode = async (novelId: number, episodeId: number, user: FirebaseUser) =>
-  NovelsApiCleint.apiV1NovelsIdEpisodesEpisodeIdGet(
-    {
-      id: novelId,
-      episodeId,
-    },
-    {
-      headers: await getAuthHeader(user),
-    }
-  );
+  apiClient.api.v1.novels
+    ._id(novelId)
+    .episodes._episodeId(episodeId)
+    .$get({
+      config: {
+        headers: await getAuthHeader(user),
+      },
+    });
 
 export const createEpisode = async (novelId: number, episodeDtoForSave: EpisodeDtoForSave, user: FirebaseUser) =>
-  NovelsApiCleint.apiV1NovelsIdEpisodesPost(
-    {
-      id: novelId,
-      episodeDtoForSave,
-    },
-    {
+  apiClient.api.v1.novels._id(novelId).episodes.$post({
+    body: episodeDtoForSave,
+    config: {
       headers: await getAuthHeader(user),
-    }
-  );
+    },
+  });
 
 export const updateEpisode = async (
   novelId: number,
@@ -93,13 +89,12 @@ export const updateEpisode = async (
   episodeDtoForSave: EpisodeDtoForSave,
   user: FirebaseUser
 ) =>
-  NovelsApiCleint.apiV1NovelsIdEpisodesEpisodeIdPut(
-    {
-      id: novelId,
-      episodeId,
-      episodeDtoForSave,
-    },
-    {
-      headers: await getAuthHeader(user),
-    }
-  );
+  apiClient.api.v1.novels
+    ._id(novelId)
+    .episodes._episodeId(episodeId)
+    .$put({
+      body: episodeDtoForSave,
+      config: {
+        headers: await getAuthHeader(user),
+      },
+    });

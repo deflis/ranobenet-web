@@ -3,7 +3,7 @@ import { Container } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pagesPath } from '~/utils/$path';
-import { ChapterDtoForPublicTypeEnum, NovelDtoForPublic } from '~/ranobe-net-api';
+import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
 
 export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
   return (
@@ -17,7 +17,7 @@ export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
           <Heading>{novel.title}</Heading>
           {novel.chapters.map((chapter) => (
             <>
-              {chapter.type === ChapterDtoForPublicTypeEnum.NUMBER_1 && <Heading>{chapter.title}</Heading>}
+              {chapter.type === 1 && <Heading>{chapter.title}</Heading>}
               {chapter.episodes.map((episode) => (
                 <p key={episode.id}>
                   <NextLinkButton href={pagesPath.novels._novelId(novel.id)._episodeId(episode.id!).$url()}>

@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { fetchUser } from '~/data/users';
 import { User } from '~/components/templates/users/User';
-import { UserDtoForPublic } from '~/ranobe-net-api';
+import { UserDtoForPublic } from '~/ranobe-net-api/@types';
 
 type Props = {
   user: UserDtoForPublic;
