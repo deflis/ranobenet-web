@@ -1,16 +1,23 @@
-import type { AppProps } from "next/app";
-import "~/utils/globals.css";
-import { AuthProvider } from "~/utils/firebase/auth";
-import { GlobalContainer } from "~/components/templates/global/GlobalContainer";
+import type { AppProps } from 'next/app';
+import '~/utils/globals.css';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
+import { Provider } from 'jotai';
+import { useAuth } from '~/utils/firebase/auth';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp(props: AppProps) {
   return (
-    <AuthProvider>
-      <GlobalContainer>
-        <Component {...pageProps} />
-      </GlobalContainer>
-    </AuthProvider>
+    <Provider>
+      <InnerApp {...props} />
+    </Provider>
   );
 }
 
-export default MyApp;
+function InnerApp({ Component, pageProps }: AppProps) {
+  useAuth();
+
+  return (
+    <GlobalContainer>
+      <Component {...pageProps} />
+    </GlobalContainer>
+  );
+}

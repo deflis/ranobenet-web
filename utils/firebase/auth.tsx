@@ -7,19 +7,13 @@ import {
   onAuthStateChanged,
   setPersistence,
   signInWithPopup,
-  User,
   signOut as signOutFirebaseAuth,
 } from 'firebase/auth';
-
-type UserContextData = User | null;
-
-const UserContext = createContext<UserContextData>(null);
-
-export function useUserContext(): UserContextData {
-  return useContext(UserContext);
-}
+import { atom, useAtom } from 'jotai';
 
 const auth = getAuth(firebase);
+const currentUser = atom(auth.currentUser);
+
 const provider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
@@ -32,17 +26,17 @@ export async function signOut() {
   signOutFirebaseAuth(auth);
 }
 
-export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(auth.currentUser);
+export const useUserContext = () => {
+  const [user] = useAtom(currentUser);
+  return user;
+};
+
+export const useAuth = () => {
+  const [, setUser] = useAtom(currentUser);
 
   useEffect(() => {
-    const unsubscribed = onAuthStateChanged(auth, (user) => {
+    return onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-    return () => {
-      unsubscribed();
-    };
   }, []);
-
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
