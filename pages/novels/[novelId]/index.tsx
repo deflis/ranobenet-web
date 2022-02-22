@@ -2,13 +2,11 @@ import Head from 'next/head';
 import { Container } from '~/components/atoms/common/Container';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { SWRConfig } from 'swr';
-import { useRouter } from 'next/router';
 import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pagesPath } from '~/utils/$path';
 import { useNovelFetcher } from '~/data/novels';
-import { ChapterDtoForPublicTypeEnum, NovelDtoForPublic } from '~/ranobe-net-api';
+import { ApiV1NovelsGetOrderEnum, ChapterDtoForPublicTypeEnum, NovelDtoForPublic } from '~/ranobe-net-api';
 import { NovelsApiCleint } from '~/utils/apiClient';
 
 type Props = {
@@ -21,8 +19,16 @@ export interface Query extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
+  const novel = await NovelsApiCleint.apiV1NovelsGet({ order: ApiV1NovelsGetOrderEnum.Id, descending: true });
+
   return {
-    paths: [],
+    paths: [
+      ...novel.items.map(({ id }) => ({
+        params: {
+          novelId: id.toString(),
+        },
+      })),
+    ],
     fallback: true,
   };
 };

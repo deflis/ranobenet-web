@@ -1,6 +1,5 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { useMemo } from 'react';
 import { NextLinkButton } from '~/components/atoms/common/Button';
@@ -8,7 +7,7 @@ import { Container } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
 import { useNovelEpisodeFetcher } from '~/data/novels';
-import { NovelDtoForPublic } from '~/ranobe-net-api';
+import { ApiV1NovelsGetOrderEnum, NovelDtoForPublic } from '~/ranobe-net-api';
 import { NovelsApiCleint } from '~/utils/apiClient';
 import { parse } from '~/utils/parser';
 import { pageNovelEpisode } from '~/utils/path';
@@ -24,9 +23,29 @@ export interface Query extends ParsedUrlQuery {
   episodeId: string;
 }
 
+const getEpisodes = async (novelId: number): Promise<{ params: Query }[]> => {
+  const novel = await NovelsApiCleint.apiV1NovelsIdGet({ id: novelId });
+  return novel.chapters.flatMap(({ episodes }) =>
+    episodes.map(({ id: episodeId }) => ({
+      params: {
+        novelId: novelId.toString(),
+        episodeId: episodeId.toString(),
+      },
+    }))
+  );
+};
+
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
+  const novel = await NovelsApiCleint.apiV1NovelsGet({ order: ApiV1NovelsGetOrderEnum.Id, descending: true });
+
+  const paths: { params: Query }[] = [];
+
+  for (const { id: novelId } of novel.items) {
+    paths.push(...(await getEpisodes(novelId)));
+  }
+
   return {
-    paths: [],
+    paths,
     fallback: true,
   };
 };
