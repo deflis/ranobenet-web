@@ -1,12 +1,10 @@
-import Head from 'next/head';
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { pagesPath } from '~/utils/$path';
-import Link from 'next/link';
-import { Container } from '~/components/atoms/common/Container';
 import { NovelsApiCleint } from '~/utils/apiClient';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api';
 import { useNovelsFetcher } from '~/data/novels';
+import { Novels } from '~/components/templates/novels/Novels';
+import { Loading } from '~/components/atoms/common/Loading';
 
 type Props = {
   page: number;
@@ -28,29 +26,15 @@ export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
   };
 };
 
-const Novels: NextPage<Props> = ({ page, novels: prefetchedNovels }) => {
-  const { novels } = useNovelsFetcher(page, prefetchedNovels);
+const Page: NextPage<Props> = ({ page, novels: prefetchedNovels }) => {
+  const { loading, novels } = useNovelsFetcher(page, prefetchedNovels);
+
   return (
     <>
-      <Head>
-        <title>小説一覧</title>
-      </Head>
-
-      <Container>
-        {novels && (
-          <>
-            <p>小説 全{novels.totalCount}件</p>
-
-            {novels.items.map((novel) => (
-              <p key={novel.id}>
-                <Link href={pagesPath.novels._novelId(novel.id).$url()}>{novel.title}</Link>
-              </p>
-            ))}
-          </>
-        )}
-      </Container>
+      <Loading enable={loading} />
+      {novels && <Novels novels={novels} />}
     </>
   );
 };
 
-export default Novels;
+export default Page;

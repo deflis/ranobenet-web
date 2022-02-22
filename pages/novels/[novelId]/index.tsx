@@ -1,13 +1,10 @@
-import Head from 'next/head';
-import { Container } from '~/components/atoms/common/Container';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { Heading } from '~/components/atoms/common/Heading';
-import { NextLinkButton } from '~/components/atoms/common/Button';
-import { pagesPath } from '~/utils/$path';
 import { useNovelFetcher } from '~/data/novels';
-import { ApiV1NovelsGetOrderEnum, ChapterDtoForPublicTypeEnum, NovelDtoForPublic } from '~/ranobe-net-api';
+import { ApiV1NovelsGetOrderEnum, NovelDtoForPublic } from '~/ranobe-net-api';
 import { NovelsApiCleint } from '~/utils/apiClient';
+import { Novel } from '~/components/templates/novels/Novel';
+import { Loading } from '~/components/atoms/common/Loading';
 
 type Props = {
   novelId: number;
@@ -45,34 +42,15 @@ export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
   };
 };
 
-const Novel: NextPage<Props> = ({ novelId, novel: prefetchedNovel }) => {
-  const { novel } = useNovelFetcher(novelId, prefetchedNovel);
+const Page: NextPage<Props> = ({ novelId, novel: prefetchedNovel }) => {
+  const { loading, novel } = useNovelFetcher(novelId, prefetchedNovel);
 
   return (
     <>
-      <Head>
-        <title>{novel?.title}</title>
-      </Head>
-
-      {novel && (
-        <Container>
-          <Heading>{novel.title}</Heading>
-          {novel.chapters.map((chapter) => (
-            <>
-              {chapter.type === ChapterDtoForPublicTypeEnum.NUMBER_1 && <Heading>{chapter.title}</Heading>}
-              {chapter.episodes.map((episode) => (
-                <p key={episode.id}>
-                  <NextLinkButton href={pagesPath.novels._novelId(novelId)._episodeId(episode.id!).$url()}>
-                    {episode.title}
-                  </NextLinkButton>
-                </p>
-              ))}
-            </>
-          ))}
-        </Container>
-      )}
+      <Loading enable={loading} />
+      {novel && <Novel novel={novel} />}
     </>
   );
 };
 
-export default Novel;
+export default Page;
