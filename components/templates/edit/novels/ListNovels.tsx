@@ -5,13 +5,14 @@ import { Container } from '~/components/atoms/common/Container';
 import { pageNovels } from '~/utils/path';
 import { useNovelList } from '~/data/edit/novels';
 import { Loading } from '~/components/atoms/common/Loading';
+import { globalTitle } from '~/utils/constants';
 
 export const ListNovels: React.FC = () => {
   const { novels, loading } = useNovelList();
   return (
     <>
       <Head>
-        <title>小説一覧</title>
+        <title>小説一覧 - {globalTitle}</title>
       </Head>
 
       <Container>

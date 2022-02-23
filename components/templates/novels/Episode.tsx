@@ -5,6 +5,7 @@ import { Container } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
 import { EpisodeDtoForPublic } from '~/ranobe-net-api/@types';
+import { globalTitle } from '~/utils/constants';
 import { parse } from '~/utils/parser';
 import { pageNovelEpisode } from '~/utils/path';
 
@@ -19,7 +20,9 @@ export const Episode: React.FC<{
   return (
     <>
       <Head>
-        <title>{episode.title}</title>
+        <title>
+          {episode.title} - {globalTitle}
+        </title>
       </Head>
 
       <Container>

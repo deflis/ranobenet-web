@@ -4,12 +4,13 @@ import { pagesPath } from '~/utils/$path';
 import { Container } from '~/components/atoms/common/Container';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { pageNovels } from '~/utils/path';
+import { globalTitle } from '~/utils/constants';
 
 export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = ({ novels }) => {
   return (
     <>
       <Head>
-        <title>小説一覧</title>
+        <title>小説一覧 - {globalTitle}</title>
       </Head>
 
       <Container>
@@ -19,8 +20,11 @@ export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = (
 
             <ul>
               {novels.items.map((novel) => (
+                // TODO: 小説一覧コンポーネントを作る
                 <li key={novel.id}>
                   <Link href={pagesPath.novels._novelId(novel.id).$url()}>{novel.title}</Link>
+                  <div>作者: {novel.author}</div>
+                  <div>{novel.description}</div>
                 </li>
               ))}
             </ul>
