@@ -21,19 +21,19 @@ export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
           <InnerContainer>
             <p>作者: {novel.author}</p>
             <p>{novel.description}</p>
-            {novel.chapters.map((chapter) => (
-              <>
-                {chapter.type === 1 && <Heading>{chapter.title}</Heading>}
-                {chapter.episodes.map((episode) => (
-                  <p key={episode.id}>
-                    <NextLinkButton href={pagesPath.novels._novelId(novel.id)._episodeId(episode.id).$url()}>
-                      {episode.title}
-                    </NextLinkButton>
-                  </p>
-                ))}
-              </>
-            ))}
           </InnerContainer>
+          {novel.chapters.map((chapter) => (
+            <>
+              {chapter.type === 1 && <Heading>{chapter.title}</Heading>}
+              {chapter.episodes.map((episode) => (
+                <p key={episode.id}>
+                  <NextLinkButton href={pagesPath.novels._novelId(novel.id)._episodeId(episode.id).$url()}>
+                    {episode.title}
+                  </NextLinkButton>
+                </p>
+              ))}
+            </>
+          ))}
         </Container>
       )}
     </>
