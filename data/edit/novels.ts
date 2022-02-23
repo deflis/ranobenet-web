@@ -1,12 +1,27 @@
 import { useAsyncFn } from 'react-use';
-import { useSWRConfig } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useFirebaseUser } from '~/utils/firebase/auth';
 import { apiClient } from '~/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
+import { useUserMe } from '../users';
 
-export const getSWRKeyForNovel = (novelId: number) => `/novels/${novelId}` as const;
+export const useNovelList = (page?: number) => {
+  const firebaseUser = useFirebaseUser();
+
+  // TODO: サーバサイドに `/users/me/novels` を実装する
+  const { user, error: errorOnUser, loading: userLoading } = useUserMe(firebaseUser);
+  const { data: novels, error } = useSWR(user && firebaseUser ? '/users/me/novels' : null, () =>
+    user && firebaseUser ? getNovelList(user.id, firebaseUser, page) : undefined
+  );
+
+  const loading = (firebaseUser && !novels && !error) || userLoading;
+
+  return { loading, error: error ?? errorOnUser, novels, loggedOut: !firebaseUser };
+};
+
+export const getSWRKeyForNovel = (novelId: number) => `/novels/me` as const;
 
 export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
   const firebaseUser = useFirebaseUser();
@@ -16,7 +31,7 @@ export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
     async (body: NovelDtoForSave) => {
       if (firebaseUser) {
         const novel = await createNovel(body, firebaseUser);
-        mutate(getSWRKeyForNovel(novel.id!), novel);
+        mutate(getSWRKeyForNovel(novel.id), novel);
         onSubmitted(novel);
       }
     },
@@ -51,6 +66,9 @@ export const useUpdateNovel = (novelId: number) => {
 
   return { novel, loading, error, update, loggedOut: !firebaseUser };
 };
+
+export const getNovelList = async (id: number, user: FirebaseUser, page?: number) =>
+  apiClient.api.v1.users._id(id).novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
 
 export const getNovel = async (id: number, user: FirebaseUser) =>
   apiClient.api.v1.novels._id(id).me.$get({

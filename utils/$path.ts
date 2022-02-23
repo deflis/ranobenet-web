@@ -14,7 +14,8 @@ export const pagesPath = {
       }),
       new: {
         $url: (url?: { hash?: string }) => ({ pathname: '/edit/novels/new' as const, hash: url?.hash })
-      }
+      },
+      $url: (url?: { hash?: string }) => ({ pathname: '/edit/novels' as const, hash: url?.hash })
     },
     users: {
       me: {
