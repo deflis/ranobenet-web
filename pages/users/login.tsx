@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useAsyncFn } from 'react-use';
-import { signInWithGoogle, useUserContext } from '~/utils/firebase/auth';
+import { signInWithGoogle, useFirebaseUser } from '~/utils/firebase/auth';
 import type { NextPage } from 'next';
 import { Button } from '~/components/atoms/common/Button';
 import { Loading } from '~/components/atoms/common/Loading';
@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const user = useUserContext();
+  const user = useFirebaseUser();
 
   const [signInState, handleSignIn] = useAsyncFn(async () => {
     await signInWithGoogle();

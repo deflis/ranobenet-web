@@ -1,12 +1,12 @@
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import AuthUser from '~/components/utils/AuthUser';
-import { useUserContext } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/utils/firebase/auth';
 import { pageLogin } from '~/utils/path';
 
 import styles from './GlobalHeader.module.css';
 
 export const GlobalHeader = () => {
-  const user = useUserContext();
+  const user = useFirebaseUser();
 
   return (
     <header className={styles.headerContainer}>

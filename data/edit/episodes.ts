@@ -2,7 +2,7 @@ import { useAsyncFn } from 'react-use';
 import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
-import { useUserContext } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/utils/firebase/auth';
 import { getNovel, getSWRKeyForNovel } from './novels';
 import { apiClient } from '~/utils/apiClient';
 import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
@@ -10,7 +10,7 @@ import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
 const getSWRKeyForEpisode = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;
 
 export const useCreateEpisode = (novelId: number, onSubmitted: (body: EpisodeDtoForMe) => void) => {
-  const firebaseUser = useUserContext();
+  const firebaseUser = useFirebaseUser();
   const { mutate } = useSWRConfig();
 
   const { data: novel, error: errorNovel } = useSWRImmutable(
@@ -36,7 +36,7 @@ export const useCreateEpisode = (novelId: number, onSubmitted: (body: EpisodeDto
 };
 
 export const useUpdateEpisode = (novelId: number, episodeId: number) => {
-  const firebaseUser = useUserContext();
+  const firebaseUser = useFirebaseUser();
   const {
     data: episode,
     error: errorEpisode,

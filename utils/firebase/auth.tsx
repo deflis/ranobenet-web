@@ -26,12 +26,12 @@ export async function signOut() {
   signOutFirebaseAuth(auth);
 }
 
-export const useUserContext = () => {
+export const useFirebaseUser = () => {
   const [user] = useAtom(currentUser);
   return user;
 };
 
-export const useAuth = () => {
+export const useAuthStateListener = () => {
   const [, setUser] = useAtom(currentUser);
 
   useEffect(() => {

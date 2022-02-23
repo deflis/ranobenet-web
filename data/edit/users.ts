@@ -1,12 +1,12 @@
 import { useAsyncFn } from 'react-use';
 import useSWRImmutable from 'swr/immutable';
-import { useUserContext } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/utils/firebase/auth';
 import { apiClient } from '~/utils/apiClient';
 import { FirebaseUser, getAuthHeader } from '../firebaseAuth';
 import { UserDtoForSave } from '~/ranobe-net-api/@types';
 
 export const useEditUser = () => {
-  const firebaseUser = useUserContext();
+  const firebaseUser = useFirebaseUser();
   const {
     data: user,
     error,

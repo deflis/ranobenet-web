@@ -2,14 +2,14 @@ import { useAsyncFn } from 'react-use';
 import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
-import { useUserContext } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/utils/firebase/auth';
 import { apiClient } from '~/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
 
 export const getSWRKeyForNovel = (novelId: number) => `/novels/${novelId}` as const;
 
 export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
-  const firebaseUser = useUserContext();
+  const firebaseUser = useFirebaseUser();
   const { mutate } = useSWRConfig();
 
   const [{ loading: postLoading, error }, create] = useAsyncFn(
@@ -29,7 +29,7 @@ export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
 };
 
 export const useUpdateNovel = (novelId: number) => {
-  const firebaseUser = useUserContext();
+  const firebaseUser = useFirebaseUser();
   const {
     data: novel,
     error,

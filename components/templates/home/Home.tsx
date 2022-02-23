@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { useUserContext } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/utils/firebase/auth';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pageLogin, pageNovels, pageUsers } from '~/utils/path';
 import { pageEditUserMe } from '~/utils/path/edit';
 
 export const Home = () => {
-  const user = useUserContext();
+  const user = useFirebaseUser();
 
   return (
     <>

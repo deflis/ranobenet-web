@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import '~/utils/globals.css';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { Provider } from 'jotai';
-import { useAuth } from '~/utils/firebase/auth';
+import { useAuthStateListener } from '~/utils/firebase/auth';
 
 const App = (props: AppProps) => (
   <Provider>
@@ -11,7 +11,7 @@ const App = (props: AppProps) => (
 );
 
 const InnerApp = ({ Component, pageProps }: AppProps) => {
-  useAuth();
+  useAuthStateListener();
 
   return (
     <GlobalContainer>
