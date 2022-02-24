@@ -5,20 +5,17 @@ import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
 import { useFirebaseUser } from '~/utils/firebase/auth';
 import { apiClient } from '~/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
-import { useUserMe } from '../users';
 
 export const useNovelList = (page?: number) => {
   const firebaseUser = useFirebaseUser();
 
-  // TODO: サーバサイドに `/users/me/novels` を実装する
-  const { user, error: errorOnUser, loading: userLoading } = useUserMe(firebaseUser);
-  const { data: novels, error } = useSWR(user && firebaseUser ? '/users/me/novels' : null, () =>
-    user && firebaseUser ? getNovelList(user.id, firebaseUser, page) : undefined
+  const { data: novels, error } = useSWR(firebaseUser ? '/users/me/novels' : null, () =>
+    firebaseUser ? getNovelList(firebaseUser, page) : undefined
   );
 
-  const loading = (firebaseUser && !novels && !error) || userLoading;
+  const loading = !!firebaseUser && !novels && !error;
 
-  return { loading, error: error ?? errorOnUser, novels, loggedOut: !firebaseUser };
+  return { loading, error, novels, loggedOut: !firebaseUser };
 };
 
 export const getSWRKeyForNovel = (novelId: number) => `/novels/me` as const;
@@ -67,8 +64,15 @@ export const useUpdateNovel = (novelId: number) => {
   return { novel, loading, error, update, loggedOut: !firebaseUser };
 };
 
-export const getNovelList = async (id: number, user: FirebaseUser, page?: number) =>
-  apiClient.api.v1.users._id(id).novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
+export const getNovelList = async (user: FirebaseUser, page?: number) =>
+  apiClient.api.v1.users.me.novels.$get({
+    query: { page: page ?? 1, size: 10, descending: true, order: 'id' },
+    config: {
+      headers: {
+        ...(await getAuthHeader(user)),
+      },
+    },
+  });
 
 export const getNovel = async (id: number, user: FirebaseUser) =>
   apiClient.api.v1.novels._id(id).me.$get({
