@@ -1,26 +1,30 @@
 /* eslint-disable */
 // prettier-ignore
-import { AspidaClient, BasicHeaders, dataToURLString } from 'aspida'
+import type { AspidaClient, BasicHeaders } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from '.'
+import { dataToURLString } from 'aspida'
 // prettier-ignore
-import { Methods as Methods1 } from './api/v1/novels'
+import type { Methods as Methods0 } from '.'
 // prettier-ignore
-import { Methods as Methods2 } from './api/v1/novels/_id@number'
+import type { Methods as Methods1 } from './api/v1/novels'
 // prettier-ignore
-import { Methods as Methods3 } from './api/v1/novels/_id@number/episodes'
+import type { Methods as Methods2 } from './api/v1/novels/_id@number'
 // prettier-ignore
-import { Methods as Methods4 } from './api/v1/novels/_id@number/episodes/_episodeId@number'
+import type { Methods as Methods3 } from './api/v1/novels/_id@number/episodes'
 // prettier-ignore
-import { Methods as Methods5 } from './api/v1/novels/_id@number/me'
+import type { Methods as Methods4 } from './api/v1/novels/_id@number/episodes/_episodeId@number'
 // prettier-ignore
-import { Methods as Methods6 } from './api/v1/users'
+import type { Methods as Methods5 } from './api/v1/novels/_id@number/me'
 // prettier-ignore
-import { Methods as Methods7 } from './api/v1/users/_id@number'
+import type { Methods as Methods6 } from './api/v1/users'
 // prettier-ignore
-import { Methods as Methods8 } from './api/v1/users/_id@number/novels'
+import type { Methods as Methods7 } from './api/v1/users/_id@number'
 // prettier-ignore
-import { Methods as Methods9 } from './api/v1/users/me'
+import type { Methods as Methods8 } from './api/v1/users/_id@number/novels'
+// prettier-ignore
+import type { Methods as Methods9 } from './api/v1/users/me'
+// prettier-ignore
+import type { Methods as Methods10 } from './api/v1/users/me/novels'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
@@ -31,6 +35,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const PATH3 = '/api/v1/users'
   const PATH4 = '/novels'
   const PATH5 = '/api/v1/users/me'
+  const PATH6 = '/api/v1/users/me/novels'
   const GET = 'GET'
   const POST = 'POST'
   const PUT = 'PUT'
@@ -184,6 +189,20 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             }
           },
           me: {
+            novels: {
+              /**
+               * @returns Success
+               */
+              get: (option: { query: Methods10['get']['query'], config?: T }) =>
+                fetch<Methods10['get']['resBody'], BasicHeaders, Methods10['get']['status']>(prefix, PATH6, GET, option).json(),
+              /**
+               * @returns Success
+               */
+              $get: (option: { query: Methods10['get']['query'], config?: T }) =>
+                fetch<Methods10['get']['resBody'], BasicHeaders, Methods10['get']['status']>(prefix, PATH6, GET, option).json().then(r => r.body),
+              $path: (option?: { method?: 'get'; query: Methods10['get']['query'] }) =>
+                `${prefix}${PATH6}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+            },
             /**
              * @returns Success
              */
@@ -231,12 +250,11 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         }
       }
     },
-    get: (option: { query: Methods0['get']['query'], config?: T }) =>
+    get: (option?: { config?: T }) =>
       fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, '', GET, option).send(),
-    $get: (option: { query: Methods0['get']['query'], config?: T }) =>
+    $get: (option?: { config?: T }) =>
       fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, '', GET, option).send().then(r => r.body),
-    $path: (option?: { method?: 'get'; query: Methods0['get']['query'] }) =>
-      `${prefix}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+    $path: () => `${prefix}`
   }
 }
 

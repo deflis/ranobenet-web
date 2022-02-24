@@ -64,7 +64,7 @@ const Episodes: React.FC<{ novelId: number }> = ({ novelId }) => {
     <ul>
       {novel?.chapters.map((chapter) => (
         <>
-          {chapter.type === 1 && <Heading>{chapter.title}</Heading>}
+          {chapter.type === 'Chapter' && <Heading>{chapter.title}</Heading>}
           {chapter.episodes.map((episode) => (
             <li key={episode.id}>
               <NextLinkButton href={pagesPath.edit.novels._novelId(novel.id).episodes._episodeId(episode.id).$url()}>

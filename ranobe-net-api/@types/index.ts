@@ -1,6 +1,6 @@
 /* eslint-disable */
 export type ChapterDtoForPublic = {
-  type: 0 | 1
+  type: 'NonChapter' | 'Chapter'
   title?: string | null
   episodes: EpisodeDtoForPublic[]
 }
@@ -30,11 +30,22 @@ export type NovelDtoForMe = {
   author?: string | null
 }
 
+export type NovelDtoForMePagedList = {
+  currentPage: number
+  totalPages: number
+  pageSize: number
+  totalCount: number
+  hasPrevious: boolean
+  hasNext: boolean
+  items: NovelDtoForMe[]
+}
+
 export type NovelDtoForPublic = {
   id: number
   title: string
   description: string
   author: string
+  userId: number
   chapters: ChapterDtoForPublic[]
 }
 
