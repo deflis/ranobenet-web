@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { fetchUser } from '~/data/users';
+import { fetchUser, fetchUsers } from '~/data/users';
 import { User } from '~/components/templates/users/User';
 import { UserDtoForPublic } from '~/ranobe-net-api/@types';
 
@@ -13,7 +13,7 @@ export interface Query extends ParsedUrlQuery {
 
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
   return {
-    paths: [],
+    paths: (await fetchUsers(1)).items.map(({ id }) => ({ params: { id: id.toString() } })),
     fallback: true,
   };
 };
