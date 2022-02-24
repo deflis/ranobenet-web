@@ -42,6 +42,20 @@ export const Episode: React.FC<{
         )}
         <Heading>{episode.title}</Heading>
         <NovelRenderer story={story} />
+        {(prevEpisode || nextEpisode) && (
+          <p>
+            {prevEpisode && (
+              <NextLinkButton href={pageNovelEpisode(novelId, prevEpisode.id!)}>
+                {'<'} {prevEpisode.title}
+              </NextLinkButton>
+            )}
+            {nextEpisode && (
+              <NextLinkButton href={pageNovelEpisode(novelId, nextEpisode.id!)}>
+                {nextEpisode.title} {'>'}
+              </NextLinkButton>
+            )}
+          </p>
+        )}
       </Container>
     </>
   );

@@ -22,8 +22,8 @@ export const Users: React.FC<{ page: number; users: UserDtoForPublicListingPaged
             </p>
           ))}
           <p>
-            {users.hasPrevious && <Link href={pageUsers(page - 1)}>{'<'}</Link>}
-            {users?.currentPage} {users.hasNext && <Link href={pageUsers(page + 1)}>{'>'}</Link>}
+            {users.hasPrevious ? <Link href={pageUsers(page - 1)}>{'<'}</Link> : '<'} {users.currentPage}{' '}
+            {users.hasNext ? <Link href={pageUsers(page + 1)}>{'>'}</Link> : '>'}
           </p>
         </>
       )}
