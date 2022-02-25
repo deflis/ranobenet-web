@@ -1,10 +1,10 @@
 import { useAsyncFn } from 'react-use';
 import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
-import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
-import { useFirebaseUser } from '~/utils/firebase/auth';
+import { FirebaseUser, getAuthHeader } from '~/modules/data/firebaseAuth';
+import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { getNovel, getSWRKeyForNovel } from './novels';
-import { apiClient } from '~/utils/apiClient';
+import { apiClient } from '~/modules/utils/apiClient';
 import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
 
 const getSWRKeyForEpisode = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;

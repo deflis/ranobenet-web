@@ -6,9 +6,9 @@ import { Button, SubmitButton } from '~/components/atoms/common/Button';
 import { Loading } from '~/components/atoms/common/Loading';
 import { TextField } from '~/components/atoms/forms/TextField';
 import { NeedLogin } from '~/components/organism/NeedLogin';
-import { useEditUser } from '~/data/edit/users';
-import { globalTitle } from '~/utils/constants';
-import { signOut } from '~/utils/firebase/auth';
+import { useEditUser } from '~/modules/data/edit/users';
+import { globalTitle } from '~/modules/utils/constants';
+import { signOut } from '~/modules/utils/firebase/auth';
 import { useEffect } from 'react';
 
 export const EditUsersMe: React.FC = () => {

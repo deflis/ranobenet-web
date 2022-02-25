@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { UserDtoForPublic } from '~/ranobe-net-api/@types';
-import { globalTitle } from '~/utils/constants';
-import { pageNovelDetail } from '~/utils/path';
+import { globalTitle } from '~/modules/utils/constants';
+import { pageNovelDetail } from '~/modules/utils/path';
 
 export const User: React.FC<{ user: UserDtoForPublic }> = ({ user }) => {
   return (

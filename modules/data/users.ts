@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { FirebaseUser } from './firebaseAuth';
-import { apiClient } from '~/utils/apiClient';
+import { apiClient } from '~/modules/utils/apiClient';
 import { UserDtoForPublic, UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 
 export const fetchMe = async (user: FirebaseUser) =>

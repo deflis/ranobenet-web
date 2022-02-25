@@ -6,9 +6,9 @@ import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { NovelData, NovelEditor } from '~/components/organism/edit/novels/NovelEditor';
 import { NeedLogin } from '~/components/organism/NeedLogin';
-import { useCreateNovel } from '~/data/edit/novels';
-import { globalTitle } from '~/utils/constants';
-import { pageEditNovelUpdate } from '~/utils/path/edit';
+import { useCreateNovel } from '~/modules/data/edit/novels';
+import { globalTitle } from '~/modules/utils/constants';
+import { pageEditNovelUpdate } from '~/modules/utils/path/edit';
 
 export const CreateNovel: React.FC = () => {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { pagesPath } from '~/utils/$path';
+import { pagesPath } from '~/modules/utils/$path';
 import { Container } from '~/components/atoms/common/Container';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { pageNovels } from '~/utils/path';
-import { globalTitle } from '~/utils/constants';
+import { pageNovels } from '~/modules/utils/path';
+import { globalTitle } from '~/modules/utils/constants';
 
 export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = ({ novels }) => {
   return (

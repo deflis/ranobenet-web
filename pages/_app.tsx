@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app';
-import '~/utils/globals.css';
+import '~/modules/utils/globals.css';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { Provider } from 'jotai';
-import { useAuthStateListener } from '~/utils/firebase/auth';
+import { useAuthStateListener } from '~/modules/utils/firebase/auth';
 
 const App = (props: AppProps) => (
   <Provider>

@@ -1,9 +1,9 @@
 import { useAsyncFn } from 'react-use';
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
-import { FirebaseUser, getAuthHeader } from '~/data/firebaseAuth';
-import { useFirebaseUser } from '~/utils/firebase/auth';
-import { apiClient } from '~/utils/apiClient';
+import { FirebaseUser, getAuthHeader } from '~/modules/data/firebaseAuth';
+import { useFirebaseUser } from '~/modules/utils/firebase/auth';
+import { apiClient } from '~/modules/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
 
 export const useNovelList = (page?: number) => {

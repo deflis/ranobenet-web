@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { fetchUser, fetchUsers } from '~/data/users';
+import { fetchUser, fetchUsers } from '~/modules/data/users';
 import { User } from '~/components/templates/users/User';
 import { UserDtoForPublic } from '~/ranobe-net-api/@types';
 

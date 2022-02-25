@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { Loading } from '~/components/atoms/common/Loading';
 import { Episode } from '~/components/templates/novels/Episode';
-import { fetchNovel, fetchNovels, useNovelEpisodeFetcher } from '~/data/novels';
+import { fetchNovel, fetchNovels, useNovelEpisodeFetcher } from '~/modules/data/novels';
 import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
 
 type Props = {

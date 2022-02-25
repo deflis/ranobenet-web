@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useAsyncFn } from 'react-use';
-import { signInWithGoogle, useFirebaseUser } from '~/utils/firebase/auth';
+import { signInWithGoogle, useFirebaseUser } from '~/modules/utils/firebase/auth';
 import type { NextPage } from 'next';
 import { Button } from '~/components/atoms/common/Button';
 import { Loading } from '~/components/atoms/common/Loading';

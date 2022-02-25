@@ -1,7 +1,7 @@
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import AuthUser from '~/components/utils/AuthUser';
-import { useFirebaseUser } from '~/utils/firebase/auth';
-import { pageIndex, pageLogin } from '~/utils/path';
+import { useFirebaseUser } from '~/modules/utils/firebase/auth';
+import { pageIndex, pageLogin } from '~/modules/utils/path';
 import NextLink from 'next/link';
 
 import styles from './GlobalHeader.module.css';

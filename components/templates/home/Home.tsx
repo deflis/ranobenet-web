@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import { useFirebaseUser } from '~/utils/firebase/auth';
+import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { NextLinkButton } from '~/components/atoms/common/Button';
-import { pageLogin, pageNovels, pageUsers } from '~/utils/path';
-import { pageEditNovelCreate, pageEditUserMe } from '~/utils/path/edit';
-import { pagesPath } from '~/utils/$path';
+import { pageLogin, pageNovels, pageUsers } from '~/modules/utils/path';
+import { pageEditNovelCreate, pageEditUserMe } from '~/modules/utils/path/edit';
+import { pagesPath } from '~/modules/utils/$path';
 
 export const Home = () => {
   const user = useFirebaseUser();

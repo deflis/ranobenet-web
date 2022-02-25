@@ -3,10 +3,10 @@ import NextLink from 'next/link';
 import { Container, InnerContainer } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
-import { pagesPath } from '~/utils/$path';
+import { pagesPath } from '~/modules/utils/$path';
 import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
-import { globalTitle } from '~/utils/constants';
-import { pageUserDetail } from '~/utils/path';
+import { globalTitle } from '~/modules/utils/constants';
+import { pageUserDetail } from '~/modules/utils/path';
 
 export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
   return (

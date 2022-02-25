@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { pagesPath } from '~/utils/$path';
+import { pagesPath } from '~/modules/utils/$path';
 import { Container } from '~/components/atoms/common/Container';
-import { pageNovels } from '~/utils/path';
-import { useNovelList } from '~/data/edit/novels';
+import { pageNovels } from '~/modules/utils/path';
+import { useNovelList } from '~/modules/data/edit/novels';
 import { Loading } from '~/components/atoms/common/Loading';
-import { globalTitle } from '~/utils/constants';
+import { globalTitle } from '~/modules/utils/constants';
 
 export const ListNovels: React.FC = () => {
   const { novels, loading } = useNovelList();

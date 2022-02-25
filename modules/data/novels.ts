@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { NovelDtoForPublic, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { apiClient } from '~/utils/apiClient';
+import { apiClient } from '~/modules/utils/apiClient';
 
 export const createNovelKey = (id: number): string => `get/novels/${id}` as const;
 export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();

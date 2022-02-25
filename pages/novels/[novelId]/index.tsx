@@ -1,8 +1,8 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { fetchNovel, useNovelFetcher } from '~/data/novels';
+import { fetchNovel, useNovelFetcher } from '~/modules/data/novels';
 import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
-import { apiClient } from '~/utils/apiClient';
+import { apiClient } from '~/modules/utils/apiClient';
 import { Novel } from '~/components/templates/novels/Novel';
 import { Loading } from '~/components/atoms/common/Loading';
 

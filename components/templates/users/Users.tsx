@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { globalTitle } from '~/utils/constants';
-import { pageUserDetail, pageUsers } from '~/utils/path';
+import { globalTitle } from '~/modules/utils/constants';
+import { pageUserDetail, pageUsers } from '~/modules/utils/path';
 
 export const Users: React.FC<{ page: number; users: UserDtoForPublicListingPagedList | undefined }> = ({
   page,

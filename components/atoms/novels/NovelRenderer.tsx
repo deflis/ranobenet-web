@@ -1,4 +1,4 @@
-import { NovelLineElement, NovelLines } from '~/utils/parser';
+import { NovelLineElement, NovelLines } from '~/modules/utils/parser';
 import { isString } from 'class-validator';
 import { Fragment } from 'react';
 import styles from './NovelRenderer.module.css';

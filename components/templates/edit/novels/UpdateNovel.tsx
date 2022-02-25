@@ -6,10 +6,10 @@ import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { NovelData, NovelEditor } from '~/components/organism/edit/novels/NovelEditor';
 import { NeedLogin } from '~/components/organism/NeedLogin';
-import { useUpdateNovel } from '~/data/edit/novels';
-import { useNovelFetcher } from '~/data/novels';
-import { pagesPath } from '~/utils/$path';
-import { globalTitle } from '~/utils/constants';
+import { useUpdateNovel } from '~/modules/data/edit/novels';
+import { useNovelFetcher } from '~/modules/data/novels';
+import { pagesPath } from '~/modules/utils/$path';
+import { globalTitle } from '~/modules/utils/constants';
 
 export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
   const { novel, loading, update, loggedOut } = useUpdateNovel(novelId);

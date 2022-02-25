@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { fetchNovels, useNovelsFetcher } from '~/data/novels';
+import { fetchNovels, useNovelsFetcher } from '~/modules/data/novels';
 import { Novels } from '~/components/templates/novels/Novels';
 import { Loading } from '~/components/atoms/common/Loading';
 

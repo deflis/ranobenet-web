@@ -5,8 +5,8 @@ import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { EpisodeData, EpisodeEditor } from '~/components/organism/edit/novels/EpisodeEditor';
 import { NeedLogin } from '~/components/organism/NeedLogin';
-import { useUpdateEpisode } from '~/data/edit/episodes';
-import { globalTitle } from '~/utils/constants';
+import { useUpdateEpisode } from '~/modules/data/edit/episodes';
+import { globalTitle } from '~/modules/utils/constants';
 
 export const UpdateEpisode: React.FC<{ novelId: number; episodeId: number }> = ({ novelId, episodeId }) => {
   const { novel, episode, loading, update, loggedOut, error } = useUpdateEpisode(novelId, episodeId);
