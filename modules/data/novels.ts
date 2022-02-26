@@ -9,6 +9,7 @@ export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get()
 export const createNovelsKey = (page?: number): string => `get/novels?page=${page}` as const;
 export const fetchNovels = (page?: number) =>
   apiClient.api.v1.novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
+export const createNovelEpisodeKey = (id: number, episodeId: number) => ['episode', id, episodeId];
 
 export const prefetchNovels = async (queryClient: QueryClient, page: number) => {
   await queryClient.prefetchQuery(createNovelsKey(page), async () => fetchNovels(page));
@@ -46,6 +47,15 @@ export const useNovelFetcher = (id: number, prefetchedData?: NovelDtoForPublic) 
   };
 };
 
+export const prefetchNovelEpisode = async (queryClient: QueryClient, novelId: number, episodeId: number) => {
+  const novel = await fetchNovel(novelId);
+  await queryClient.prefetchQuery(createNovelKey(novelId), () => novel);
+  const episodes = novel.chapters?.flatMap((chapter) => chapter.episodes ?? []) ?? [];
+  const episode = episodes.find((episode) => episode.id === episodeId);
+  await queryClient.prefetchQuery(createNovelEpisodeKey(novelId, episodeId), () => parse(episode?.story ?? ''));
+  return queryClient;
+};
+
 export const useNovelEpisodeFetcher = (id: number, episodeId: number, prefetchedData?: NovelDtoForPublic) => {
   const { data, error } = useQuery(createNovelKey(id), async () => fetchNovel(id), {
     initialData: prefetchedData,
@@ -60,7 +70,7 @@ export const useNovelEpisodeFetcher = (id: number, episodeId: number, prefetched
     const prevEpisode = episodes?.[episodeKey - 1];
     const nextEpisode = episodes?.[episodeKey + 1];
 
-    const { data: story } = useQuery(['episode', data.id, episode?.id], () => parse(episode?.story ?? ''));
+    const { data: story } = useQuery(createNovelEpisodeKey(id, episodeId), () => parse(episode?.story ?? ''));
 
     return {
       loading,

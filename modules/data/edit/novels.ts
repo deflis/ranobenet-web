@@ -4,12 +4,12 @@ import { apiClient } from '~/modules/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-const getMyNovelsKey = () => '/users/me/novels';
+const getMyNovelsKey = (firebaseUid: string | undefined) => `users/${firebaseUid}/novels` as const;
 
 export const useNovelList = (page?: number) => {
   const firebaseUser = useFirebaseUser();
 
-  const { data: novels, error } = useQuery(getMyNovelsKey(), () => getNovelList(firebaseUser!, page), {
+  const { data: novels, error } = useQuery(getMyNovelsKey(firebaseUser?.uid), () => getNovelList(firebaseUser!, page), {
     enabled: !!firebaseUser,
   });
 
