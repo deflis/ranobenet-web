@@ -1,5 +1,5 @@
 import { NovelDtoForPublic, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { apiClient } from '~/modules/utils/apiClient';
+import { apiClient } from '../utils/apiClient';
 import { QueryClient, useQuery } from 'react-query';
 import { parse } from '../utils/parser';
 

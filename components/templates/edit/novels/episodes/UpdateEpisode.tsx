@@ -20,7 +20,7 @@ export const UpdateEpisode: React.FC<{ novelId: number; episodeId: number }> = (
       <Heading>エピソードの編集</Heading>
       {loggedOut && <NeedLogin label='エピソードの編集' />}
       {JSON.stringify(error)}
-      {!loading && novel && episode && <EpisodeEditor novel={novel!} defaultValues={episode} onClickOk={update} />}
+      {!loading && novel && episode && <EpisodeEditor novel={novel!} defaultValues={episode} onSuccess={update} />}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { useAsyncFn } from 'react-use';
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
-import { FirebaseUser, getAuthHeader } from '~/modules/data/firebaseAuth';
+import { FirebaseUser, getAuthHeader } from '~/modules/utils/firebase/auth';
 import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { apiClient } from '~/modules/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';

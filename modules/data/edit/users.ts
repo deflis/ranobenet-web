@@ -2,7 +2,7 @@ import { useAsyncFn } from 'react-use';
 import useSWRImmutable from 'swr/immutable';
 import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { apiClient } from '~/modules/utils/apiClient';
-import { FirebaseUser, getAuthHeader } from '../firebaseAuth';
+import { FirebaseUser, getAuthHeader } from '~/modules/utils/firebase/auth';
 import { UserDtoForSave } from '~/ranobe-net-api/@types';
 
 export const useEditUser = () => {

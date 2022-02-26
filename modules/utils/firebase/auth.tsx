@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { firebase } from '.';
 import {
   browserSessionPersistence,
@@ -8,13 +8,19 @@ import {
   setPersistence,
   signInWithPopup,
   signOut as signOutFirebaseAuth,
+  User,
 } from 'firebase/auth';
-import { atom, useAtom } from 'jotai';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
+
+export type FirebaseUser = User;
 
 const auth = getAuth(firebase);
-const currentUser = atom(auth.currentUser);
-
+const currentUserAtom = atom(auth.currentUser);
 const provider = new GoogleAuthProvider();
+
+export const getAuthHeader = async (user: FirebaseUser) => ({
+  authorization: `Bearer ${await user.getIdToken()}` as const,
+});
 
 export async function signInWithGoogle() {
   setPersistence(auth, browserSessionPersistence);
@@ -27,12 +33,12 @@ export async function signOut() {
 }
 
 export const useFirebaseUser = () => {
-  const [user] = useAtom(currentUser);
+  const user = useAtomValue(currentUserAtom);
   return user;
 };
 
 export const useAuthStateListener = () => {
-  const [, setUser] = useAtom(currentUser);
+  const setUser = useSetAtom(currentUserAtom);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => {

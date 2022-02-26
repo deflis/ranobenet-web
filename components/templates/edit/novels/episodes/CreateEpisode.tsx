@@ -29,7 +29,7 @@ export const CreateEpisode: React.FC<{ novelId: number }> = ({ novelId }) => {
       <Heading>新規エピソードの投稿</Heading>
       {loggedOut && <NeedLogin label='新規エピソードの投稿' />}
       {JSON.stringify(error)}
-      {!loading && novel && <EpisodeEditor novel={novel} onClickOk={create} />}
+      {!loading && novel && <EpisodeEditor novel={novel} onSuccess={create} />}
     </>
   );
 };

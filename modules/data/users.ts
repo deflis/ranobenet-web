@@ -1,6 +1,6 @@
-import { FirebaseUser } from './firebaseAuth';
-import { apiClient } from '~/modules/utils/apiClient';
+import { apiClient } from '../utils/apiClient';
 import { QueryClient, useQuery } from 'react-query';
+import { FirebaseUser } from '../utils/firebase/auth';
 
 export const fetchMe = async (user: FirebaseUser) =>
   await apiClient.api.v1.users.me.$post({

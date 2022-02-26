@@ -17,10 +17,10 @@ export type EpisodeData = z.infer<typeof EpisodeDataSchema>;
 type EpisodeEditorProps = {
   novel: NovelDtoForMe;
   defaultValues?: EpisodeData;
-  onClickOk: (data: EpisodeData) => void;
+  onSuccess: (data: EpisodeData) => void;
 };
 
-export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, onClickOk }) => {
+export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, onSuccess }) => {
   const {
     register,
     handleSubmit,
@@ -40,7 +40,7 @@ export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, on
   }, [reset, defaultValues]);
 
   return (
-    <form onSubmit={handleSubmit(onClickOk)}>
+    <form onSubmit={handleSubmit(onSuccess)}>
       <TextField inputProps={register('title')}>エピソードタイトル</TextField>
       <TextFieldMultiLine inputProps={register('story')}>本文</TextFieldMultiLine>
       <SubmitButton disabled={!isValid || !isDirty}>Ok</SubmitButton>
