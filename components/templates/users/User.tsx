@@ -4,7 +4,7 @@ import { UserDtoForPublic } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
 import { pageNovelDetail } from '~/modules/utils/path';
 
-export const User: React.FC<{ user: UserDtoForPublic }> = ({ user }) => {
+export const User: React.FC<{ user: UserDtoForPublic | undefined }> = ({ user }) => {
   return (
     <>
       {user && (

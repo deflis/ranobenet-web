@@ -1,7 +1,6 @@
-import useSWR from 'swr';
 import { FirebaseUser } from './firebaseAuth';
 import { apiClient } from '~/modules/utils/apiClient';
-import { UserDtoForPublic, UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
+import { QueryClient, useQuery } from 'react-query';
 
 export const fetchMe = async (user: FirebaseUser) =>
   await apiClient.api.v1.users.me.$post({
@@ -13,10 +12,10 @@ export const fetchMe = async (user: FirebaseUser) =>
   });
 
 export const useUserMe = (user: FirebaseUser | null) => {
-  const { data, error } = useSWR(
-    () => (user ? `post/user/${user.uid}` : null),
+  const { data, error } = useQuery(
+    `post/user/${user?.uid}`,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    () => fetchMe(user!)
+    () => (user && fetchMe(user)) ?? undefined
   );
 
   const loading = !data && !error;
@@ -35,10 +34,13 @@ export const createUsersKey = (page?: number): string => `get/users?page=${page}
 export const fetchUsers = (page?: number) =>
   apiClient.api.v1.users.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
 
-export const useUserFetcher = (id: number, prefetchedData?: UserDtoForPublic) => {
-  const { data, error } = useSWR(createUserKey(id), async () => await fetchUser(id), {
-    fallbackData: prefetchedData,
-  });
+export const prefetchUser = async (queryClient: QueryClient, id: number) => {
+  await queryClient.prefetchQuery(createUsersKey(id), async () => await fetchUser(id));
+  return queryClient;
+};
+
+export const useUserFetcher = (id: number) => {
+  const { data, error } = useQuery(createUserKey(id), async () => await fetchUser(id));
 
   const loading = !data && !error;
 
@@ -49,10 +51,13 @@ export const useUserFetcher = (id: number, prefetchedData?: UserDtoForPublic) =>
   };
 };
 
-export const useUsersFetcher = (page: number, prefetchedData?: UserDtoForPublicListingPagedList) => {
-  const { data, error } = useSWR(createUsersKey(page), async () => await fetchUsers(page), {
-    fallbackData: prefetchedData,
-  });
+export const prefetchUsers = async (queryClient: QueryClient, page: number) => {
+  await queryClient.prefetchQuery(createUsersKey(page), async () => await fetchUsers(page));
+  return queryClient;
+};
+
+export const useUsersFetcher = (page: number) => {
+  const { data, error } = useQuery(createUsersKey(page), async () => await fetchUsers(page));
 
   const loading = !data && !error;
 
