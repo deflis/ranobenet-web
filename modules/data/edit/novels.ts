@@ -1,67 +1,61 @@
-import { useAsyncFn } from 'react-use';
-import useSWR, { useSWRConfig } from 'swr';
-import useSWRImmutable from 'swr/immutable';
 import { FirebaseUser, getAuthHeader } from '~/modules/utils/firebase/auth';
 import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { apiClient } from '~/modules/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export const useNovelList = (page?: number) => {
   const firebaseUser = useFirebaseUser();
 
-  const { data: novels, error } = useSWR(firebaseUser ? '/users/me/novels' : null, () =>
-    firebaseUser ? getNovelList(firebaseUser, page) : undefined
-  );
+  const { data: novels, error } = useQuery('/users/me/novels', () => getNovelList(firebaseUser!, page), {
+    enabled: !!firebaseUser,
+  });
 
   const loading = !!firebaseUser && !novels && !error;
 
   return { loading, error, novels, loggedOut: !firebaseUser };
 };
 
-export const getSWRKeyForNovel = (novelId: number) => `/novels/me` as const;
+export const getNovelKey = (novelId: number) => `/edit/novels/${novelId}` as const;
 
 export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
   const firebaseUser = useFirebaseUser();
-  const { mutate } = useSWRConfig();
+  const queryClient = useQueryClient();
 
-  const [{ loading: postLoading, error }, create] = useAsyncFn(
-    async (body: NovelDtoForSave) => {
-      if (firebaseUser) {
-        const novel = await createNovel(body, firebaseUser);
-        mutate(getSWRKeyForNovel(novel.id), novel);
-        onSubmitted(novel);
-      }
-    },
-    [firebaseUser, mutate, onSubmitted]
+  const { mutate, error, isLoading } = useMutation(
+    async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!),
+    {
+      onSuccess: (body) => {
+        queryClient.setQueryData(getNovelKey(body.id), body);
+        onSubmitted(body);
+      },
+    }
   );
+  const loading = isLoading;
 
-  const loading = postLoading;
-
-  return { loading, error, create, loggedOut: !firebaseUser };
+  return { loading, error, create: mutate, loggedOut: !firebaseUser };
 };
 
 export const useUpdateNovel = (novelId: number) => {
   const firebaseUser = useFirebaseUser();
-  const {
-    data: novel,
-    error,
-    mutate,
-  } = useSWRImmutable(firebaseUser ? getSWRKeyForNovel(novelId) : null, async () =>
-    firebaseUser ? await getNovel(novelId, firebaseUser) : undefined
+  const queryClient = useQueryClient();
+
+  const { data: novel, error } = useQuery(
+    getNovelKey(novelId),
+    async () => await getNovel(novelId, firebaseUser!),
+    {
+      enabled: !!firebaseUser,
+    }
   );
 
-  const [{ loading: postLoading }, update] = useAsyncFn(
-    async (novel: NovelDtoForSave) => {
-      if (firebaseUser) {
-        await mutate(await updateNovel(novelId, novel, firebaseUser));
-      }
+  const { mutate, isLoading } = useMutation(async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!), {
+    onSuccess: (body) => {
+      queryClient.setQueryData(getNovelKey(body.id), body);
     },
-    [firebaseUser, mutate, novelId]
-  );
+  });
+  const loading = (firebaseUser && !novel && !error) || isLoading;
 
-  const loading = (firebaseUser && !novel && !error) || postLoading;
-
-  return { novel, loading, error, update, loggedOut: !firebaseUser };
+  return { novel, loading, error, update: mutate, loggedOut: !firebaseUser };
 };
 
 export const getNovelList = async (user: FirebaseUser, page?: number) =>

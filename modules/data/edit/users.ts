@@ -1,30 +1,33 @@
-import { useAsyncFn } from 'react-use';
-import useSWRImmutable from 'swr/immutable';
 import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { apiClient } from '~/modules/utils/apiClient';
 import { FirebaseUser, getAuthHeader } from '~/modules/utils/firebase/auth';
 import { UserDtoForSave } from '~/ranobe-net-api/@types';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export const useEditUser = () => {
   const firebaseUser = useFirebaseUser();
+  const queryClient = useQueryClient();
+
   const {
     data: user,
     error,
-    mutate,
-  } = useSWRImmutable(firebaseUser ? 'users/me' : null, async () => (firebaseUser ? getUser(firebaseUser) : undefined));
+    isLoading,
+  } = useQuery('users/me', async () => getUser(firebaseUser!), {
+    enabled: !!firebaseUser,
+  });
 
-  const [{ loading: postLoading }, update] = useAsyncFn(
-    async (user: UserDtoForSave) => {
-      if (firebaseUser) {
-        mutate(await postUser(user, firebaseUser));
-      }
-    },
-    [firebaseUser, mutate]
+  const { mutate, isLoading: postLoading } = useMutation(
+    async (body: UserDtoForSave) => await postUser(body, firebaseUser!),
+    {
+      onSuccess: (body) => {
+        queryClient.setQueryData('users/me', body);
+      },
+    }
   );
 
-  const loading = (firebaseUser && !user && !error) || postLoading;
+  const loading = isLoading || postLoading;
 
-  return { user, loading, error, update, loggedOut: !firebaseUser };
+  return { user, loading, error, update: mutate, loggedOut: !firebaseUser };
 };
 
 export const getUser = async (user: FirebaseUser) =>

@@ -27,7 +27,6 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 
 const Page: NextPage<Props> = ({ page }) => {
   const { users } = useUsersFetcher(page);
-  // SWR hooks inside the `SWRConfig` boundary will use those values.
   return <Users page={1} users={users} />;
 };
 
