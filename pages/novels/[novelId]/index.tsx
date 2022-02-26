@@ -16,7 +16,7 @@ export interface Query extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Query> = async () => {
-  const novel = await await apiClient.api.v1.novels.$get({
+  const novel = await apiClient.api.v1.novels.$get({
     query: { order: 'id', descending: true, size: 10, page: 1 },
   });
 

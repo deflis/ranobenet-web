@@ -53,7 +53,7 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
 
   const { mutate, isLoading: isLoadingMutate } = useMutation(
     async (body: EpisodeDtoForSave) => {
-      if (firebaseUser) return await createEpisode(novelId, body, firebaseUser);
+      if (firebaseUser) return await updateEpisode(novelId, episodeId, body, firebaseUser);
       throw new Error();
     },
     {
