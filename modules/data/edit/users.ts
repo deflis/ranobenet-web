@@ -4,6 +4,8 @@ import { FirebaseUser, getAuthHeader } from '~/modules/utils/firebase/auth';
 import { UserDtoForSave } from '~/ranobe-net-api/@types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+const getUsersMeKey = () => 'users/me';
+
 export const useEditUser = () => {
   const firebaseUser = useFirebaseUser();
   const queryClient = useQueryClient();
@@ -12,7 +14,7 @@ export const useEditUser = () => {
     data: user,
     error,
     isLoading,
-  } = useQuery('users/me', async () => getUser(firebaseUser!), {
+  } = useQuery(getUsersMeKey(), async () => getUser(firebaseUser!), {
     enabled: !!firebaseUser,
   });
 
@@ -20,7 +22,7 @@ export const useEditUser = () => {
     async (body: UserDtoForSave) => await postUser(body, firebaseUser!),
     {
       onSuccess: (body) => {
-        queryClient.setQueryData('users/me', body);
+        queryClient.setQueryData(getUsersMeKey(), body);
       },
     }
   );

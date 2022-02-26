@@ -4,10 +4,12 @@ import { apiClient } from '~/modules/utils/apiClient';
 import { NovelDtoForMe, NovelDtoForSave } from '~/ranobe-net-api/@types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+const getMyNovelsKey = () => '/users/me/novels';
+
 export const useNovelList = (page?: number) => {
   const firebaseUser = useFirebaseUser();
 
-  const { data: novels, error } = useQuery('/users/me/novels', () => getNovelList(firebaseUser!, page), {
+  const { data: novels, error } = useQuery(getMyNovelsKey(), () => getNovelList(firebaseUser!, page), {
     enabled: !!firebaseUser,
   });
 
@@ -16,7 +18,7 @@ export const useNovelList = (page?: number) => {
   return { loading, error, novels, loggedOut: !firebaseUser };
 };
 
-export const getNovelKey = (novelId: number) => `/edit/novels/${novelId}` as const;
+export const getNovelKey = (novelId: number) => `edit/novels/${novelId}` as const;
 
 export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
   const firebaseUser = useFirebaseUser();
@@ -40,13 +42,9 @@ export const useUpdateNovel = (novelId: number) => {
   const firebaseUser = useFirebaseUser();
   const queryClient = useQueryClient();
 
-  const { data: novel, error } = useQuery(
-    getNovelKey(novelId),
-    async () => await getNovel(novelId, firebaseUser!),
-    {
-      enabled: !!firebaseUser,
-    }
-  );
+  const { data: novel, error } = useQuery(getNovelKey(novelId), async () => await getNovel(novelId, firebaseUser!), {
+    enabled: !!firebaseUser,
+  });
 
   const { mutate, isLoading } = useMutation(async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!), {
     onSuccess: (body) => {
