@@ -1,6 +1,6 @@
 import { apiClient } from '../utils/apiClient';
 import { QueryClient, useQuery } from 'react-query';
-import { FirebaseUser } from '../utils/firebase/auth';
+import { FirebaseUser, useFirebaseUser } from '../utils/firebase/auth';
 
 export const fetchMe = async (user: FirebaseUser) =>
   await apiClient.api.v1.users.me.$post({
@@ -11,12 +11,13 @@ export const fetchMe = async (user: FirebaseUser) =>
     },
   });
 
-export const useUserMe = (user: FirebaseUser | null) => {
-  const { data, error } = useQuery(
-    `post/user/${user?.uid}`,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    () => (user && fetchMe(user)) ?? undefined
-  );
+const createUserMeKey = (firebaseUid: string | undefined) => `post/user/${firebaseUid}` as const;
+
+export const useUserMe = () => {
+  const firebaseUid = useFirebaseUser();
+  const { data, error } = useQuery(createUserMeKey(firebaseUid?.uid), () => fetchMe(firebaseUid!), {
+    enabled: !!firebaseUid,
+  });
 
   const loading = !data && !error;
 

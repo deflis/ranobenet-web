@@ -37,6 +37,11 @@ export const useFirebaseUser = () => {
   return user;
 };
 
+const isUserLoggedInAtom = atom((get) => get(currentUserAtom) !== null);
+export const useIsLoggedIn = () => {
+  return useAtomValue(isUserLoggedInAtom);
+};
+
 export const useAuthStateListener = () => {
   const setUser = useSetAtom(currentUserAtom);
 

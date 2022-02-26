@@ -1,9 +1,8 @@
 import React from 'react';
 import { useUserMe } from '~/modules/data/users';
-import { FirebaseUser } from '~/modules/utils/firebase/auth';
 
-export const AuthUser: React.FC<{ firebaseUser: FirebaseUser }> = ({ firebaseUser }) => {
-  const { user } = useUserMe(firebaseUser);
+export const AuthUser: React.FC = () => {
+  const { user } = useUserMe();
 
   return (
     <>
