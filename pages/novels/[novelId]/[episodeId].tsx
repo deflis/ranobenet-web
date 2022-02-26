@@ -1,14 +1,14 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import { dehydrate, QueryClient } from 'react-query';
 import { Loading } from '~/components/atoms/common/Loading';
 import { Episode } from '~/components/templates/novels/Episode';
-import { fetchNovel, fetchNovels, useNovelEpisodeFetcher } from '~/modules/data/novels';
-import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
+import { fetchNovel, fetchNovels, prefetchNovel, useNovelEpisodeFetcher } from '~/modules/data/novels';
+import { PropsDehydratedState } from '~/pages/_app';
 
 type Props = {
   novelId: number;
   episodeId: number;
-  novel: NovelDtoForPublic;
 };
 
 export interface Query extends ParsedUrlQuery {
@@ -43,27 +43,35 @@ export const getStaticPaths: GetStaticPaths<Query> = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
+export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query> = async (context) => {
   const novelId = parseInt(context.params?.novelId ?? '', 10) || 1;
   const episodeId = parseInt(context.params?.episodeId ?? '', 10) || 1;
-  const novel = await fetchNovel(novelId);
+
   return {
     props: {
       novelId,
       episodeId,
-      novel,
+      dehydratedState: dehydrate(await prefetchNovel(new QueryClient(), novelId)),
     },
     revalidate: 60 * 60 * 10,
   };
 };
 
-const Page: NextPage<Props> = ({ novelId, episodeId, novel: prefetchedNovel }) => {
-  const { loading, episode, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId, prefetchedNovel);
+const Page: NextPage<Props> = ({ novelId, episodeId }) => {
+  const { loading, episode, story, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId);
 
   return (
     <>
       <Loading enable={loading} />
-      {episode && <Episode novelId={novelId} episode={episode} prevEpisode={prevEpisode} nextEpisode={nextEpisode} />}
+      {episode && story && (
+        <Episode
+          novelId={novelId}
+          episode={episode}
+          prevEpisode={prevEpisode}
+          story={story}
+          nextEpisode={nextEpisode}
+        />
+      )}
     </>
   );
 };

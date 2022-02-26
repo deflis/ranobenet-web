@@ -1,33 +1,33 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
-import { fetchNovels, useNovelsFetcher } from '~/modules/data/novels';
+import { prefetchNovels, useNovelsFetcher } from '~/modules/data/novels';
 import { Novels } from '~/components/templates/novels/Novels';
 import { Loading } from '~/components/atoms/common/Loading';
+import { PropsDehydratedState } from '../_app';
+import { dehydrate, QueryClient } from 'react-query';
 
 type Props = {
   page: number;
-  novels: NovelDtoForPublicListingPagedList;
 };
 
 export interface Query extends ParsedUrlQuery {
   page?: string;
 }
 
-export const getStaticProps: GetStaticProps<Props, Query> = async (context) => {
+export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query> = async (context) => {
   const page = parseInt(context.params?.page ?? '1', 10) || 1;
-  const novels = await fetchNovels(page);
+
   return {
     props: {
       page,
-      novels,
+      dehydratedState: dehydrate(await prefetchNovels(new QueryClient(), page)),
     },
     revalidate: 60 * 60 * 10,
   };
 };
 
-const Page: NextPage<Props> = ({ page, novels: prefetchedNovels }) => {
-  const { loading, novels } = useNovelsFetcher(page, prefetchedNovels);
+const Page: NextPage<Props> = ({ page }) => {
+  const { loading, novels } = useNovelsFetcher(page);
 
   return (
     <>

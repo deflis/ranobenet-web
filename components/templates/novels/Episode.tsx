@@ -6,17 +6,16 @@ import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
 import { EpisodeDtoForPublic } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
-import { parse } from '~/modules/utils/parser';
+import { NovelLines, parse } from '~/modules/utils/parser';
 import { pageNovelEpisode } from '~/modules/utils/path';
 
 export const Episode: React.FC<{
   novelId: number;
   episode: EpisodeDtoForPublic;
+  story: NovelLines;
   prevEpisode: EpisodeDtoForPublic | undefined;
   nextEpisode: EpisodeDtoForPublic | undefined;
-}> = ({ novelId, episode, prevEpisode, nextEpisode }) => {
-  const story = useMemo(() => parse(episode.story), [episode.story]);
-
+}> = ({ novelId, episode, story, prevEpisode, nextEpisode }) => {
   return (
     <>
       <Head>
