@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import { useCallback, useMemo } from 'react';
-import { NextLinkButton } from '~/components/atoms/common/Button';
+import { Button, NextLinkButton } from '~/components/atoms/common/Button';
 import { InnerContainer } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { NovelData, NovelEditor } from '~/components/organism/edit/novels/NovelEditor';
 import { NeedLogin } from '~/components/organism/NeedLogin';
+import { useDeleteEpisode } from '~/modules/data/edit/episodes';
 import { useUpdateNovel } from '~/modules/data/edit/novels';
 import { useNovelFetcher } from '~/modules/data/novels';
 import { pagesPath } from '~/modules/utils/$path';
@@ -60,6 +61,7 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
 const Episodes: React.FC<{ novelId: number }> = ({ novelId }) => {
   // TODO: NovelDtoForMe で返す
   const { novel } = useNovelFetcher(novelId);
+  const { delete: deleteFunc } = useDeleteEpisode(novelId);
   return (
     <ul>
       {novel?.chapters.map((chapter) => (
@@ -67,9 +69,11 @@ const Episodes: React.FC<{ novelId: number }> = ({ novelId }) => {
           {chapter.type === 'Chapter' && <Heading>{chapter.title}</Heading>}
           {chapter.episodes.map((episode) => (
             <li key={episode.id}>
+              {episode.title}
               <NextLinkButton href={pagesPath.edit.novels._novelId(novel.id).episodes._episodeId(episode.id).$url()}>
-                {episode.title} を編集
+                編集
               </NextLinkButton>
+              <Button onClick={() => deleteFunc(episode.id)}>削除</Button>
             </li>
           ))}
         </>

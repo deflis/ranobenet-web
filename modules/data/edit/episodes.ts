@@ -4,6 +4,7 @@ import { getNovel, getNovelKey } from './novels';
 import { apiClient } from '~/modules/utils/apiClient';
 import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
 import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
+import { createNovelKey } from '../novels';
 
 const getEpisodeKey = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;
 
@@ -69,6 +70,32 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
   return { novel, episode, loading, error, update: mutate, loggedOut: !firebaseUser };
 };
 
+export const useDeleteEpisode = (novelId: number) => {
+  const firebaseUser = useFirebaseUser();
+  const queryClient = useQueryClient();
+
+  const {
+    mutate,
+    isLoading: isLoading,
+    error,
+  } = useMutation(
+    async (episodeId: number) => {
+      if (firebaseUser) return await deleteEpisode(novelId, episodeId, firebaseUser);
+      throw new Error();
+    },
+    {
+      onSuccess: () => {
+        queryClient.refetchQueries(getNovelKey(novelId));
+        queryClient.refetchQueries(createNovelKey(novelId));
+      },
+    }
+  );
+
+  const loading = isLoading;
+
+  return { loading, error, delete: mutate, loggedOut: !firebaseUser };
+};
+
 export const getEpisode = async (novelId: number, episodeId: number, user: FirebaseUser) =>
   apiClient.api.v1.novels
     ._id(novelId)
@@ -98,6 +125,16 @@ export const updateEpisode = async (
     .episodes._episodeId(episodeId)
     .$put({
       body: episodeDtoForSave,
+      config: {
+        headers: await getAuthHeader(user),
+      },
+    });
+
+export const deleteEpisode = async (novelId: number, episodeId: number, user: FirebaseUser) =>
+  apiClient.api.v1.novels
+    ._id(novelId)
+    .episodes._episodeId(episodeId)
+    .$delete({
       config: {
         headers: await getAuthHeader(user),
       },
