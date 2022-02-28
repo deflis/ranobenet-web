@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { pagesPath } from '~/modules/utils/$path';
 import { Container } from '~/components/atoms/common/Container';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { pageNovels } from '~/modules/utils/path';
 import { globalTitle } from '~/modules/utils/constants';
+import { NovelList } from '~/components/organism/novels/NovelList';
+import { Pagination } from '~/components/atoms/common/Pagination';
 
 export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = ({ novels }) => {
   return (
@@ -18,21 +19,8 @@ export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = (
           <>
             <p>小説 全{novels.totalCount}件</p>
 
-            <ul>
-              {novels.items.map((novel) => (
-                // TODO: 小説一覧コンポーネントを作る
-                <li key={novel.id}>
-                  <Link href={pagesPath.novels._novelId(novel.id).$url()}>{novel.title}</Link>
-                  <div>作者: {novel.author}</div>
-                  <div>{novel.description}</div>
-                </li>
-              ))}
-            </ul>
-            <p>
-              {novels.hasPrevious && <Link href={pageNovels(novels.currentPage - 1)}>{'<'}</Link>}
-              {novels.currentPage}
-              {novels.hasNext && <Link href={pageNovels(novels.currentPage + 1)}>{'>'}</Link>}
-            </p>
+            <NovelList novels={novels.items} />
+            <Pagination pagedList={novels} createHref={pageNovels} />
           </>
         )}
       </Container>

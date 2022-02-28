@@ -10,6 +10,9 @@
 
   @apply text-xl;
   font-family: 'Yusei Magic', sans-serif;
+  a {
+    @apply text-black hover:text-black;
+  }
 }
 
 .signInButton {

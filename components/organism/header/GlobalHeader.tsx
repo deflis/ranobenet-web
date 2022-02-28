@@ -13,7 +13,9 @@ export const GlobalHeader = () => {
     <header className={styles.headerContainer}>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <NextLink href={pageIndex()}>らのべねっと</NextLink>
+          <NextLink href={pageIndex()}>
+            <a>らのべねっと</a>
+          </NextLink>
         </div>
         <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
           {isLoggedIn && <AuthUser />}

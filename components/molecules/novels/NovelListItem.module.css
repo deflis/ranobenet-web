@@ -1,0 +1,15 @@
+.card {
+  @apply flex flex-col lg:justify-between items-start border rounded-lg overflow-hidden p-4 sm:p-8;
+  @apply cursor-pointer;
+}
+
+.title_container {
+  @apply mb-4 sm:mb-8 lg:mb-0;
+  & h3 {
+    @apply text-gray-800 text-xl font-bold;
+  }
+}
+
+.author {
+  @apply text-gray-600;
+}
