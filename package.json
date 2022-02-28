@@ -4,8 +4,9 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:next": "next dev",
+    "dev:typed-css-modules": "tcm -w components",
     "dev:path": "pathpida --ignorePath .gitignore -o modules/utils/ --watch",
-    "build": "pathpida --ignorePath .gitignore -o modules/utils/ && next build",
+    "build": "pathpida --ignorePath .gitignore -o modules/utils/ && tcm components && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watch",
