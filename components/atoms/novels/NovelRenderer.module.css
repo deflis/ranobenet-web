@@ -1,4 +1,8 @@
 .container {
+  font-family: a-otf-ryumin-pr6n, serif;
+  font-style: normal;
+  font-weight: 300;
+
   margin: 0;
   padding: 0;
   whitespace: pre-wrap;
