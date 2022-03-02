@@ -5,11 +5,11 @@
     @apply block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer;
   }
   &:checked {
-    @apply right-0 border-amber-500 bg-amber-700;
+    @apply right-0 border-gray-300  bg-white;
     right: 0;
 
     + .toggleLabel {
-      @apply bg-amber-900;
+      @apply bg-gray-300;
     }
   }
 }
