@@ -8,5 +8,6 @@ module.exports = {
       opacity: ['disabled'],
     },
   },
+  darkMode: 'class',
   plugins: [],
 };

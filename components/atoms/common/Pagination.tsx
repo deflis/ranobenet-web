@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import NextLink from 'next/link';
 import { container, current, dots, nav, next, page, previous } from './Pagination.module.css';
 import { UrlObject } from 'url';
@@ -72,19 +72,19 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
           </span>
         )}
         {pagination.map((pageNumber, i) => (
-          <>
+          <React.Fragment key={i}>
             {pageNumber === DOTS ? (
-              <NextLink href={createHref(pageNumber)} key={i}>
+              <NextLink href={createHref(pageNumber)}>
                 <span className={dots}>...</span>
               </NextLink>
             ) : pageNumber === currentPage ? (
               <span className={current}>{pageNumber}</span>
             ) : (
-              <NextLink href={createHref(pageNumber)} key={i}>
+              <NextLink href={createHref(pageNumber)}>
                 <a className={page}>{pageNumber}</a>
               </NextLink>
             )}
-          </>
+          </React.Fragment>
         ))}
         {currentPage <= totalPages ? (
           <NextLink href={createHref(currentPage + 1)}>

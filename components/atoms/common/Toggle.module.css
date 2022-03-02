@@ -1,0 +1,15 @@
+.toggleCheckbox {
+  @apply absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer;
+
+  & + .toggleLabel {
+    @apply block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer;
+  }
+  &:checked {
+    @apply right-0 border-amber-500 bg-amber-700;
+    right: 0;
+
+    + .toggleLabel {
+      @apply bg-amber-900;
+    }
+  }
+}

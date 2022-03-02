@@ -5,4 +5,9 @@
 
 a {
   @apply text-blue-500 hover:text-blue-700;
+  @apply dark:text-blue-300 dark:text-blue-500;
+}
+
+body {
+  @apply dark:bg-black dark:text-white;
 }

@@ -8,7 +8,12 @@
 
 .previous,
 .next {
-  @apply items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500;
+  @apply items-center px-2 py-2 text-sm font-medium border;
+  @apply border-gray-300 bg-white text-gray-500;
+
+  :global(.dark) & {
+    @apply border-gray-700 bg-gray-900 text-gray-100;
+  }
   svg {
     @apply h-5 w-5;
   }
@@ -28,13 +33,25 @@ a.next {
 }
 
 .page {
-  @apply bg-indigo-50 border-indigo-500 text-indigo-600 items-center px-4 py-2 border text-sm font-medium;
+  @apply bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium;
+
+  :global(.dark) & {
+    @apply border-gray-700 bg-gray-900 text-gray-100 hover:bg-gray-800;
+  }
 }
 
 .dots {
   @apply items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700;
+
+  :global(.dark) & {
+    @apply border-gray-700 bg-gray-900 text-gray-100;
+  }
 }
 
 .current {
-  @apply bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium;
+  @apply bg-indigo-50 border-indigo-500 text-indigo-600 items-center px-4 py-2 border text-sm font-medium;
+
+  :global(.dark) & {
+    @apply border-gray-700 bg-gray-800 text-gray-100;
+  }
 }
