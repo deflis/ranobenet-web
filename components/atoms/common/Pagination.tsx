@@ -17,14 +17,8 @@ const DOTS = -1;
 
 const usePagination = ({ currentPage, totalPages }: PagedList, siblingCount: number = 1) => {
   const paginationRange = useMemo(() => {
-    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
     const totalPageNumbers = siblingCount + 5;
 
-    /*
-      Case 1:
-      If the number of pages is less than the page numbers we want to show in our
-      paginationComponent, we return the range [1..totalPageCount]
-    */
     if (totalPageNumbers < totalPages) {
       const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
       const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
