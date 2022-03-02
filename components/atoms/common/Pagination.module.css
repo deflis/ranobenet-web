@@ -9,6 +9,9 @@
 .previous,
 .next {
   @apply items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500;
+  svg {
+    @apply h-5 w-5;
+  }
 }
 
 a.previous,
