@@ -1,15 +1,13 @@
 import { useMemo } from 'react';
 import NextLink from 'next/link';
+import { container, current, dots, nav, next, page, previous } from './Pagination.module.css';
 import { UrlObject } from 'url';
+
 declare type Url = string | UrlObject;
 
 export type PagedList = {
   currentPage: number;
   totalPages: number;
-  pageSize: number;
-  totalCount: number;
-  hasPrevious: boolean;
-  hasNext: boolean;
 };
 
 const range = (start: number, end: number) => [...Array(end + 1).keys()].slice(start);
@@ -63,14 +61,13 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
   createHref,
 }) => {
   const pagination = usePagination(pagedList);
-  const { currentPage, hasNext, hasPrevious } = pagedList;
+  const { currentPage, totalPages } = pagedList;
   return (
-    <div>
-      <nav className='relative z-0 inline-flex rounded-md shadow-sm -space-x-px'>
-        {hasPrevious && (
+    <div className={container}>
+      <nav className={nav}>
+        {currentPage > 1 ? (
           <NextLink href={createHref(currentPage - 1)}>
-            <a className='relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'>
-              <span className='sr-only'>Previous</span>
+            <a className={previous}>
               <svg
                 className='h-5 w-5'
                 xmlns='http://www.w3.org/2000/svg'
@@ -86,34 +83,41 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
               </svg>
             </a>
           </NextLink>
+        ) : (
+          <span className={previous}>
+            <svg
+              className='h-5 w-5'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              aria-hidden='true'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z'
+                clip-rule='evenodd'
+              />
+            </svg>
+          </span>
         )}
         {pagination.map((pageNumber, i) => (
           <>
             {pageNumber === DOTS ? (
               <NextLink href={createHref(pageNumber)} key={i}>
-                <span className='relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700'>
-                  ...
-                </span>
+                <span className={dots}>...</span>
               </NextLink>
             ) : pageNumber === currentPage ? (
-              <NextLink href={createHref(pageNumber)} key={i}>
-                <a className='z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium'>
-                  {pageNumber}
-                </a>
-              </NextLink>
+              <span className={current}>{pageNumber}</span>
             ) : (
               <NextLink href={createHref(pageNumber)} key={i}>
-                <a className='bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium'>
-                  {pageNumber}
-                </a>
+                <a className={page}>{pageNumber}</a>
               </NextLink>
             )}
           </>
         ))}
-        {hasNext && (
+        {currentPage <= totalPages ? (
           <NextLink href={createHref(currentPage + 1)}>
-            <a className='relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'>
-              <span className='sr-only'>Next</span>
+            <a className={next}>
               <svg
                 className='h-5 w-5'
                 xmlns='http://www.w3.org/2000/svg'
@@ -129,6 +133,22 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
               </svg>
             </a>
           </NextLink>
+        ) : (
+          <span className={next}>
+            <svg
+              className='h-5 w-5'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              aria-hidden='true'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
+                clip-rule='evenodd'
+              />
+            </svg>
+          </span>
         )}
       </nav>
     </div>
