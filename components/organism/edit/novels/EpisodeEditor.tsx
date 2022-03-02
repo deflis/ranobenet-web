@@ -7,6 +7,9 @@ import { TextField, TextFieldMultiLine } from '~/components/atoms/forms/TextFiel
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NovelDtoForMe } from '~/ranobe-net-api/@types';
+import { useAtomValue } from 'jotai';
+import { fontAtom } from '~/modules/theme/font';
+import clsx from 'clsx';
 
 const EpisodeDataSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは１文字以上必要です。' }),
@@ -39,10 +42,14 @@ export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, on
     reset(defaultValues);
   }, [reset, defaultValues]);
 
+  const font = useAtomValue(fontAtom);
+
   return (
     <form onSubmit={handleSubmit(onSuccess)}>
       <TextField inputProps={register('title')}>エピソードタイトル</TextField>
-      <TextFieldMultiLine inputProps={register('story')}>本文</TextFieldMultiLine>
+      <TextFieldMultiLine className={clsx('h-screen', font)} inputProps={register('story')}>
+        本文
+      </TextFieldMultiLine>
       <SubmitButton disabled={!isValid || !isDirty}>Ok</SubmitButton>
       <ErrorMessage errors={errors} name='title' />
       <ErrorMessage errors={errors} name='story' />
