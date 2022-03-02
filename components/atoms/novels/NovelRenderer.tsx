@@ -2,12 +2,14 @@ import { NovelLineElement, NovelLines } from '~/modules/utils/parser';
 import { isString } from 'class-validator';
 import { Fragment } from 'react';
 import styles from './NovelRenderer.module.css';
+import clsx from 'clsx';
 
 export const NovelRenderer: React.VFC<{
+  className: string;
   story: NovelLines;
-}> = ({ story }) => {
+}> = ({ className, story }) => {
   return (
-    <>
+    <div className={clsx(className, 'story')}>
       {story.map((line, lineIndex) => (
         <p className={styles.container} key={lineIndex}>
           {line.map((element, elementIndex) => (
@@ -15,7 +17,7 @@ export const NovelRenderer: React.VFC<{
           ))}
         </p>
       ))}
-    </>
+    </div>
   );
 };
 
@@ -31,7 +33,7 @@ const LineElementRender: React.VFC<{
   switch (lineElement.type) {
     case 'ruby':
       return (
-        <ruby className={styles.ruby}>
+        <ruby className={clsx(styles.ruby, 'story-ruby')}>
           <rp>|</rp>
           {spToNbsp(lineElement.text)}
           <rp>《</rp>
@@ -41,7 +43,7 @@ const LineElementRender: React.VFC<{
       );
     case 'bouten':
       return (
-        <ruby className={styles.ruby}>
+        <ruby className={clsx(styles.ruby, 'story-bouten')}>
           <rp>《《</rp>
           {Array.from(spToNbsp(lineElement.text)).map((char, i) => (
             <Fragment key={i}>
