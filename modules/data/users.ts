@@ -17,6 +17,7 @@ export const useUserMe = () => {
   const firebaseUid = useFirebaseUser();
   const { data, error } = useQuery(createUserMeKey(firebaseUid?.uid), () => fetchMe(firebaseUid!), {
     enabled: !!firebaseUid,
+    refetchOnMount: false,
   });
 
   const loading = !data && !error;
