@@ -5,6 +5,7 @@ import { User } from '~/components/templates/users/User';
 import { QueryClient, dehydrate } from 'react-query';
 import { PropsDehydratedState } from '../_app';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
+import { Loading } from '~/components/atoms/common/Loading';
 
 type Props = {
   userId: number;
@@ -34,9 +35,10 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 };
 
 const Page: NextPage<Props, Query> = ({ userId }) => {
-  const { user } = useUserFetcher(userId);
+  const { user, loading } = useUserFetcher(userId);
   return (
     <GlobalContainer>
+      <Loading enable={loading} />
       <User user={user} />
     </GlobalContainer>
   );

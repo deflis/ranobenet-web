@@ -1,11 +1,10 @@
 import type { AppProps } from 'next/app';
 import '~/modules/utils/globals.css';
-import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { Provider, useAtomValue } from 'jotai';
 import { useAuthStateListener } from '~/modules/utils/firebase/auth';
 import { queryClientAtom } from 'jotai/query';
 import { Hydrate, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/types/devtools';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 export type PropsDehydratedState = {
   dehydratedState: unknown;

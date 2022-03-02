@@ -5,6 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient } from 'react-query';
 import { PropsDehydratedState } from '../_app';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
+import { Loading } from '~/components/atoms/common/Loading';
 
 type Props = {
   page: number;
@@ -27,9 +28,10 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 };
 
 const Page: NextPage<Props> = ({ page }) => {
-  const { users } = useUsersFetcher(page);
+  const { users, loading } = useUsersFetcher(page);
   return (
     <GlobalContainer>
+      <Loading enable={loading} />
       <Users users={users} />
     </GlobalContainer>
   );
