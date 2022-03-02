@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { UserDtoForPublic } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
 import { pageNovelDetail } from '~/modules/utils/path';
+import { NovelList } from '~/components/organism/novels/NovelList';
 
 export const User: React.FC<{ user: UserDtoForPublic | undefined }> = ({ user }) => {
   return (
@@ -16,18 +17,8 @@ export const User: React.FC<{ user: UserDtoForPublic | undefined }> = ({ user })
           </Head>
 
           <h1>{user.name}</h1>
-          <ul>
-            {user.novels.map((novel) => (
-              <li key={novel.id}>
-                <h3>
-                  <Link href={pageNovelDetail(novel.id)}>
-                    <a>{novel.title}</a>
-                  </Link>
-                </h3>
-                <p>{novel.description}</p>
-              </li>
-            ))}
-          </ul>
+
+          <NovelList novels={user.novels} />
         </>
       )}
     </>

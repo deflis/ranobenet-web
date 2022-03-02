@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { UserDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
 import { pageUserDetail, pageUsers } from '~/modules/utils/path';
+import { Pagination } from '~/components/atoms/common/Pagination';
 
 export const Users: React.FC<{ page: number; users: UserDtoForPublicListingPagedList | undefined }> = ({
   page,
@@ -21,10 +22,7 @@ export const Users: React.FC<{ page: number; users: UserDtoForPublicListingPaged
               <Link href={pageUserDetail(user.id)}>{user.name}</Link>
             </p>
           ))}
-          <p>
-            {users.hasPrevious ? <Link href={pageUsers(page - 1)}>{'<'}</Link> : '<'} {users.currentPage}{' '}
-            {users.hasNext ? <Link href={pageUsers(page + 1)}>{'>'}</Link> : '>'}
-          </p>
+          <Pagination pagedList={users} createHref={pageUsers} />
         </>
       )}
     </>
