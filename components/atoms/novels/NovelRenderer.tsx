@@ -5,7 +5,7 @@ import styles from './NovelRenderer.module.css';
 import clsx from 'clsx';
 
 export const NovelRenderer: React.VFC<{
-  className: string;
+  className?: string;
   story: NovelLines;
 }> = ({ className, story }) => {
   return (
