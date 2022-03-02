@@ -8,13 +8,17 @@ import { useRouter } from 'next/router';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { globalTitle } from '~/modules/utils/constants';
 import { IoLogoGoogle } from 'react-icons/io5';
+import { toast } from 'react-toastify';
 
-const Home: NextPage = () => {
+const Page: NextPage = () => {
   const router = useRouter();
   const user = useFirebaseUser();
 
   const [signInState, handleSignIn] = useAsyncFn(async () => {
-    await signInWithGoogle();
+    await toast.promise(signInWithGoogle(), {
+      success: 'ログインしました',
+      error: 'ログインに失敗しました',
+    });
     router.back();
   }, [router]);
 
@@ -43,4 +47,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Page;

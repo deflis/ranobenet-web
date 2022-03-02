@@ -24,7 +24,7 @@ export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
   const firebaseUser = useFirebaseUser();
   const queryClient = useQueryClient();
 
-  const { mutate, error, isLoading } = useMutation(
+  const { mutateAsync, error, isLoading } = useMutation(
     async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!),
     {
       onSuccess: (body) => {
@@ -35,7 +35,7 @@ export const useCreateNovel = (onSubmitted: (body: NovelDtoForMe) => void) => {
   );
   const loading = isLoading;
 
-  return { loading, error, create: mutate, loggedOut: !firebaseUser };
+  return { loading, error, create: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const useUpdateNovel = (novelId: number) => {
@@ -46,14 +46,17 @@ export const useUpdateNovel = (novelId: number) => {
     enabled: !!firebaseUser,
   });
 
-  const { mutate, isLoading } = useMutation(async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!), {
-    onSuccess: (body) => {
-      queryClient.setQueryData(getNovelKey(body.id), body);
-    },
-  });
+  const { mutateAsync, isLoading } = useMutation(
+    async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!),
+    {
+      onSuccess: (body) => {
+        queryClient.setQueryData(getNovelKey(body.id), body);
+      },
+    }
+  );
   const loading = (firebaseUser && !novel && !error) || isLoading;
 
-  return { novel, loading, error, update: mutate, loggedOut: !firebaseUser };
+  return { novel, loading, error, update: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const getNovelList = async (user: FirebaseUser, page?: number) =>

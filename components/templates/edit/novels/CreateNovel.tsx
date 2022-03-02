@@ -9,6 +9,8 @@ import { NeedLogin } from '~/components/organism/NeedLogin';
 import { useCreateNovel } from '~/modules/data/edit/novels';
 import { globalTitle } from '~/modules/utils/constants';
 import { pageEditNovelUpdate } from '~/modules/utils/path/edit';
+import { toast } from 'react-toastify';
+import { MiddleContainer } from '~/components/atoms/common/Container';
 
 export const CreateNovel: React.FC = () => {
   const router = useRouter();
@@ -22,11 +24,18 @@ export const CreateNovel: React.FC = () => {
 
   const handleClickOk = useCallback(
     ({ title, description, useAuthorName, author }: NovelData) => {
-      return create({
-        title,
-        description,
-        author: useAuthorName ? author : undefined,
-      });
+      toast.promise(
+        create({
+          title,
+          description,
+          author: useAuthorName ? author : undefined,
+        }),
+        {
+          pending: '更新中',
+          success: '更新しました',
+          error: '失敗しました',
+        }
+      );
     },
     [create]
   );
@@ -36,10 +45,11 @@ export const CreateNovel: React.FC = () => {
       <Head>
         <title>新規小説の投稿 - {globalTitle}</title>
       </Head>
-      <Loading enable={loading} />
-      <Heading>新規小説の投稿</Heading>
-      {loggedOut && <NeedLogin label='新規小説の投稿' />}
-      {!loading && <NovelEditor onClickOk={handleClickOk} />}
+      <MiddleContainer>
+        <Heading>新規小説の投稿</Heading>
+        {loggedOut && <NeedLogin label='新規小説の投稿' />}
+        {!loading && <NovelEditor onClickOk={handleClickOk} />}
+      </MiddleContainer>
     </>
   );
 };

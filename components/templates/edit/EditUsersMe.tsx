@@ -9,24 +9,34 @@ import { NeedLogin } from '~/components/organism/NeedLogin';
 import { useEditUser } from '~/modules/data/edit/users';
 import { globalTitle } from '~/modules/utils/constants';
 import { signOut } from '~/modules/utils/firebase/auth';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const EditUsersMe: React.FC = () => {
-  const { user, loading, update, loggedOut } = useEditUser();
-
+  const { user, update, loggedOut } = useEditUser();
   const [, handleSignOut] = useAsyncFn(async () => {
     signOut();
   });
+
+  const handleClickOk = useCallback(
+    (body: UserDtoForSave) => {
+      toast.promise(update(body), {
+        pending: '更新中',
+        success: '更新しました',
+        error: '失敗しました',
+      });
+    },
+    [update]
+  );
 
   return (
     <>
       <Head>
         <title>ユーザー情報編集 - {globalTitle}</title>
       </Head>
-      <Loading enable={loading} />
       ユーザー情報の編集
       {loggedOut && <NeedLogin label='ユーザー情報の編集' />}
-      {user && <Editor user={user} onClickOk={update} />}
+      {user && <Editor user={user} onClickOk={handleClickOk} />}
       {user && <Button onClick={handleSignOut}>サインアウト</Button>}
     </>
   );

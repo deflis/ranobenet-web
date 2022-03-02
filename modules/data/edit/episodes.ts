@@ -20,7 +20,7 @@ export const useCreateEpisode = (novelId: number, onSubmitted: (body: EpisodeDto
     enabled: !!firebaseUser,
   });
 
-  const { mutate, isLoading: isLoadingMutate } = useMutation(
+  const { mutateAsync, isLoading: isLoadingMutate } = useMutation(
     async (body: EpisodeDtoForSave) => await createEpisode(novelId, body, firebaseUser!),
     {
       onSuccess: (body) => {
@@ -33,7 +33,7 @@ export const useCreateEpisode = (novelId: number, onSubmitted: (body: EpisodeDto
   const error = errorNovel;
   const loading = isLoading && isLoadingMutate;
 
-  return { novel, loading, error, create: mutate, loggedOut: !firebaseUser };
+  return { novel, loading, error, create: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const useUpdateEpisode = (novelId: number, episodeId: number) => {
@@ -52,7 +52,7 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
     },
   ]);
 
-  const { mutate, isLoading: isLoadingMutate } = useMutation(
+  const { mutateAsync, isLoading: isLoadingMutate } = useMutation(
     async (body: EpisodeDtoForSave) => {
       if (firebaseUser) return await updateEpisode(novelId, episodeId, body, firebaseUser);
       throw new Error();
@@ -67,7 +67,7 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
   const error = errorEpisode ?? errorNovel;
   const loading = isLoading || isLoadingMutate;
 
-  return { novel, episode, loading, error, update: mutate, loggedOut: !firebaseUser };
+  return { novel, episode, loading, error, update: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const useDeleteEpisode = (novelId: number) => {
@@ -75,7 +75,7 @@ export const useDeleteEpisode = (novelId: number) => {
   const queryClient = useQueryClient();
 
   const {
-    mutate,
+    mutateAsync,
     isLoading: isLoading,
     error,
   } = useMutation(
@@ -93,7 +93,7 @@ export const useDeleteEpisode = (novelId: number) => {
 
   const loading = isLoading;
 
-  return { loading, error, delete: mutate, loggedOut: !firebaseUser };
+  return { loading, error, delete: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const getEpisode = async (novelId: number, episodeId: number, user: FirebaseUser) =>

@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { useCallback, useMemo } from 'react';
+import { toast } from 'react-toastify';
 import { Button, NextLinkButton } from '~/components/atoms/common/Button';
-import { InnerContainer } from '~/components/atoms/common/Container';
+import { InnerContainer, MiddleContainer } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import { Loading } from '~/components/atoms/common/Loading';
 import { NovelData, NovelEditor } from '~/components/organism/edit/novels/NovelEditor';
@@ -17,11 +18,18 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
 
   const handleClickOk = useCallback(
     ({ title, description, useAuthorName, author }: NovelData) => {
-      update({
-        title,
-        description,
-        author: useAuthorName ? author : undefined,
-      });
+      toast.promise(
+        update({
+          title,
+          description,
+          author: useAuthorName ? author : undefined,
+        }),
+        {
+          pending: '更新中',
+          success: '更新しました',
+          error: '失敗しました',
+        }
+      );
     },
     [update]
   );
@@ -46,13 +54,12 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
           小説の編集 - {novel?.title} - {globalTitle}
         </title>
       </Head>
-      <Loading enable={loading} />
-      <InnerContainer>
+      <MiddleContainer>
         <Heading>小説情報の編集</Heading>
         {loggedOut && <NeedLogin label='小説情報の編集' />}
         {values && <NovelEditor defaultValues={values} onClickOk={handleClickOk} />}
         {!loggedOut && <Episodes novelId={novelId} />}
-      </InnerContainer>
+      </MiddleContainer>
     </>
   );
 };

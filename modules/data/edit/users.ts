@@ -18,7 +18,7 @@ export const useEditUser = () => {
     enabled: !!firebaseUser,
   });
 
-  const { mutate, isLoading: postLoading } = useMutation(
+  const { mutateAsync, isLoading: postLoading } = useMutation(
     async (body: UserDtoForSave) => await postUser(body, firebaseUser!),
     {
       onSuccess: (body) => {
@@ -29,7 +29,7 @@ export const useEditUser = () => {
 
   const loading = isLoading || postLoading;
 
-  return { user, loading, error, update: mutate, loggedOut: !firebaseUser };
+  return { user, loading, error, update: mutateAsync, loggedOut: !firebaseUser };
 };
 
 export const getUser = async (user: FirebaseUser) =>

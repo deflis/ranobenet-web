@@ -12,3 +12,7 @@ export const Container: React.VFC<ContainerProps> = ({ children }) => (
 export const InnerContainer: React.VFC<ContainerProps> = ({ children }) => (
   <div className={styles.innerContainer}>{children}</div>
 );
+
+export const MiddleContainer: React.VFC<ContainerProps> = ({ children }) => (
+  <div className={styles.middleContainer}>{children}</div>
+);
