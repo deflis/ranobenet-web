@@ -21,7 +21,7 @@ export const GlobalHeader = () => {
           {isLoggedIn && <AuthUser />}
           {!isLoggedIn && (
             <NextLinkButton href={pageLogin()} className={styles.signInButton}>
-              Sign up
+              ログインする
             </NextLinkButton>
           )}
         </div>
