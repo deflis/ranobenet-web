@@ -4,6 +4,7 @@ import { fetchUsers, prefetchUser, useUserFetcher } from '~/modules/data/users';
 import { User } from '~/components/templates/users/User';
 import { QueryClient, dehydrate } from 'react-query';
 import { PropsDehydratedState } from '../_app';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 
 type Props = {
   userId: number;
@@ -34,7 +35,11 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 
 const Page: NextPage<Props, Query> = ({ userId }) => {
   const { user } = useUserFetcher(userId);
-  return <User user={user} />;
+  return (
+    <GlobalContainer>
+      <User user={user} />
+    </GlobalContainer>
+  );
 };
 
 export default Page;

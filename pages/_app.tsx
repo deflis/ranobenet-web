@@ -5,6 +5,7 @@ import { Provider, useAtomValue } from 'jotai';
 import { useAuthStateListener } from '~/modules/utils/firebase/auth';
 import { queryClientAtom } from 'jotai/query';
 import { Hydrate, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/types/devtools';
 
 export type PropsDehydratedState = {
   dehydratedState: unknown;
@@ -23,9 +24,8 @@ const InnerApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={(pageProps as Partial<PropsDehydratedState>)?.dehydratedState}>
-        <GlobalContainer>
-          <Component {...pageProps} />
-        </GlobalContainer>
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
       </Hydrate>
     </QueryClientProvider>
   );

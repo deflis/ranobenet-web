@@ -5,6 +5,8 @@ import type { NextPage } from 'next';
 import { Button } from '~/components/atoms/common/Button';
 import { Loading } from '~/components/atoms/common/Loading';
 import { useRouter } from 'next/router';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
+import { globalTitle } from '~/modules/utils/constants';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -19,9 +21,9 @@ const Home: NextPage = () => {
   const loading = signInState.loading;
 
   return (
-    <>
+    <GlobalContainer>
       <Head>
-        <title>らのべねっと</title>
+        <title>{globalTitle}</title>
       </Head>
 
       <Loading enable={loading} />
@@ -31,7 +33,7 @@ const Home: NextPage = () => {
         </div>
       )}
       {!user && <Button onClick={handleSignIn}>Sign In</Button>}
-    </>
+    </GlobalContainer>
   );
 };
 

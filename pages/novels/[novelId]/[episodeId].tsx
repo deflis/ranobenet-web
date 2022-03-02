@@ -2,6 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient } from 'react-query';
 import { Loading } from '~/components/atoms/common/Loading';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { Episode } from '~/components/templates/novels/Episode';
 import { fetchNovel, fetchNovels, prefetchNovel, useNovelEpisodeFetcher } from '~/modules/data/novels';
 import { PropsDehydratedState } from '~/pages/_app';
@@ -61,7 +62,7 @@ const Page: NextPage<Props> = ({ novelId, episodeId }) => {
   const { loading, episode, story, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId);
 
   return (
-    <>
+    <GlobalContainer>
       <Loading enable={loading} />
       {episode && story && (
         <Episode
@@ -72,7 +73,7 @@ const Page: NextPage<Props> = ({ novelId, episodeId }) => {
           nextEpisode={nextEpisode}
         />
       )}
-    </>
+    </GlobalContainer>
   );
 };
 

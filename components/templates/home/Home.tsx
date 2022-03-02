@@ -10,10 +10,6 @@ export const Home = () => {
 
   return (
     <>
-      <Head>
-        <title>らのべねっと</title>
-      </Head>
-
       <NextLinkButton href={pageUsers()}>ユーザー一覧</NextLinkButton>
       <NextLinkButton href={pageNovels()}>小説一覧</NextLinkButton>
       {!user && <NextLinkButton href={pageLogin()}>ログイン</NextLinkButton>}

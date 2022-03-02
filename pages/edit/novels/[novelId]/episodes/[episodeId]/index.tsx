@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { UpdateEpisode } from '~/components/templates/edit/novels/episodes/UpdateEpisode';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 
 export interface Query extends ParsedUrlQuery {
   novelId: string;
@@ -14,7 +15,11 @@ const Page: NextPage = () => {
   const novelIdNum = parseInt(novelId, 10) || 1;
   const episodeIdNum = parseInt(episodeId, 10) || 1;
 
-  return <UpdateEpisode novelId={novelIdNum} episodeId={episodeIdNum} />;
+  return (
+    <GlobalContainer>
+      <UpdateEpisode novelId={novelIdNum} episodeId={episodeIdNum} />
+    </GlobalContainer>
+  );
 };
 
 export default Page;

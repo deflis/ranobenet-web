@@ -5,6 +5,7 @@ import { Novels } from '~/components/templates/novels/Novels';
 import { Loading } from '~/components/atoms/common/Loading';
 import { PropsDehydratedState } from '../_app';
 import { dehydrate, QueryClient } from 'react-query';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 
 type Props = {
   page: number;
@@ -30,10 +31,10 @@ const Page: NextPage<Props> = ({ page }) => {
   const { loading, novels } = useNovelsFetcher(page);
 
   return (
-    <>
+    <GlobalContainer>
       <Loading enable={loading} />
       {novels && <Novels novels={novels} />}
-    </>
+    </GlobalContainer>
   );
 };
 

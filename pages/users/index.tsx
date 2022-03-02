@@ -4,6 +4,7 @@ import { Users } from '~/components/templates/users/Users';
 import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient } from 'react-query';
 import { PropsDehydratedState } from '../_app';
+import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 
 type Props = {
   page: number;
@@ -27,7 +28,11 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 
 const Page: NextPage<Props> = ({ page }) => {
   const { users } = useUsersFetcher(page);
-  return <Users page={1} users={users} />;
+  return (
+    <GlobalContainer>
+      <Users users={users} />
+    </GlobalContainer>
+  );
 };
 
 export default Page;

@@ -5,10 +5,7 @@ import { globalTitle } from '~/modules/utils/constants';
 import { pageUserDetail, pageUsers } from '~/modules/utils/path';
 import { Pagination } from '~/components/atoms/common/Pagination';
 
-export const Users: React.FC<{ page: number; users: UserDtoForPublicListingPagedList | undefined }> = ({
-  page,
-  users,
-}) => {
+export const Users: React.FC<{ users: UserDtoForPublicListingPagedList | undefined }> = ({ users }) => {
   return (
     <>
       <Head>
