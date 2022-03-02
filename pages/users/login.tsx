@@ -7,6 +7,7 @@ import { Loading } from '~/components/atoms/common/Loading';
 import { useRouter } from 'next/router';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { globalTitle } from '~/modules/utils/constants';
+import { IoLogoGoogle } from 'react-icons/io5';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -32,7 +33,12 @@ const Home: NextPage = () => {
           <p>Error: {error.message}</p>
         </div>
       )}
-      {!user && <Button onClick={handleSignIn}>Sign In</Button>}
+      {!user && (
+        <Button onClick={handleSignIn}>
+          <IoLogoGoogle />
+          Sign In
+        </Button>
+      )}
     </GlobalContainer>
   );
 };
