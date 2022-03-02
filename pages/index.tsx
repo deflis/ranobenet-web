@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Head } from 'next/document';
+import Head from 'next/head';
 import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { Home } from '~/components/templates/home/Home';
 import { globalTitle } from '~/modules/utils/constants';

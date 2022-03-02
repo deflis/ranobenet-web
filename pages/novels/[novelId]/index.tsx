@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { fetchNovel, prefetchNovel, useNovelFetcher } from '~/modules/data/novels';
+import { prefetchNovel, useNovelFetcher } from '~/modules/data/novels';
 import { apiClient } from '~/modules/utils/apiClient';
 import { Novel } from '~/components/templates/novels/Novel';
 import { Loading } from '~/components/atoms/common/Loading';
