@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { NextLinkButton } from '~/components/atoms/common/Button';
-import { Container } from '~/components/atoms/common/Container';
+import { Container, MiddleContainer } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import NovelRenderer from '~/components/atoms/novels/NovelRenderer';
 import { EpisodeDtoForPublic } from '~/ranobe-net-api/@types';
@@ -23,7 +23,7 @@ export const Episode: React.FC<{
         </title>
       </Head>
 
-      <Container>
+      <MiddleContainer>
         {(prevEpisode || nextEpisode) && (
           <p>
             {prevEpisode && (
@@ -54,7 +54,7 @@ export const Episode: React.FC<{
             )}
           </p>
         )}
-      </Container>
+      </MiddleContainer>
     </>
   );
 };

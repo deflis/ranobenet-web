@@ -1,6 +1,5 @@
 .card {
   @apply flex flex-col lg:justify-between items-start border rounded-lg overflow-hidden p-4 sm:p-8;
-  @apply cursor-pointer;
 }
 
 .title_container {

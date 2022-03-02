@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useFirebaseUser } from '~/modules/utils/firebase/auth';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pageLogin, pageNovels, pageUsers } from '~/modules/utils/path';

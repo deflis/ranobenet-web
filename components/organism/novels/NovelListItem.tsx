@@ -1,7 +1,7 @@
-import NextLink from 'next/link';
-import { pageNovelDetail } from '~/modules/utils/path';
 import { NovelDtoForPublicListing } from '~/ranobe-net-api/@types';
 import { card, title_container, author } from './NovelListItem.module.css';
+import NextLink from 'next/link';
+import { pageNovelDetail } from '~/modules/utils/path';
 
 export const NovelListItem: React.FC<{ novel: NovelDtoForPublicListing }> = ({ novel }) => (
   <li className={card}>

@@ -12,8 +12,8 @@ import { fontAtom } from '~/modules/theme/font';
 import clsx from 'clsx';
 
 const EpisodeDataSchema = z.object({
-  title: z.string().min(1, { message: 'タイトルは１文字以上必要です。' }),
-  story: z.string().min(1, { message: '本文は１文字以上必要です。' }),
+  title: z.string().min(1, { message: 'タイトルは1文字以上必要です。' }),
+  story: z.string().min(1, { message: '本文は1文字以上必要です。' }),
 });
 export type EpisodeData = z.infer<typeof EpisodeDataSchema>;
 
@@ -47,12 +47,12 @@ export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, on
   return (
     <form onSubmit={handleSubmit(onSuccess)}>
       <TextField inputProps={register('title')}>エピソードタイトル</TextField>
+      <ErrorMessage errors={errors} name='title' />
       <TextFieldMultiLine className={clsx('h-screen', font)} inputProps={register('story')}>
         本文
       </TextFieldMultiLine>
-      <SubmitButton disabled={!isValid || !isDirty}>Ok</SubmitButton>
-      <ErrorMessage errors={errors} name='title' />
       <ErrorMessage errors={errors} name='story' />
+      <SubmitButton disabled={!isValid || !isDirty}>Ok</SubmitButton>
     </form>
   );
 };

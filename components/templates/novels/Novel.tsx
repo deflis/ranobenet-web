@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { Container, InnerContainer } from '~/components/atoms/common/Container';
+import { Container, InnerContainer, MiddleContainer } from '~/components/atoms/common/Container';
 import { Heading } from '~/components/atoms/common/Heading';
 import { NextLinkButton } from '~/components/atoms/common/Button';
 import { pagesPath } from '~/modules/utils/$path';
 import { NovelDtoForPublic } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
-import { pageUserDetail } from '~/modules/utils/path';
+import { pageNovelEpisode, pageUserDetail } from '~/modules/utils/path';
+import { IoBookmarkOutline } from 'react-icons/io5';
+import { EpisodeList } from '~/components/organism/novels/EpisodeList';
 
 export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
   return (
@@ -18,7 +20,7 @@ export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
       </Head>
 
       {novel && (
-        <Container>
+        <MiddleContainer>
           <Heading>{novel.title}</Heading>
           <InnerContainer>
             <p>
@@ -26,19 +28,8 @@ export const Novel: React.FC<{ novel: NovelDtoForPublic }> = ({ novel }) => {
             </p>
             <p>{novel.description}</p>
           </InnerContainer>
-          {novel.chapters.map((chapter) => (
-            <>
-              {chapter.type === 'Chapter' && <Heading>{chapter.title}</Heading>}
-              {chapter.episodes.map((episode) => (
-                <p key={episode.id}>
-                  <NextLinkButton href={pagesPath.novels._novelId(novel.id)._episodeId(episode.id).$url()}>
-                    {episode.title}
-                  </NextLinkButton>
-                </p>
-              ))}
-            </>
-          ))}
-        </Container>
+          <EpisodeList novelId={novel.id} chapters={novel.chapters} />
+        </MiddleContainer>
       )}
     </>
   );
