@@ -9,7 +9,7 @@
   @apply flex justify-start lg:w-0 lg:flex-1;
 
   @apply text-xl;
-  font-family: 'Yusei Magic', inherit;
+  font-family: 'Yusei Magic', fantasy;
   a {
     @apply text-black hover:text-black;
   }

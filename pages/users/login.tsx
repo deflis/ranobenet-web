@@ -22,7 +22,6 @@ const Page: NextPage = () => {
     router.back();
   }, [router]);
 
-  const error = signInState.error;
   const loading = signInState.loading;
 
   return (
@@ -32,15 +31,12 @@ const Page: NextPage = () => {
       </Head>
 
       <Loading enable={loading} />
-      {error && (
-        <div>
-          <p>Error: {error.message}</p>
-        </div>
-      )}
       {!user && (
         <Button onClick={handleSignIn}>
-          <IoLogoGoogle />
-          Sign In
+          <span className='flex'>
+            <IoLogoGoogle className='m-auto mr-2 w-5 h-5' />
+            <span>Googleでログイン</span>
+          </span>
         </Button>
       )}
     </GlobalContainer>

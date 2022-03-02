@@ -7,6 +7,9 @@ import { EpisodeDtoForPublic } from '~/ranobe-net-api/@types';
 import { globalTitle } from '~/modules/utils/constants';
 import { NovelLines } from '~/modules/utils/parser';
 import { pageNovelEpisode } from '~/modules/utils/path';
+import { useAtomValue } from 'jotai';
+import { fontAtom } from '~/modules/theme/font';
+import clsx from 'clsx';
 
 export const Episode: React.FC<{
   novelId: number;
@@ -15,6 +18,7 @@ export const Episode: React.FC<{
   prevEpisode: EpisodeDtoForPublic | undefined;
   nextEpisode: EpisodeDtoForPublic | undefined;
 }> = ({ novelId, episode, story, prevEpisode, nextEpisode }) => {
+  const font = useAtomValue(fontAtom);
   return (
     <>
       <Head>
@@ -39,7 +43,7 @@ export const Episode: React.FC<{
           </p>
         )}
         <Heading>{episode.title}</Heading>
-        <NovelRenderer story={story} />
+        <NovelRenderer className={clsx(font)} story={story} />
         {(prevEpisode || nextEpisode) && (
           <p>
             {prevEpisode && (
