@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import NextLink from 'next/link';
 import { useAsyncFn } from 'react-use';
 import { signInWithGoogle, useFirebaseUser } from '~/modules/utils/firebase/auth';
 import type { NextPage } from 'next';
@@ -9,6 +10,7 @@ import { GlobalContainer } from '~/components/templates/global/GlobalContainer';
 import { globalTitle } from '~/modules/utils/constants';
 import { IoLogoGoogle } from 'react-icons/io5';
 import { toast } from 'react-toastify';
+import { pagesPath } from '~/modules/utils/$path';
 
 const Page: NextPage = () => {
   const router = useRouter();
@@ -31,6 +33,14 @@ const Page: NextPage = () => {
       </Head>
 
       <Loading enable={loading} />
+
+      <p>
+        本サービスにログインした場合、
+        <NextLink href={pagesPath.terms.$url()}>
+          <a>利用規約</a>
+        </NextLink>
+        に同意したこととします。
+      </p>
       {!user && (
         <Button onClick={handleSignIn}>
           <span className='flex'>

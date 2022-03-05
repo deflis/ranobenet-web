@@ -1,4 +1,5 @@
 import { Container } from '~/components/atoms/common/Container';
+import { GlobalFooter } from '~/components/organism/footer/GlobalFooter';
 import { GlobalHeader } from '~/components/organism/header/GlobalHeader';
 
 export const GlobalContainer: React.FC = ({ children }) => {
@@ -6,6 +7,7 @@ export const GlobalContainer: React.FC = ({ children }) => {
     <>
       <GlobalHeader />
       <Container>{children}</Container>
+      <GlobalFooter />
     </>
   );
 };
