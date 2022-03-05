@@ -11,15 +11,26 @@ import 'react-toastify/dist/ReactToastify.css';
 import { darkModeAtom } from '~/modules/theme/dark';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
 export type PropsDehydratedState = {
   dehydratedState: unknown;
 };
 
+const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) => (
+  <div role='alert'>
+    <p>Something went wrong:</p>
+    <pre>{error.message}</pre>
+    <button onClick={resetErrorBoundary}>Try again</button>
+  </div>
+);
+
 const App = (props: AppProps) => (
-  <Provider>
-    <InnerApp {...props} />
-  </Provider>
+  <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <Provider>
+      <InnerApp {...props} />
+    </Provider>
+  </ErrorBoundary>
 );
 
 const InnerApp = ({ Component, pageProps }: AppProps) => {
