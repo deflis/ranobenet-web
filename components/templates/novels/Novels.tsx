@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { Container } from '~/components/atoms/common/Container';
 import { NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { pageNovels } from '~/modules/utils/path';
@@ -15,14 +14,10 @@ export const Novels: React.FC<{ novels: NovelDtoForPublicListingPagedList }> = (
       </Head>
 
       <Container>
-        {novels && (
-          <>
-            <p>小説 全{novels.totalCount}件</p>
+        <p>小説 全{novels.totalCount}件</p>
 
-            <NovelList novels={novels.items} />
-            <Pagination pagedList={novels} createHref={pageNovels} />
-          </>
-        )}
+        <NovelList novels={novels.items} />
+        <Pagination pagedList={novels} createHref={pageNovels} />
       </Container>
     </>
   );

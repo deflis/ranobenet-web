@@ -4,7 +4,6 @@ import { pageLogin, pageNovels, pageUsers } from '~/modules/utils/path';
 import { pageEditNovelCreate, pageEditUserMe } from '~/modules/utils/path/edit';
 import { pagesPath } from '~/modules/utils/$path';
 import { Toggle } from '~/components/atoms/common/Toggle';
-import { IoMoon } from 'react-icons/io5';
 import { useAtom } from 'jotai';
 import { darkModeAtom } from '~/modules/theme/dark';
 import { useCallback } from 'react';
