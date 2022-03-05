@@ -8,22 +8,10 @@ import { atom } from 'jotai';
 export const createNovelsKey = (page?: number) => ['novels', page] as const;
 export const fetchNovels = (page?: number) =>
   apiClient.api.v1.novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
-export const pageNumAtom = atom(1);
-export const novelsAtom = atomWithQuery<NovelDtoForPublicListingPagedList, any>((get) => ({
-  queryKey: createNovelsKey(get(pageNumAtom)),
-}));
 
 export const createNovelKey = (id: number) => ['novel', id] as const;
 export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();
-export const novelIdAtom = atom(0);
-export const novelAtom = atomWithQuery<NovelDtoForPublic, any>((get) => ({
-  queryKey: createNovelKey(get(novelIdAtom)),
-}));
 export const createNovelEpisodeKey = (id: number, episodeId: number) => ['episode', id, episodeId] as const;
-export const episodeIdAtom = atom(0);
-export const episodeAtom = atomWithQuery<NovelEpisode, any>((get) => ({
-  queryKey: createNovelEpisodeKey(get(novelIdAtom), get(episodeIdAtom)),
-}));
 
 type NovelEpisode = {
   episode: Omit<EpisodeDtoForPublic, 'story'>;
