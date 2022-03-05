@@ -1,15 +1,40 @@
-import { NovelDtoForPublic, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
+import { EpisodeDtoForPublic, NovelDtoForPublic, NovelDtoForPublicListingPagedList } from '~/ranobe-net-api/@types';
 import { apiClient } from '../utils/apiClient';
 import { QueryClient, useQuery } from 'react-query';
-import { parse } from '../utils/parser';
+import { NovelLines, parse } from '../utils/parser';
+import { atomWithQuery } from 'jotai/query';
+import { atom } from 'jotai';
 
-export const createNovelKey = (id: number): string => `get/novels/${id}` as const;
-export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();
-
-export const createNovelsKey = (page?: number): string => `get/novels?page=${page}` as const;
+export const createNovelsKey = (page?: number) => ['novels', page] as const;
 export const fetchNovels = (page?: number) =>
   apiClient.api.v1.novels.$get({ query: { page: page ?? 1, size: 10, descending: true, order: 'id' } });
-export const createNovelEpisodeKey = (id: number, episodeId: number) => ['episode', id, episodeId];
+export const pageNumAtom = atom(1);
+export const novelsAtom = atomWithQuery<NovelDtoForPublicListingPagedList, any>((get) => ({
+  queryKey: createNovelsKey(get(pageNumAtom)),
+}));
+
+export const createNovelKey = (id: number) => ['novel', id] as const;
+export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();
+export const novelIdAtom = atom(0);
+export const novelAtom = atomWithQuery<NovelDtoForPublic, any>((get) => ({
+  queryKey: createNovelKey(get(novelIdAtom)),
+}));
+export const createNovelEpisodeKey = (id: number, episodeId: number) => ['episode', id, episodeId] as const;
+export const episodeIdAtom = atom(0);
+export const episodeAtom = atomWithQuery<NovelEpisode, any>((get) => ({
+  queryKey: createNovelEpisodeKey(get(novelIdAtom), get(episodeIdAtom)),
+}));
+
+type NovelEpisode = {
+  episode: Omit<EpisodeDtoForPublic, 'story'>;
+  story: NovelLines;
+  chapter: {
+    type: 'NonChapter' | 'Chapter';
+    title?: string | null;
+  };
+  prevEpisode: Omit<EpisodeDtoForPublic, 'story'> | undefined;
+  nextEpisode: Omit<EpisodeDtoForPublic, 'story'> | undefined;
+};
 
 export const prefetchNovels = async (queryClient: QueryClient, page: number) => {
   await queryClient.prefetchQuery(createNovelsKey(page), async () => fetchNovels(page));
@@ -47,44 +72,69 @@ export const useNovelFetcher = (id: number, prefetchedData?: NovelDtoForPublic) 
   };
 };
 
-export const prefetchNovelEpisode = async (queryClient: QueryClient, novelId: number, episodeId: number) => {
-  const novel = await fetchNovel(novelId);
-  await queryClient.prefetchQuery(createNovelKey(novelId), () => novel);
-  const episodes = novel.chapters?.flatMap((chapter) => chapter.episodes ?? []) ?? [];
-  const episode = episodes.find((episode) => episode.id === episodeId);
-  await queryClient.prefetchQuery(createNovelEpisodeKey(novelId, episodeId), () => parse(episode?.story ?? ''));
-  return queryClient;
+const convertEpisode = (data: NovelDtoForPublic, episodeId: number): NovelEpisode => {
+  const { episodes, ...chapter } = data.chapters?.find((chapter) =>
+    chapter.episodes.some((episode) => episode.id === episodeId)
+  ) ?? { type: 'error' };
+  const { story, ...episode } = episodes?.find((episode) => episode.id === episodeId) ?? { id: -1, title: '' };
+  if (chapter.type === 'error' || episode.id === -1 || !story) {
+    throw new Error();
+  }
+  const allEpisodes = data.chapters.flatMap((chapter) => chapter.episodes);
+  const episodeKey = allEpisodes.findIndex((episode) => episode.id === episodeId);
+  const hasPrevEpisode = episodeKey - 1 in allEpisodes;
+  const hasNextEpisode = episodeKey + 1 in allEpisodes;
+  const { story: _1, ...prevEpisode } = allEpisodes?.[episodeKey - 1] ?? {};
+  const { story: _2, ...nextEpisode } = allEpisodes?.[episodeKey + 1] ?? {};
+
+  return {
+    episode,
+    story: parse(story),
+    chapter,
+    prevEpisode: hasPrevEpisode ? prevEpisode : undefined,
+    nextEpisode: hasNextEpisode ? nextEpisode : undefined,
+  };
 };
 
-export const useNovelEpisodeFetcher = (id: number, episodeId: number, prefetchedData?: NovelDtoForPublic) => {
-  const { data, error } = useQuery(createNovelKey(id), async () => fetchNovel(id), {
-    initialData: prefetchedData,
+const wait = () => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve(undefined);
+    }, 0);
+  });
+};
+
+export const prefetchNovelEpisode = async (queryClient: QueryClient, novelId: number, episodeId: number) => {
+  await queryClient.prefetchQuery(createNovelEpisodeKey(novelId, episodeId), async () => {
+    const data = await fetchNovel(novelId);
+    return convertEpisode(data, episodeId);
   });
 
-  const loading = !data && !error;
+  return queryClient;
+};
+export const useNovelEpisodeFetcher = (novelId: number, episodeId: number) => {
+  const { data, error, isSuccess } = useQuery({
+    queryKey: createNovelKey(novelId),
+    queryFn: async () => fetchNovel(novelId),
+  });
+  useQuery(
+    createNovelEpisodeKey(novelId, episodeId),
+    async () => {
+      await wait();
+      if (data) {
+        return convertEpisode(data, episodeId);
+      }
+    },
+    {
+      enabled: isSuccess && !!data,
+    }
+  );
+  const { data: episodeData, isIdle, isLoading } = useQuery<NovelEpisode>(createNovelEpisodeKey(novelId, episodeId));
 
-  if (!loading && data) {
-    const episodes = data.chapters?.flatMap((chapter) => chapter.episodes ?? []) ?? [];
-    const episode = episodes.find((episode) => episode.id === episodeId);
-    const episodeKey = episodes.findIndex((episode) => episode.id === episodeId);
-    const prevEpisode = episodes?.[episodeKey - 1];
-    const nextEpisode = episodes?.[episodeKey + 1];
+  return {
+    loading: isIdle || isLoading,
+    error,
 
-    const { data: story } = useQuery(createNovelEpisodeKey(id, episodeId), () => parse(episode?.story ?? ''));
-
-    return {
-      loading,
-      error,
-
-      episode,
-      story,
-      prevEpisode,
-      nextEpisode,
-    };
-  } else {
-    return {
-      loading,
-      error,
-    };
-  }
+    ...episodeData,
+  };
 };

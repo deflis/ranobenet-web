@@ -13,10 +13,10 @@ import clsx from 'clsx';
 
 export const Episode: React.FC<{
   novelId: number;
-  episode: EpisodeDtoForPublic;
+  episode: Omit<EpisodeDtoForPublic, 'story'>;
   story: NovelLines;
-  prevEpisode: EpisodeDtoForPublic | undefined;
-  nextEpisode: EpisodeDtoForPublic | undefined;
+  prevEpisode: Omit<EpisodeDtoForPublic, 'story'> | undefined;
+  nextEpisode: Omit<EpisodeDtoForPublic, 'story'> | undefined;
 }> = ({ novelId, episode, story, prevEpisode, nextEpisode }) => {
   const font = useAtomValue(fontAtom);
   return (
