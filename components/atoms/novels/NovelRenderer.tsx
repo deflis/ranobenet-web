@@ -9,9 +9,9 @@ export const NovelRenderer: React.VFC<{
   story: NovelLines;
 }> = ({ className, story }) => {
   return (
-    <div className={clsx(className, 'story')}>
+    <div className={clsx(styles.container, className, 'story')}>
       {story.map((line, lineIndex) => (
-        <p className={styles.container} key={lineIndex}>
+        <p key={lineIndex}>
           {line.map((element, elementIndex) => (
             <LineElementRender lineElement={element} key={`${lineIndex}-${elementIndex}`} />
           ))}
@@ -33,7 +33,7 @@ const LineElementRender: React.VFC<{
   switch (lineElement.type) {
     case 'ruby':
       return (
-        <ruby className={clsx(styles.ruby, 'story-ruby')}>
+        <ruby className={clsx('ruby')}>
           <rp>|</rp>
           {spToNbsp(lineElement.text)}
           <rp>《</rp>
@@ -43,7 +43,7 @@ const LineElementRender: React.VFC<{
       );
     case 'bouten':
       return (
-        <ruby className={clsx(styles.ruby, 'story-bouten')}>
+        <ruby className={clsx('bouten')}>
           <rp>《《</rp>
           {Array.from(spToNbsp(lineElement.text)).map((char, i) => (
             <Fragment key={i}>

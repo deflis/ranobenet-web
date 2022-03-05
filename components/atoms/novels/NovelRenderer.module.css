@@ -1,16 +1,18 @@
 .container {
-  margin: 0;
-  padding: 0;
-  whitespace: pre-wrap;
-  wordwrap: unset;
+  p {
+    margin: 0;
+    padding: 0;
+    whitespace: pre-wrap;
+    wordwrap: unset;
 
-  &:before {
-    content: ' ';
-    white-space: pre;
+    &:before {
+      content: ' ';
+      white-space: pre;
+    }
   }
-}
 
-.ruby {
-  & rb {
+  ruby {
+    & rb {
+    }
   }
 }
