@@ -49,8 +49,8 @@ export const Episode: React.FC<{
             </div>
           )}
           <MiddleContainer>
-            <Heading>{episode.title}</Heading>
-            <NovelRenderer className={clsx(font)} story={story} />
+            <Heading className={clsx('text-center', 'my-10')}>{episode.title}</Heading>
+            <NovelRenderer className={clsx(font, 'my-10')} story={story} />
           </MiddleContainer>
           {nextEpisode && (
             <div className='w-full text-center mt-2 text-sm'>

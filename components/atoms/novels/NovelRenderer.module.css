@@ -4,11 +4,6 @@
     padding: 0;
     whitespace: pre-wrap;
     wordwrap: unset;
-
-    &:before {
-      content: ' ';
-      white-space: pre;
-    }
   }
 
   ruby {
