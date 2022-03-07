@@ -1,0 +1,44 @@
+.headerContainer {
+  @apply mx-auto my-0;
+  @apply border-b-2 border-gray-200;
+  @apply flex justify-between items-center;
+}
+
+.closeButton {
+  @apply w-auto my-auto h-full;
+  @apply p-2 m-0 mr-2;
+  @apply border-r-2 border-gray-200;
+
+  a {
+    @apply text-black hover:text-black;
+    > * {
+      @apply w-5 h-5;
+    }
+  }
+}
+
+.title {
+  @apply w-auto;
+  @apply ml-0 mr-auto;
+  h2 {
+    @apply text-sm;
+  }
+  h3 {
+    @apply text-xs;
+  }
+}
+
+.hamburger {
+  @apply w-auto my-auto;
+  @apply px-2 ml-2;
+  @apply border-l-2 border-gray-200;
+
+  button {
+    @apply m-auto p-0.5;
+    @apply border-2 border-gray-200 rounded-sm;
+
+    > * {
+      @apply w-5 h-5;
+    }
+  }
+}

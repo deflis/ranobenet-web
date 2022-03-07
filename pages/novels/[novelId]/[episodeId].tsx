@@ -59,21 +59,17 @@ export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query>
 };
 
 const Page: NextPage<Props> = ({ novelId, episodeId }) => {
-  const { loading, episode, story, prevEpisode, nextEpisode } = useNovelEpisodeFetcher(novelId, episodeId);
+  const { loading, episode } = useNovelEpisodeFetcher(novelId, episodeId);
 
   return (
-    <GlobalContainer>
+    <>
       <Loading enable={loading} />
-      {episode && story && (
+      {episode && (
         <Episode
-          novelId={novelId}
           episode={episode}
-          prevEpisode={prevEpisode}
-          story={story}
-          nextEpisode={nextEpisode}
         />
       )}
-    </GlobalContainer>
+    </>
   );
 };
 

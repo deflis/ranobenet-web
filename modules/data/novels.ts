@@ -2,8 +2,6 @@ import { EpisodeDtoForPublic, NovelDtoForPublic, NovelDtoForPublicListingPagedLi
 import { apiClient } from '../utils/apiClient';
 import { QueryClient, useQuery } from 'react-query';
 import { NovelLines, parse } from '../utils/parser';
-import { atomWithQuery } from 'jotai/query';
-import { atom } from 'jotai';
 
 export const createNovelsKey = (page?: number) => ['novels', page] as const;
 export const fetchNovels = (page?: number) =>
@@ -13,8 +11,12 @@ export const createNovelKey = (id: number) => ['novel', id] as const;
 export const fetchNovel = (id: number) => apiClient.api.v1.novels._id(id).$get();
 export const createNovelEpisodeKey = (id: number, episodeId: number) => ['episode', id, episodeId] as const;
 
-type NovelEpisode = {
-  episode: Omit<EpisodeDtoForPublic, 'story'>;
+export type NovelEpisode = Omit<EpisodeDtoForPublic, 'story'> & {
+  novel: {
+    id: number;
+    title: string;
+    author: string;
+  };
   story: NovelLines;
   chapter: {
     type: 'NonChapter' | 'Chapter';
@@ -61,7 +63,8 @@ export const useNovelFetcher = (id: number, prefetchedData?: NovelDtoForPublic) 
 };
 
 const convertEpisode = (data: NovelDtoForPublic, episodeId: number): NovelEpisode => {
-  const { episodes, ...chapter } = data.chapters?.find((chapter) =>
+  const { chapters, ...novel } = data;
+  const { episodes, ...chapter } = chapters.find((chapter) =>
     chapter.episodes.some((episode) => episode.id === episodeId)
   ) ?? { type: 'error' };
   const { story, ...episode } = episodes?.find((episode) => episode.id === episodeId) ?? { id: -1, title: '' };
@@ -76,7 +79,8 @@ const convertEpisode = (data: NovelDtoForPublic, episodeId: number): NovelEpisod
   const { story: _2, ...nextEpisode } = allEpisodes?.[episodeKey + 1] ?? {};
 
   return {
-    episode,
+    ...episode,
+    novel,
     story: parse(story),
     chapter,
     prevEpisode: hasPrevEpisode ? prevEpisode : undefined,
@@ -117,12 +121,12 @@ export const useNovelEpisodeFetcher = (novelId: number, episodeId: number) => {
       enabled: isSuccess && !!data,
     }
   );
-  const { data: episodeData, isIdle, isLoading } = useQuery<NovelEpisode>(createNovelEpisodeKey(novelId, episodeId));
+  const { data: episode, isIdle, isLoading } = useQuery<NovelEpisode>(createNovelEpisodeKey(novelId, episodeId));
 
   return {
     loading: isIdle || isLoading,
     error,
 
-    ...episodeData,
+    episode,
   };
 };
