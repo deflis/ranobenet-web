@@ -9,7 +9,6 @@ import { Toggle } from '~/components/atoms/common/Toggle';
 import { useAtom } from 'jotai';
 import { darkModeAtom } from '~/modules/theme/dark';
 import { useCallback } from 'react';
-import { HiMoon } from 'react-icons/hi';
 import { IoMoon } from 'react-icons/io5';
 
 export const GlobalHeader = () => {
