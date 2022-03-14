@@ -8,10 +8,8 @@ import { ToastContainer } from 'react-toastify';
 
 import '~/modules/utils/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { darkModeAtom } from '~/modules/theme/dark';
-import clsx from 'clsx';
-import { useEffect } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { ThemeProvider, useTheme } from 'next-themes';
 
 export type PropsDehydratedState = {
   dehydratedState: unknown;
@@ -26,25 +24,19 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) =
 );
 
 const App = (props: AppProps) => (
-  <ErrorBoundary FallbackComponent={ErrorFallback}>
-    <Provider>
-      <InnerApp {...props} />
-    </Provider>
-  </ErrorBoundary>
+  <ThemeProvider attribute='class'>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Provider>
+        <InnerApp {...props} />
+      </Provider>
+    </ErrorBoundary>
+  </ThemeProvider>
 );
 
 const InnerApp = ({ Component, pageProps }: AppProps) => {
   useAuthStateListener();
   const queryClient = useAtomValue(queryClientAtom);
-  const isDarkMode = useAtomValue(darkModeAtom);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+  const { theme } = useTheme();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -61,7 +53,7 @@ const InnerApp = ({ Component, pageProps }: AppProps) => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={theme}
         />
       </Hydrate>
     </QueryClientProvider>

@@ -10,10 +10,6 @@ import { useCallback } from 'react';
 
 export const Home = () => {
   const user = useFirebaseUser();
-  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
-  const toggleDarkMode = useCallback(() => {
-    setDarkMode((x) => !x);
-  }, []);
 
   return (
     <>
@@ -23,9 +19,6 @@ export const Home = () => {
       {user && <NextLinkButton href={pageEditUserMe()}>ユーザー情報を編集する</NextLinkButton>}
       {user && <NextLinkButton href={pageEditNovelCreate()}>新しい小説を書く</NextLinkButton>}
       {user && <NextLinkButton href={pagesPath.edit.novels.$url()}>投稿した小説</NextLinkButton>}
-      <Toggle id='darkmode' checked={darkMode} onChange={toggleDarkMode}>
-        ダークモード切り替え
-      </Toggle>
     </>
   );
 };
