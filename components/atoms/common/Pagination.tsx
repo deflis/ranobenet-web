@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import NextLink from 'next/link';
-import { container, current, dots, nav, next, page, previous } from './Pagination.module.css';
+import styles from './Pagination.module.css';
 import { UrlObject } from 'url';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
@@ -58,16 +58,16 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
   const pagination = usePagination(pagedList);
   const { currentPage, totalPages } = pagedList;
   return (
-    <div className={container}>
-      <nav className={nav}>
+    <div className={styles.container}>
+      <nav>
         {currentPage > 1 ? (
           <NextLink href={createHref(currentPage - 1)}>
-            <a className={previous}>
+            <a>
               <HiChevronLeft />
             </a>
           </NextLink>
         ) : (
-          <span className={previous}>
+          <span>
             <HiChevronLeft />
           </span>
         )}
@@ -75,25 +75,25 @@ export const Pagination: React.FC<{ pagedList: PagedList; createHref: (page: num
           <React.Fragment key={i}>
             {pageNumber === DOTS ? (
               <NextLink href={createHref(pageNumber)}>
-                <span className={dots}>...</span>
+                <span className={styles.dots}>...</span>
               </NextLink>
             ) : pageNumber === currentPage ? (
-              <span className={current}>{pageNumber}</span>
+              <span className={styles.current}>{pageNumber}</span>
             ) : (
               <NextLink href={createHref(pageNumber)}>
-                <a className={page}>{pageNumber}</a>
+                <a>{pageNumber}</a>
               </NextLink>
             )}
           </React.Fragment>
         ))}
-        {currentPage <= totalPages ? (
+        {currentPage < totalPages ? (
           <NextLink href={createHref(currentPage + 1)}>
-            <a className={next}>
+            <a>
               <HiChevronRight />
             </a>
           </NextLink>
         ) : (
-          <span className={next}>
+          <span>
             <HiChevronRight />
           </span>
         )}

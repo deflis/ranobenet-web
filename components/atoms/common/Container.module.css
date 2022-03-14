@@ -3,9 +3,9 @@
 }
 
 .innerContainer {
-  @apply h-full border-2 border-gray-200 border-opacity-60 rounded-lg p-4;
+  @apply h-full rounded-lg border-2 border-basicColor-200 border-opacity-60 p-4;
 }
 
 .middleContainer {
-  @apply max-w-screen-md mx-auto;
+  @apply mx-auto max-w-screen-md;
 }

@@ -32,17 +32,17 @@ export const Episode: React.FC<{
         </title>
       </Head>
 
-      <div className='flex flex-col w-screen h-screen'>
+      <div className='flex h-screen w-screen flex-col'>
         <div className='w-full'>
           <EpisodeHeader episode={episode} />
         </div>
-        <div className='w-full h-full overflow-auto' ref={ref}>
+        <div className='h-full w-full overflow-auto bg-white text-black dark:bg-black dark:text-white' ref={ref}>
           {prevEpisode && (
-            <div className='w-full text-center mb-2 text-sm'>
+            <div className='mb-2 w-full text-center text-sm'>
               <Link href={pageNovelEpisode(novel.id, prevEpisode.id)}>
-                <a className='w-full bg-slate-200 hover:bg-slate-300 block text-white p-2'>
+                <a className='block w-full bg-slate-200 p-2 text-white hover:bg-slate-300'>
                   <span className='text-gray-500'>前のエピソード</span>
-                  <span className='text-gray-400 tracking-tight	'>――</span>{' '}
+                  <span className='tracking-tight text-gray-400	'>――</span>{' '}
                   <span className='text-black'>{prevEpisode.title}</span>
                 </a>
               </Link>
@@ -53,11 +53,11 @@ export const Episode: React.FC<{
             <NovelRenderer className={clsx(font, 'my-10')} story={story} />
           </MiddleContainer>
           {nextEpisode && (
-            <div className='w-full text-center mt-2 text-sm'>
+            <div className='mt-2 w-full text-center text-sm'>
               <Link href={pageNovelEpisode(novel.id, nextEpisode.id)}>
-                <a className='w-full bg-slate-200 hover:bg-slate-300 block text-white p-2'>
+                <a className='block w-full bg-slate-200 p-2 text-white hover:bg-slate-300'>
                   <span className='text-gray-500'>次のエピソード</span>
-                  <span className='text-gray-400 tracking-tight	'>――</span>{' '}
+                  <span className='tracking-tight text-gray-400	'>――</span>{' '}
                   <span className='text-black'>{nextEpisode.title}</span>
                 </a>
               </Link>

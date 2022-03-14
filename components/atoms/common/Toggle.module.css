@@ -1,27 +1,45 @@
 .container {
   @apply flex flex-row;
-}
 
-.toggleContainer {
-  @apply relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in;
-}
+  > div {
+    @apply relative mr-2 inline-block w-10 select-none align-middle transition duration-200 ease-in;
 
-.toggleCheckbox {
-  @apply absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer;
+    input {
+      @apply absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4;
+      @apply checked:right-0;
+      @apply border-basicColor-400 bg-white;
+      @apply checked:border-basicColor-400  checked:bg-white;
 
-  & + .toggleLabel {
-    @apply block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer;
-  }
-  &:checked {
-    @apply right-0 border-gray-300  bg-white;
-    right: 0;
+      + label {
+        @apply block h-6 cursor-pointer overflow-hidden rounded-full;
+        @apply bg-basicColor-300;
+      }
 
-    + .toggleLabel {
-      @apply bg-gray-300;
+      &:checked {
+        @apply right-0;
+        @apply border-basicColor-400  bg-white;
+
+        + label {
+          @apply bg-basicColor-300;
+        }
+      }
+
+      :global(.dark) & {
+        @apply border-basicColor-400 bg-basicColor-600;
+        @apply checked:border-basicColor-400 checked:bg-basicColor-50;
+
+        + label {
+          @apply bg-basicColor-700;
+        }
+
+        &:checked + label {
+          @apply bg-basicColor-700;
+        }
+      }
     }
   }
-}
 
-.children {
-  @apply text-xs text-gray-700;
+  > label {
+    @apply text-xs;
+  }
 }

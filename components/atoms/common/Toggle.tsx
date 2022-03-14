@@ -32,15 +32,11 @@ export const ToggleStandalone: React.VFC<{
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked), [onChange]);
   return (
     <form className={clsx(styles.container, className)}>
-      <div className={styles.toggleContainer}>
-        <input id={id} type='checkbox' className={styles.toggleCheckbox} checked={value} onChange={handleChange} />
-        <label htmlFor={id} className={styles.toggleLabel}></label>
+      <div>
+        <input id={id} type='checkbox' checked={value} onChange={handleChange} />
+        <label htmlFor={id}></label>
       </div>
-      {children ? (
-        <label htmlFor={id} className={styles.children}>
-          {children}
-        </label>
-      ) : null}
+      {children ? <label htmlFor={id}>{children}</label> : null}
     </form>
   );
 };

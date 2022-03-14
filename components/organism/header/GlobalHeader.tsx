@@ -27,16 +27,12 @@ export const GlobalHeader = () => {
             <a>らのべねっと</a>
           </NextLink>
         </div>
-        <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
+        <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
           <ToggleStandalone id='darkmode' value={theme === 'dark'} onChange={toggleDarkMode}>
             <IoMoon />
           </ToggleStandalone>
           {isLoggedIn && <AuthUser />}
-          {!isLoggedIn && (
-            <NextLinkButton href={pageLogin()} className={styles.signInButton}>
-              ログインする
-            </NextLinkButton>
-          )}
+          {!isLoggedIn && <NextLinkButton href={pageLogin()}>ログインする</NextLinkButton>}
         </div>
       </div>
     </header>

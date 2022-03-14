@@ -1,57 +1,57 @@
 .container {
-  @apply w-full text-center m-2;
-}
+  @apply m-2 w-full text-center;
 
-.nav {
-  @apply z-0 inline-flex rounded-md shadow-sm -space-x-px w-auto mx-auto;
-}
+  nav {
+    @apply z-0 mx-auto inline-flex w-auto -space-x-px rounded-md shadow-sm;
 
-.previous,
-.next {
-  @apply items-center px-2 py-2 text-sm font-medium border;
-  @apply border-gray-300 bg-white text-gray-500;
+    > :first-child {
+      @apply rounded-l-md;
+    }
+    > :last-child {
+      @apply rounded-r-md;
+    }
 
-  :global(.dark) & {
-    @apply border-gray-700 bg-gray-900 text-gray-100;
-  }
-  svg {
-    @apply h-5 w-5;
-  }
-}
+    > :first-child,
+    > :last-child {
+      @apply items-center border px-2 py-2 text-sm font-medium;
+      @apply border-basicColor-300 bg-white text-basicColor-500;
 
-a.previous,
-a.next {
-  @apply: hover: bg-gray-50;
-}
+      :global(.dark) & {
+        @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100;
+      }
+      svg {
+        @apply h-5 w-5;
+      }
+      a& {
+        @apply hover:bg-basicColor-50;
+      }
+    }
 
-.previous {
-  @apply rounded-l-md;
-}
+    > :not(:first-child, :last-child) {
+      @apply relative inline-flex items-center border px-4 py-2;
+      @apply text-sm font-medium;
 
-.next {
-  @apply rounded-r-md;
-}
+      @apply border-basicColor-300 bg-white text-basicColor-500 hover:bg-basicColor-50;
 
-.page {
-  @apply bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium;
+      :global(.dark) & {
+        @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100 hover:bg-basicColor-800;
+      }
 
-  :global(.dark) & {
-    @apply border-gray-700 bg-gray-900 text-gray-100 hover:bg-gray-800;
-  }
-}
+      &.dots {
+        @apply border-basicColor-300 bg-white text-sm font-medium text-gray-700;
 
-.dots {
-  @apply items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700;
+        :global(.dark) & {
+          @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100;
+        }
+      }
 
-  :global(.dark) & {
-    @apply border-gray-700 bg-gray-900 text-gray-100;
-  }
-}
+      &.current {
+        @apply border-primaryColor-500 bg-primaryColor-50 text-primaryColor-600;
 
-.current {
-  @apply bg-indigo-50 border-indigo-500 text-indigo-600 items-center px-4 py-2 border text-sm font-medium;
-
-  :global(.dark) & {
-    @apply border-gray-700 bg-gray-800 text-gray-100;
+        :global(.dark) & {
+          @apply border-basicColor-700 bg-basicColor-800 text-basicColor-100;
+        }
+      }
+    }
   }
 }

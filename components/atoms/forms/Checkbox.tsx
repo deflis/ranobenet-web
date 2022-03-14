@@ -11,6 +11,6 @@ export type CheckBoxProps = {
 export const CheckBox: React.VFC<CheckBoxProps> = ({ children, className, inputProps }) => (
   <label className={clsx(styles.container, className)}>
     <input type='checkbox' {...inputProps} />
-    <span className={styles.label}>{children}</span>
+    <span>{children}</span>
   </label>
 );

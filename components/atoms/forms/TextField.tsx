@@ -11,8 +11,8 @@ export type TextFieldProps = {
 export const TextField: React.VFC<TextFieldProps> = ({ children, className, inputProps }) => {
   return (
     <div className={clsx(styles.container, className)}>
-      <label className={styles.label}>{children}</label>
-      <input type='text' className={styles.input} {...inputProps} />
+      <label>{children}</label>
+      <input type='text' {...inputProps} />
     </div>
   );
 };
@@ -25,8 +25,8 @@ export type TextFieldMultiLineProps = {
 export const TextFieldMultiLine: React.VFC<TextFieldMultiLineProps> = ({ children, className, inputProps }) => {
   return (
     <div className={clsx(styles.container, className)}>
-      <label className={styles.label}>{children}</label>
-      <textarea className={styles.input} {...inputProps} />
+      <label>{children}</label>
+      <textarea {...inputProps} />
     </div>
   );
 };

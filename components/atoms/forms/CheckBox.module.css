@@ -1,12 +1,28 @@
 .container {
   @apply flex items-center;
+  @apply mb-2 block text-base font-semibold;
+
+  @apply text-foreground-heading-secondary-light;
+  :global(.dark) & {
+    @apply text-foreground-heading-secondary-dark;
+  }
+
   &:not(:last-child) {
     @apply mb-2;
   }
-  & > input {
+
+  > input {
+    @apply form-checkbox;
+    @apply float-left mt-1 h-4 w-4 cursor-pointer appearance-none;
+    @apply rounded-sm border border-basicColor-300;
+    @apply bg-white bg-contain bg-center bg-no-repeat;
+    @apply checked:bg-primaryColor-600;
+    @apply outline-none;
+    @apply align-top transition duration-200;
   }
-  @apply block text-gray-700 text-base font-semibold mb-2;
-  & .label {
+
+  > span {
     @apply ml-2;
+    @apply text-sm font-bold;
   }
 }

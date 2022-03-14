@@ -11,8 +11,8 @@ export const NovelListItem: React.FC<{ novel: NovelDtoForPublicListing }> = ({ n
           <a>{novel.title}</a>
         </NextLink>
       </h3>
+      <div className={author}>作者: {novel.author}</div>
     </div>
-    <div className={author}>作者: {novel.author}</div>
     <div>{novel.description}</div>
   </li>
 );

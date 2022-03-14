@@ -1,14 +1,26 @@
 .card {
-  @apply flex flex-col lg:justify-between items-start border rounded-lg overflow-hidden p-4 sm:p-8;
-}
+  @apply flex flex-col items-start overflow-hidden rounded-lg p-4 sm:p-8 lg:justify-between;
+  @apply border;
 
-.title_container {
-  @apply mb-4 sm:mb-8 lg:mb-0;
-  & h3 {
-    @apply text-gray-800 text-xl font-bold;
+  .title_container {
+    @apply mb-2;
+
+    & h3 {
+      @apply text-xl font-bold;
+      a {
+        @apply text-foreground-heading-primary-light;
+        :global(.dark) & {
+          @apply text-foreground-heading-primary-dark;
+        }
+      }
+    }
   }
-}
 
-.author {
-  @apply text-gray-600;
+  .author {
+    @apply text-sm;
+    @apply text-foreground-heading-secondary-light;
+    :global(.dark) & {
+      @apply text-foreground-heading-secondary-dark;
+    }
+  }
 }

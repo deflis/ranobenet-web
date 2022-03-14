@@ -1,8 +1,7 @@
 .container {
   p {
-    margin: 0;
-    padding: 0;
-    whitespace: pre-wrap;
+    @apply m-0 p-0;
+    @apply whitespace-pre-wrap;
     wordwrap: unset;
   }
 

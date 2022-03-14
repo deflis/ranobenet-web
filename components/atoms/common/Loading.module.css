@@ -1,32 +1,23 @@
 .container {
-  @apply fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 flex flex-col items-center justify-center;
+  @apply fixed top-0 left-0 right-0 bottom-0 z-50 flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-gray-700;
 
-  @apply opacity-0 invisible;
+  @apply invisible opacity-0;
   @apply transition-all ease-in-out;
   &.enable {
-    @apply opacity-75 visible;
+    @apply visible opacity-75;
   }
 }
 
 .loader {
-  @apply ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4;
-  border-top-color: #3498db;
-  animation: spinner 1.5s linear infinite;
+  @apply mb-4 h-12 w-12 rounded-full border-4 border-t-4 border-gray-200 ease-linear;
+  @apply border-t-primaryColor-600;
+  @apply animate-spin;
 }
 
 .label {
-  @apply text-center text-white text-xl font-semibold;
+  @apply text-center text-xl font-semibold text-white;
 }
 
 .children {
   @apply text-center text-white;
-}
-
-@keyframes spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
