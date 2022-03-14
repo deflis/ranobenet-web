@@ -11,13 +11,11 @@ export const Toggle: React.VFC<
 > = ({ children, id, className, ...props }) => {
   return (
     <div className={clsx(styles.container, className)}>
-      <div className={styles.toggleContainer}>
-        <input name={id} type='checkbox' className={styles.toggleCheckbox} {...props} />
-        <label htmlFor={id} className={styles.toggleLabel}></label>
+      <div>
+        <input name={id} type='checkbox' {...props} />
+        <label htmlFor={id}></label>
       </div>
-      <label htmlFor={id} className='text-xs text-gray-700'>
-        {children}
-      </label>
+      {children ? <label htmlFor={id}>{children}</label> : null}
     </div>
   );
 };
