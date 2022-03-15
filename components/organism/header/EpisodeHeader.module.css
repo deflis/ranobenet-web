@@ -1,13 +1,23 @@
 .headerContainer {
   @apply mx-auto my-0;
-  @apply border-b-2 border-basicColor-200;
+
   @apply flex items-center justify-between;
+
+  @apply border-b-2;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 }
 
 .closeButton {
   @apply my-auto h-full w-auto;
   @apply m-0 mr-2 p-2;
-  @apply border-r-2 border-basicColor-200;
+  @apply border-r-2;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 
   a {
     @apply text-foreground-light hover:text-foreground-light;
@@ -34,12 +44,19 @@
 .hamburger {
   @apply my-auto w-auto;
   @apply ml-2 px-2;
-  @apply border-l-2 border-border-light;
+  @apply border-l-2;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 
   button {
     @apply m-auto p-0.5;
-    @apply rounded-sm border-2 border-border-light;
-
+    @apply rounded-sm border-2;
+    @apply border-borderColor-light;
+    :global(.dark) & {
+      @apply border-borderColor-dark;
+    }
     > * {
       @apply h-5 w-5;
     }

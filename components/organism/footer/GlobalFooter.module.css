@@ -1,14 +1,14 @@
 .footerContainer {
   @apply mx-auto px-4 sm:px-6;
   @apply mt-4;
-}
-.footer {
-  @apply flex items-center justify-between py-6 md:justify-start md:space-x-10;
+
   @apply border-t-2;
-  @apply border-border-light;
+  @apply border-borderColor-light;
   :global(.dark) & {
-    @apply border-border-dark;
+    @apply border-borderColor-dark;
   }
+
+  @apply flex items-center justify-between py-6 md:justify-start md:space-x-10;
 }
 
 .terms {

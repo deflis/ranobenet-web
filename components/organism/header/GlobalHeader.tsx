@@ -5,9 +5,7 @@ import { pageIndex, pageLogin } from '~/modules/utils/path';
 import NextLink from 'next/link';
 
 import styles from './GlobalHeader.module.css';
-import { Toggle, ToggleStandalone } from '~/components/atoms/common/Toggle';
-import { useAtom } from 'jotai';
-import { darkModeAtom } from '~/modules/theme/dark';
+import { ToggleStandalone } from '~/components/atoms/common/Toggle';
 import { useCallback } from 'react';
 import { IoMoon } from 'react-icons/io5';
 import { useTheme } from 'next-themes';
@@ -21,19 +19,19 @@ export const GlobalHeader = () => {
 
   return (
     <header className={styles.headerContainer}>
-      <div className={styles.header}>
-        <div className={styles.logo}>
-          <NextLink href={pageIndex()}>
-            <a>らのべねっと</a>
-          </NextLink>
-        </div>
-        <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
-          <ToggleStandalone id='darkmode' value={theme === 'dark'} onChange={toggleDarkMode}>
-            <IoMoon />
-          </ToggleStandalone>
-          {isLoggedIn && <AuthUser />}
-          {!isLoggedIn && <NextLinkButton href={pageLogin()}>ログインする</NextLinkButton>}
-        </div>
+      <div className={styles.logo}>
+        <NextLink href={pageIndex()}>
+          <a>らのべねっと</a>
+        </NextLink>
+      </div>
+      <div className={styles.switch}>
+        <ToggleStandalone id='darkmode' value={theme === 'dark'} onChange={toggleDarkMode}>
+          <IoMoon />
+        </ToggleStandalone>
+      </div>
+      <div className={styles.user}>
+        {isLoggedIn && <AuthUser />}
+        {!isLoggedIn && <NextLinkButton href={pageLogin()}>ログインする</NextLinkButton>}
       </div>
     </header>
   );

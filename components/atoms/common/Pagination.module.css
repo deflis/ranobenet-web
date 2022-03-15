@@ -14,10 +14,10 @@
     > :first-child,
     > :last-child {
       @apply items-center border px-2 py-2 text-sm font-medium;
-      @apply border-basicColor-300 bg-white text-basicColor-500;
+      @apply border-borderColor-light bg-white text-basicColor-500;
 
       :global(.dark) & {
-        @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100;
+        @apply border-borderColor-dark bg-basicColor-900 text-basicColor-100;
       }
       svg {
         @apply h-5 w-5;
@@ -31,17 +31,17 @@
       @apply relative inline-flex items-center border px-4 py-2;
       @apply text-sm font-medium;
 
-      @apply border-basicColor-300 bg-white text-basicColor-500 hover:bg-basicColor-50;
+      @apply border-borderColor-light bg-white text-basicColor-500 hover:bg-basicColor-50;
 
       :global(.dark) & {
-        @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100 hover:bg-basicColor-800;
+        @apply border-borderColor-dark bg-basicColor-900 text-basicColor-100 hover:bg-basicColor-800;
       }
 
       &.dots {
-        @apply border-basicColor-300 bg-white text-sm font-medium text-gray-700;
+        @apply border-borderColor-light bg-white text-sm font-medium text-gray-700;
 
         :global(.dark) & {
-          @apply border-basicColor-700 bg-basicColor-900 text-basicColor-100;
+          @apply border-borderColor-dark bg-basicColor-900 text-basicColor-100;
         }
       }
 
@@ -49,7 +49,7 @@
         @apply border-primaryColor-500 bg-primaryColor-50 text-primaryColor-600;
 
         :global(.dark) & {
-          @apply border-basicColor-700 bg-basicColor-800 text-basicColor-100;
+          @apply border-primaryColor-700 bg-primaryColor-900 text-primaryColor-100;
         }
       }
     }

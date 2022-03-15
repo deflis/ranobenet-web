@@ -7,10 +7,18 @@
   }
 
   h1 {
-    @apply border-b-4 border-gray-800 text-2xl my-5 font-bold;
+    @apply my-5 border-b-4 text-2xl font-bold;
+    @apply border-borderColor-light;
+    :global(.dark) & {
+      @apply border-borderColor-dark;
+    }
   }
   h2 {
-    @apply text-lg border-b border-gray-800 my-5 font-semibold;
+    @apply my-5 border-b text-lg font-semibold;
+    @apply border-borderColor-light;
+    :global(.dark) & {
+      @apply border-borderColor-dark;
+    }
   }
   ul {
     @apply list-disc pl-10;

@@ -1,9 +1,12 @@
 .headerContainer {
   @apply mx-auto px-4 sm:px-6;
-}
-.header {
+
   @apply flex items-center justify-between py-6 md:justify-start md:space-x-10;
-  @apply border-b-2 border-gray-100;
+  @apply border-b-2;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 }
 
 .logo {
@@ -17,4 +20,12 @@
       @apply text-white hover:text-white;
     }
   }
+}
+
+.switch {
+  @apply hidden items-center justify-end md:flex md:flex-1 lg:w-0;
+}
+
+.user {
+  @apply items-center justify-end md:flex md:flex-1 lg:w-0;
 }

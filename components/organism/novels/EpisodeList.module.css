@@ -1,0 +1,28 @@
+.container {
+  @apply mt-2 flex w-full flex-col rounded border;
+  @apply border-borderColor-light bg-background-light text-foreground-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark bg-background-dark text-foreground-dark;
+  }
+
+  .chapter {
+    @apply p-3 font-semibold;
+  }
+
+  .episode {
+    @apply col-span-5 flex flex-row;
+    @apply cursor-pointer grid-cols-6 border-t p-3 first:border-none;
+    @apply border-borderColor-light bg-background-light text-foreground-light;
+    @apply hover:bg-basicColor-200 hover:text-foreground-light;
+    :global(.dark) & {
+      @apply border-borderColor-dark bg-background-dark text-foreground-dark;
+      @apply hover:bg-basicColor-800 hover:text-white;
+    }
+    .icon {
+      @apply mr-2 h-5 w-5 rounded bg-basicColor-300 text-basicColor-900;
+      :global(.dark) & {
+        @apply bg-basicColor-700 text-basicColor-300;
+      }
+    }
+  }
+}

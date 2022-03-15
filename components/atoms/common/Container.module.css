@@ -3,7 +3,11 @@
 }
 
 .innerContainer {
-  @apply h-full rounded-lg border-2 border-basicColor-200 border-opacity-60 p-4;
+  @apply h-full rounded-lg border-2 border-opacity-60 p-4;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 }
 
 .middleContainer {

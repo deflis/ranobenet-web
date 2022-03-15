@@ -35,9 +35,9 @@ module.exports = {
         },
         basicColor,
         primaryColor,
-        border: {
-          light: basicColor[600],
-          dark: basicColor[100],
+        borderColor: {
+          light: basicColor[300],
+          dark: basicColor[700],
         },
         link: {
           light: linkColor[500],

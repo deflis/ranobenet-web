@@ -1,0 +1,37 @@
+.container {
+  @apply flex h-screen w-screen flex-col;
+
+  .header {
+    @apply w-full;
+  }
+
+  .contents {
+    @apply h-full w-full overflow-auto bg-white text-black;
+    :global(.dark) & {
+      @apply bg-black text-white;
+    }
+  }
+
+  .episodeNavigator {
+    @apply mb-2 w-full text-center text-sm;
+    a {
+      @apply block w-full bg-slate-200 p-2 hover:bg-slate-300;
+      .label {
+        @apply text-slate-500;
+      }
+      .dash {
+        @apply tracking-tight text-slate-400;
+      }
+      .title {
+        @apply text-black;
+      }
+    }
+  }
+}
+
+.novelTitle {
+  @apply my-10 text-center;
+}
+.novel {
+  @apply my-10;
+}

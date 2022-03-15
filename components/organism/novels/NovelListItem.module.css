@@ -1,6 +1,10 @@
 .card {
   @apply flex flex-col items-start overflow-hidden rounded-lg p-4 sm:p-8 lg:justify-between;
   @apply border;
+  @apply border-borderColor-light;
+  :global(.dark) & {
+    @apply border-borderColor-dark;
+  }
 
   .title_container {
     @apply mb-2;
