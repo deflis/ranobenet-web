@@ -64,5 +64,10 @@
   },
   "browserslist": [
     "last 1 version"
-  ]
+  ],
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  },
+  "packageManager": "pnpm@7.0.0"
 }
