@@ -66,7 +66,7 @@
     "last 1 version"
   ],
   "engines": {
-    "node": ">=16",
+    "node": ">=14",
     "pnpm": ">=7"
   },
   "packageManager": "pnpm@7.0.0"
