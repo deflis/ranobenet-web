@@ -19,12 +19,12 @@
     @apply flex-auto;
     @apply h-full w-full appearance-none rounded border py-2 px-3 leading-tight shadow;
     @apply focus:outline-none;
-    @apply border border-border-light;
+    @apply border border-borderColor-light;
 
     @apply bg-input-background-light text-input-foreground-light;
     :global(.dark) & {
       @apply bg-input-background-dark text-input-foreground-dark;
-      @apply border-border-dark;
+      @apply border-borderColor-dark;
     }
   }
 }
