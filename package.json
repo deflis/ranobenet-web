@@ -23,6 +23,7 @@
     "@mdx-js/loader": "^2.0.0",
     "@next/mdx": "^12.1.0",
     "@tailwindcss/forms": "^0.5.0",
+    "aspida": "^1.10.1",
     "class-validator": "^0.13.2",
     "clsx": "^1.1.1",
     "firebase": "^9.6.6",
