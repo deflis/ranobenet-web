@@ -22,7 +22,6 @@ export const getStaticPaths: GetStaticPaths<Query> = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props & PropsDehydratedState, Query> = async (context) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const userId = parseInt(context.params!.id, 10);
 
   return {

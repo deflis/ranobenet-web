@@ -38,13 +38,13 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
     () =>
       novel
         ? {
-            title: novel.title!,
-            description: novel.description!,
+            title: novel.title,
+            description: novel.description,
             useAuthorName: !!novel.author,
             author: novel.author ?? '',
           }
         : undefined,
-    [novel, novel?.title, novel?.description, novel?.author]
+    [novel]
   );
 
   return (

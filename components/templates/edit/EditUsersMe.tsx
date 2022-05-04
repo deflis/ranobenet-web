@@ -50,7 +50,7 @@ const Editor: React.VFC<{ user: UserDtoForMe; onClickOk: (user: UserDtoForSave) 
   const { register, handleSubmit, reset } = useForm<UserData>({ defaultValues: user });
   useEffect(() => {
     reset(user);
-  }, [user]);
+  }, [reset, user]);
 
   return (
     <form onSubmit={handleSubmit(onClickOk)}>

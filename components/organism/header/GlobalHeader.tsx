@@ -13,9 +13,12 @@ import { useTheme } from 'next-themes';
 export const GlobalHeader = () => {
   const isLoggedIn = useIsLoggedIn();
   const { theme, setTheme } = useTheme();
-  const toggleDarkMode = useCallback((value: boolean) => {
-    setTheme(value ? 'dark' : 'light');
-  }, []);
+  const toggleDarkMode = useCallback(
+    (value: boolean) => {
+      setTheme(value ? 'dark' : 'light');
+    },
+    [setTheme]
+  );
 
   return (
     <header className={styles.headerContainer}>
