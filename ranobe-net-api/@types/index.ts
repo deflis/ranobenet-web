@@ -1,8 +1,23 @@
 /* eslint-disable */
+export type Chapter = {
+  id?: number | null | undefined
+  type: 'nonChapter' | 'chapter'
+  title?: string | null | undefined
+  episodes: Episode[]
+}
+
 export type ChapterDtoForPublic = {
-  type: 'NonChapter' | 'Chapter'
-  title?: string | null
+  type: 'nonChapter' | 'chapter'
+  title?: string | null | undefined
   episodes: EpisodeDtoForPublic[]
+}
+
+export type ChaptersDto = {
+  chapters: Chapter[]
+}
+
+export type Episode = {
+  id: number
 }
 
 export type EpisodeDtoForMe = {
@@ -18,6 +33,12 @@ export type EpisodeDtoForPublic = {
   story: string
 }
 
+export type EpisodeDtoForPublicParsed = {
+  id: number
+  title: string
+  story: string[][]
+}
+
 export type EpisodeDtoForSave = {
   title: string
   story: string
@@ -27,7 +48,9 @@ export type NovelDtoForMe = {
   id: number
   title: string
   description: string
-  author?: string | null
+  author?: string | null | undefined
+  links: NovelLinkDto[]
+  tags: NovelTagDto[]
 }
 
 export type NovelDtoForMePagedList = {
@@ -47,6 +70,8 @@ export type NovelDtoForPublic = {
   author: string
   userId: number
   chapters: ChapterDtoForPublic[]
+  links: NovelLinkDto[]
+  tags: NovelTagDto[]
 }
 
 export type NovelDtoForPublicListing = {
@@ -69,7 +94,18 @@ export type NovelDtoForPublicListingPagedList = {
 export type NovelDtoForSave = {
   title: string
   description: string
-  author?: string | null
+  author?: string | null | undefined
+  links: NovelLinkDto[]
+  tags: NovelTagDto[]
+}
+
+export type NovelLinkDto = {
+  link?: string | null | undefined
+  name?: string | null | undefined
+}
+
+export type NovelTagDto = {
+  tag?: string | null | undefined
 }
 
 export type UserDtoForMe = {
@@ -81,6 +117,7 @@ export type UserDtoForPublic = {
   id: number
   name: string
   novels: NovelDtoForPublicListing[]
+  links: UserLinkDto[]
 }
 
 export type UserDtoForPublicListing = {
@@ -100,4 +137,9 @@ export type UserDtoForPublicListingPagedList = {
 
 export type UserDtoForSave = {
   name: string
+}
+
+export type UserLinkDto = {
+  link?: string | null | undefined
+  name?: string | null | undefined
 }

@@ -5,7 +5,7 @@ export type Methods = {
   get: {
     status: 200
     /** Success */
-    resBody: Types.EpisodeDtoForMe
+    resBody: Types.EpisodeDtoForPublicParsed
   }
 
   put: {
