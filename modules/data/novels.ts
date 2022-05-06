@@ -19,7 +19,7 @@ export type NovelEpisode = Omit<EpisodeDtoForPublic, 'story'> & {
   };
   story: NovelLines;
   chapter: {
-    type: 'NonChapter' | 'Chapter';
+    type: 'nonChapter' | 'chapter';
     title?: string | null;
   };
   prevEpisode: Omit<EpisodeDtoForPublic, 'story'> | undefined;
