@@ -23,6 +23,8 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
           title,
           description,
           author: useAuthorName ? author : undefined,
+          links: [],
+          tags: [],
         }),
         {
           pending: '更新中',
@@ -73,7 +75,7 @@ const Episodes: React.FC<{ novelId: number }> = ({ novelId }) => {
     <ul>
       {novel?.chapters.map((chapter) => (
         <>
-          {chapter.type === 'Chapter' && <Heading>{chapter.title}</Heading>}
+          {chapter.type === 'chapter' && <Heading>{chapter.title}</Heading>}
           {chapter.episodes.map((episode) => (
             <li key={episode.id}>
               {episode.title}

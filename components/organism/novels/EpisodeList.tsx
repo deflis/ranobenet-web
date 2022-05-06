@@ -11,7 +11,7 @@ export const EpisodeList: React.FC<{ chapters: ChapterDtoForPublic[]; novelId: n
         .filter((x) => x.episodes.length !== 0)
         .map((chapter) => (
           <>
-            {chapter.type === 'Chapter' && <header className={styles.chapter}>{chapter.title}</header>}
+            {chapter.type === 'chapter' && <header className={styles.chapter}>{chapter.title}</header>}
             {chapter.episodes.map((episode) => (
               <NextLink href={pageNovelEpisode(novelId, episode.id)} key={episode.id}>
                 <a className={styles.episode}>

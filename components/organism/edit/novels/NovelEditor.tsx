@@ -27,7 +27,6 @@ export const NovelEditor: React.VFC<{ defaultValues?: NovelData; onClickOk: (use
     watch,
     reset,
     formState: { isValid, isDirty },
-    control,
   } = useForm({
     defaultValues: {
       title: '',

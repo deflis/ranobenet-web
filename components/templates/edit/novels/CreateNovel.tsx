@@ -29,6 +29,8 @@ export const CreateNovel: React.FC = () => {
           title,
           description,
           author: useAuthorName ? author : undefined,
+          links: [],
+          tags: [],
         }),
         {
           pending: '更新中',

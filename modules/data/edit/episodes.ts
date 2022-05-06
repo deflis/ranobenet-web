@@ -100,7 +100,7 @@ export const getEpisode = async (novelId: number, episodeId: number, user: Fireb
   apiClient.api.v1.novels
     ._id(novelId)
     .episodes._episodeId(episodeId)
-    .$get({
+    .me.$get({
       config: {
         headers: await getAuthHeader(user),
       },
