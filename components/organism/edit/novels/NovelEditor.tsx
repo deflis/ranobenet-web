@@ -13,6 +13,18 @@ const NovelDataSchema = z
     description: z.string(),
     useAuthorName: z.boolean(),
     author: z.string(),
+    links: z.array(
+      z.object({
+        name: z.string(),
+        link: z.string(),
+      })
+    ),
+    tags: z.array(
+      z.object({
+        tag: z.string(),
+      })
+    ),
+    private: z.boolean(),
   })
   .refine(({ useAuthorName, author }) => !useAuthorName || (useAuthorName && author.length > 0));
 export type NovelData = z.infer<typeof NovelDataSchema>;
@@ -33,6 +45,9 @@ export const NovelEditor: React.VFC<{ defaultValues?: NovelData; onClickOk: (use
       description: '',
       useAuthorName: false,
       author: '',
+      links: [],
+      tags: [],
+      private: false,
       ...defaultValues,
     },
     resolver: zodResolver(NovelDataSchema),

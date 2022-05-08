@@ -11,8 +11,8 @@
     "lint": "next lint",
     "test": "jest --watch",
     "openapi-gen": "run-s openapi-gen:prepare openapi-gen:build",
-    "openapi-gen:prepare": "npx rimraf ranobe-net-api",
-    "openapi-gen:build": "npx openapi2aspida"
+    "openapi-gen:prepare": "pnpx rimraf ranobe-net-api",
+    "openapi-gen:build": "pnpx openapi2aspida"
   },
   "dependencies": {
     "@aspida/fetch": "^1.10.1",

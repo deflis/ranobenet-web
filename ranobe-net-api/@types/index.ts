@@ -25,6 +25,7 @@ export type EpisodeDtoForMe = {
   chapterId: number
   title: string
   story: string
+  private: boolean
 }
 
 export type EpisodeDtoForPublic = {
@@ -42,6 +43,7 @@ export type EpisodeDtoForPublicParsed = {
 export type EpisodeDtoForSave = {
   title: string
   story: string
+  private: boolean
 }
 
 export type NovelDtoForMe = {
@@ -51,6 +53,7 @@ export type NovelDtoForMe = {
   author?: string | null | undefined
   links: NovelLinkDto[]
   tags: NovelTagDto[]
+  private: boolean
 }
 
 export type NovelDtoForMePagedList = {
@@ -97,15 +100,16 @@ export type NovelDtoForSave = {
   author?: string | null | undefined
   links: NovelLinkDto[]
   tags: NovelTagDto[]
+  private: boolean
 }
 
 export type NovelLinkDto = {
-  link?: string | null | undefined
-  name?: string | null | undefined
+  link: string
+  name: string
 }
 
 export type NovelTagDto = {
-  tag?: string | null | undefined
+  tag: string
 }
 
 export type UserDtoForMe = {
@@ -140,6 +144,6 @@ export type UserDtoForSave = {
 }
 
 export type UserLinkDto = {
-  link?: string | null | undefined
-  name?: string | null | undefined
+  link: string
+  name: string
 }

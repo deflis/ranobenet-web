@@ -14,6 +14,7 @@ import clsx from 'clsx';
 const EpisodeDataSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは1文字以上必要です。' }),
   story: z.string().min(1, { message: '本文は1文字以上必要です。' }),
+  private: z.boolean(),
 });
 export type EpisodeData = z.infer<typeof EpisodeDataSchema>;
 
@@ -34,6 +35,7 @@ export const EpisodeEditor: React.VFC<EpisodeEditorProps> = ({ defaultValues, on
     defaultValues: {
       title: '',
       story: '',
+      private: false,
       ...defaultValues,
     },
     resolver: zodResolver(EpisodeDataSchema),

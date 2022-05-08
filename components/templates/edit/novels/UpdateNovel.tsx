@@ -17,14 +17,11 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
   const { novel, loading, update, loggedOut } = useUpdateNovel(novelId);
 
   const handleClickOk = useCallback(
-    ({ title, description, useAuthorName, author }: NovelData) => {
+    ({ useAuthorName, author, ...data }: NovelData) => {
       toast.promise(
         update({
-          title,
-          description,
           author: useAuthorName ? author : undefined,
-          links: [],
-          tags: [],
+          ...data,
         }),
         {
           pending: '更新中',
@@ -40,8 +37,7 @@ export const UpdateNovel: React.FC<{ novelId: number }> = ({ novelId }) => {
     () =>
       novel
         ? {
-            title: novel.title,
-            description: novel.description,
+            ...novel,
             useAuthorName: !!novel.author,
             author: novel.author ?? '',
           }

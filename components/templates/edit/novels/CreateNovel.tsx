@@ -23,14 +23,11 @@ export const CreateNovel: React.FC = () => {
   const { loading, create, loggedOut } = useCreateNovel(handleCreated);
 
   const handleClickOk = useCallback(
-    ({ title, description, useAuthorName, author }: NovelData) => {
+    ({ useAuthorName, author, ...data }: NovelData) => {
       toast.promise(
         create({
-          title,
-          description,
           author: useAuthorName ? author : undefined,
-          links: [],
-          tags: [],
+          ...data,
         }),
         {
           pending: '更新中',
