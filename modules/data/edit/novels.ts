@@ -47,7 +47,7 @@ export const useUpdateNovel = (novelId: number) => {
   });
 
   const { mutateAsync, isLoading } = useMutation(
-    async (body: NovelDtoForSave) => await createNovel(body, firebaseUser!),
+    async (body: NovelDtoForSave) => await updateNovel(novelId, body, firebaseUser!),
     {
       onSuccess: (body) => {
         queryClient.setQueryData(getNovelKey(body.id), body);
