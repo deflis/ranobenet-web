@@ -21,6 +21,9 @@ const nextConfig = {
   },
   // MDX
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  env: {
+    baseUrl: 'https://api.ranobe.net',
+  },
 };
 
 module.exports = withPWA(withMDX(nextConfig));
