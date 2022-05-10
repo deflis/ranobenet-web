@@ -5,6 +5,7 @@ import { apiClient } from '~/modules/utils/apiClient';
 import { EpisodeDtoForMe, EpisodeDtoForSave } from '~/ranobe-net-api/@types';
 import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { createNovelKey } from '../novels';
+import { getChaptersKey } from './chapters';
 
 const getEpisodeKey = (novelId: number, episodeId: number) => `edit/novels/${novelId}/${episodeId}` as const;
 
@@ -23,9 +24,10 @@ export const useCreateEpisode = (novelId: number, onSubmitted: (body: EpisodeDto
   const { mutateAsync, isLoading: isLoadingMutate } = useMutation(
     async (body: EpisodeDtoForSave) => await createEpisode(novelId, body, firebaseUser!),
     {
-      onSuccess: (body) => {
+      onSuccess: async (body) => {
         queryClient.setQueryData(getEpisodeKey(novelId, body.id), body);
         onSubmitted(body);
+        await queryClient.invalidateQueries(getChaptersKey(novelId));
       },
     }
   );
@@ -58,8 +60,9 @@ export const useUpdateEpisode = (novelId: number, episodeId: number) => {
       throw new Error();
     },
     {
-      onSuccess: (body) => {
+      onSuccess: async (body) => {
         queryClient.setQueryData(getEpisodeKey(novelId, body.id), body);
+        await queryClient.invalidateQueries(getChaptersKey(novelId));
       },
     }
   );
@@ -84,9 +87,10 @@ export const useDeleteEpisode = (novelId: number) => {
       throw new Error();
     },
     {
-      onSuccess: () => {
-        queryClient.refetchQueries(getNovelKey(novelId));
-        queryClient.refetchQueries(createNovelKey(novelId));
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(getNovelKey(novelId));
+        await queryClient.invalidateQueries(createNovelKey(novelId));
+        await queryClient.invalidateQueries(getChaptersKey(novelId));
       },
     }
   );

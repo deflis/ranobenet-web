@@ -5,11 +5,11 @@ export type Methods = {
   get: {
     status: 200
     /** Success */
-    resBody: Types.ChaptersDto
+    resBody: Types.ChaptersDtoForMe
   }
 
   post: {
     status: 200
-    reqBody: Types.ChaptersDto
+    reqBody: Types.ChaptersDtoForSave
   }
 }

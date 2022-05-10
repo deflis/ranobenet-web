@@ -1,9 +1,8 @@
 /* eslint-disable */
-export type Chapter = {
-  id?: number | null | undefined
+export type ChapterDtoForMeList = {
   type: 'nonChapter' | 'chapter'
   title?: string | null | undefined
-  episodes: Episode[]
+  episodes: EpisodeDtoForMeList[]
 }
 
 export type ChapterDtoForPublic = {
@@ -12,11 +11,35 @@ export type ChapterDtoForPublic = {
   episodes: EpisodeDtoForPublic[]
 }
 
-export type ChaptersDto = {
-  chapters: Chapter[]
+export type ChaptersChapterForMe = {
+  id?: number | null | undefined
+  type: 'nonChapter' | 'chapter'
+  title?: string | null | undefined
+  episodes: ChaptersEpisodeForMe[]
 }
 
-export type Episode = {
+export type ChaptersChapterForSave = {
+  id?: number | null | undefined
+  type: 'nonChapter' | 'chapter'
+  title?: string | null | undefined
+  episodes: ChaptersEpisodeForSave[]
+}
+
+export type ChaptersDtoForMe = {
+  chapters: ChaptersChapterForMe[]
+}
+
+export type ChaptersDtoForSave = {
+  chapters: ChaptersChapterForSave[]
+}
+
+export type ChaptersEpisodeForMe = {
+  id: number
+  title: string
+  private: boolean
+}
+
+export type ChaptersEpisodeForSave = {
   id: number
 }
 
@@ -25,6 +48,12 @@ export type EpisodeDtoForMe = {
   chapterId: number
   title: string
   story: string
+  private: boolean
+}
+
+export type EpisodeDtoForMeList = {
+  id: number
+  title: string
   private: boolean
 }
 
@@ -51,9 +80,10 @@ export type NovelDtoForMe = {
   title: string
   description: string
   author?: string | null | undefined
+  private: boolean
   links: NovelLinkDto[]
   tags: NovelTagDto[]
-  private: boolean
+  chapters: ChapterDtoForMeList[]
 }
 
 export type NovelDtoForMePagedList = {

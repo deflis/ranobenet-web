@@ -6,6 +6,7 @@ import { TextField, TextFieldMultiLine } from '~/components/atoms/forms/TextFiel
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckBox } from '~/components/atoms/forms/Checkbox';
+import { DevTool } from '@hookform/devtools';
 
 const NovelDataSchema = z
   .object({
@@ -39,6 +40,7 @@ export const NovelEditor: React.VFC<{ defaultValues?: NovelData; onClickOk: (use
     watch,
     reset,
     formState: { isValid, isDirty },
+    control,
   } = useForm({
     defaultValues: {
       title: '',
@@ -59,11 +61,12 @@ export const NovelEditor: React.VFC<{ defaultValues?: NovelData; onClickOk: (use
 
   return (
     <form onSubmit={handleSubmit(onClickOk)}>
+      <DevTool control={control} />
       <TextField inputProps={register('title', { minLength: 1 })}>タイトル</TextField>
       <TextFieldMultiLine inputProps={register('description')}>あらすじ</TextFieldMultiLine>
       <CheckBox inputProps={register('useAuthorName')}>作者名を変更する</CheckBox>
       {useAuthorName && <TextField inputProps={register('author', { minLength: 1 })}>作者名</TextField>}
-
+      <CheckBox inputProps={register('private')}>非公開にする</CheckBox>
       <SubmitButton disabled={!isValid || !isDirty}>Ok</SubmitButton>
     </form>
   );
